@@ -74,12 +74,12 @@ module.exports = {
     const email = req.body.email;
     const name = req.body.name;
     const username = req.body.username;
-    // const password = await encryptPassword(req.body.password);
+    const password = !req.body.password ? req.admin.password : await encryptPassword(req.body.password)
     AdminServices.update(req.admin.id, {
       email: email,
       name: name,
       username: username,
-      //  password : password,
+      password : password,
     })
       .then(() => {
         res.status(200).json({

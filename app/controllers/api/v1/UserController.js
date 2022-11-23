@@ -82,7 +82,7 @@ module.exports = {
     const email = req.body.email;
     const name = req.body.name;
     const username = req.body.username;
-    // const password = await encryptPassword(req.body.password);
+    const password = !req.body.password ? req.user.password : await encryptPassword(req.body.password);
     UserServices.update(req.user.id, {
       no_ktp: no_ktp,
       no_passport: no_passport,
@@ -92,7 +92,7 @@ module.exports = {
       email: email,
       name: name,
       username: username,
-      //  password : password,
+      password : password,
     })
       .then(() => {
         res.status(200).json({
