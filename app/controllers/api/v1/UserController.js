@@ -64,6 +64,43 @@
        updatedAt: user.updatedAt,
      });
    },
+
+   async updateUser(req, res) {
+    const no_ktp = req.body.no_ktp
+    const no_passport = req.body.no_passport
+    const sex = req.body.sex
+    const date_of_birth = req.body.date_of_birth
+    const address = req.body.address
+    const email = req.body.email
+    const name = req.body.name
+    const username = req.body.username
+    // const password = await encryptPassword(req.body.password);
+    UserServices.update(
+        req.params.id, {
+         no_ktp : no_ktp,
+         no_passport : no_passport,
+         sex : sex,
+         date_of_birth : date_of_birth,
+         address : address,
+         email : email,
+         name : name,
+         username : username,
+        //  password : password,
+      })
+      .then(() => {
+        res.status(200).json({
+          status: "SUCCESS",
+          message: "Update User successfully",
+        });
+      })
+      .catch((err) => {
+        res.status(422).json({
+          status: "FAIL",
+          message: err.message,
+        });
+      });
+  },
+
  
    //FUNCTION LOGIN
    async login(req, res) {

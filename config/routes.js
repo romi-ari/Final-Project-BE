@@ -40,11 +40,18 @@ apiRouter.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 //   controllers.api.v1.carController.verifyRoles("superAdmin", "admin"),
 //   controllers.api.v1.carController.destroy
 // );
-// apiRouter.get("/api/v1/whoami",
-//   controllers.api.v1.authController.authorize,
-//   controllers.api.v1.authController.whoAmI
-// );
+apiRouter.get("/api/v1/profile",
+  controllers.api.v1.userController.authorize,
+  controllers.api.v1.userController.whoAmI
+);
+apiRouter.put("/api/v1/updateUser/:id", controllers.api.v1.userController.updateUser);
+
+
+
+
+
 apiRouter.post("/api/v1/loginAdmin", controllers.api.v1.adminController.loginAdmin);
+apiRouter.put("/api/v1/updateAdmin/:id", controllers.api.v1.adminController.updateAdmin);
 apiRouter.post("/api/v1/login", controllers.api.v1.userController.login);
 apiRouter.post("/api/v1/register", controllers.api.v1.userController.register);
 apiRouter.post(
