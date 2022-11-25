@@ -6,7 +6,7 @@
 /** Destruct environment variable to get database configuration */
 const {
   DB_USERNAME = "postgres",
-  DB_PASSWORD = "sastra2002",
+  DB_PASSWORD = "123",
   DB_HOST = "127.0.0.1",
   DB_NAME = "db_gotravel",
 } = process.env;

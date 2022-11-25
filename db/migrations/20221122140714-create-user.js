@@ -12,9 +12,6 @@ module.exports = {
       no_ktp: {
         type: Sequelize.STRING
       },
-      no_passport: {
-        type: Sequelize.STRING
-      },
       sex: {
         type: Sequelize.CHAR
       },
