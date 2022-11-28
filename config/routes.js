@@ -72,6 +72,28 @@ apiRouter.post(
   controllers.api.v1.adminController.createAdmin
 );
 
+//End Point Airport
+
+apiRouter.get("/api/v1/airport", controllers.api.v1.airportController.list);
+apiRouter.post(
+  "/api/v1/airport", 
+  controllers.api.v1.adminController.authorize,
+  controllers.api.v1.airportController.create
+);
+apiRouter.put(
+  "/api/v1/airport/:id", 
+  controllers.api.v1.adminController.authorize,
+  controllers.api.v1.airportController.update
+);
+apiRouter.get('/api/v1/airport/:id', controllers.api.v1.airportController.show);
+apiRouter.delete(
+  "/api/v1/airport/:id",
+  controllers.api.v1.adminController.authorize,
+  controllers.api.v1.airportController.destroy
+);
+
+
+
 apiRouter.use(controllers.api.main.onLost);
 apiRouter.use(controllers.api.main.onError);
 

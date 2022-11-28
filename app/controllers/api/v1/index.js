@@ -5,8 +5,10 @@
 
 const adminController = require("./adminController");
 const userController = require("./UserController");
+const airportController = require("./airportController");
 
 module.exports = {
   adminController,
-  userController
+  userController,
+  airportController
 };
