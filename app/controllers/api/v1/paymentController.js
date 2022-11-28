@@ -1,4 +1,4 @@
-const userServices = require("../../../services/userServices")
+const confirmationServices = require("../../../services/confirmationService")
 const cloudinary = require("../../../../config/cloudinary")
 
 module.exports = {
@@ -19,7 +19,7 @@ module.exports = {
                 file_url: result.url
             }
 
-            userServices.create(body)
+            confirmationServices.create(body)
                 .then(() => {
                     res.status(201).json({
                         status: "Created"
