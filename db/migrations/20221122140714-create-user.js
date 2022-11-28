@@ -37,12 +37,6 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      file_url: {
-        type: Sequelize.STRING
-      },
-      cloudinary_id: {
-        type: Sequelize.STRING
-      },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
