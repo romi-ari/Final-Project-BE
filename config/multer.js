@@ -1,6 +1,3 @@
-const multer = require("multer");
-const path = require("path");
-
 // Multer config
 const multer = require('multer')
 const path = require('path')
