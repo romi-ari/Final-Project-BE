@@ -10,5 +10,5 @@ const airportController = require("./airportController");
 module.exports = {
   adminController,
   userController,
-  airportController
+  airportController,
 };

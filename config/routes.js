@@ -2,6 +2,7 @@ const express = require("express");
 const controllers = require("../app/controllers");
 const YAML = require("yamljs");
 const swaggerUi = require("swagger-ui-express");
+const limit = require("./limitSize")
 const cors = require("cors");
 const handleGoogleLoginOrRegister = require("../app/controllers/api/v1/handleGoogleLoginOrRegister");
 
@@ -91,6 +92,9 @@ apiRouter.delete(
   controllers.api.v1.adminController.authorize,
   controllers.api.v1.airportController.destroy
 );
+
+//cloudinary
+apiRouter.post("/confirmation", controllers.api.v1.paymentController, limit, controllers.api.v1.paymentController.create)
 
 
 

@@ -14,7 +14,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Receipt.init({
-    cloudinary_url: DataTypes.STRING,
+    file_url: DataTypes.STRING,
+    cloudinary_id: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'Receipt',
