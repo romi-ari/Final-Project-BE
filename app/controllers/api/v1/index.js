@@ -7,10 +7,12 @@ const adminController = require("./adminController");
 const userController = require("./UserController");
 const airportController = require("./airportController");
 const planeController = require("./planeController");
+const paymentController = require("./paymentController");
 
 module.exports = {
   adminController,
   userController,
   airportController,
-
+  planeController,
+  paymentController
 };
