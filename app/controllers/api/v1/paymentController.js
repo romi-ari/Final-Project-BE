@@ -16,7 +16,6 @@ module.exports = {
             }
 
             const body = {
-                ...req.body,
                 file_url: result.url
             }
 

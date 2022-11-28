@@ -120,7 +120,7 @@ apiRouter.delete(
 );
 
 //cloudinary
-apiRouter.post("/confirmation", controllers.api.v1.paymentController, limit, controllers.api.v1.paymentController.create)
+apiRouter.post("/confirmation",  limit, controllers.api.v1.paymentController.create)
 
 apiRouter.use(controllers.api.main.onLost);
 apiRouter.use(controllers.api.main.onError);
