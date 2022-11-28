@@ -1,13 +1,13 @@
-const airportService = require("../../../services/airportService");
+const planeService = require("../../../services/planeService");
 
 module.exports = {
   list(req, res) {
-    airportService
+    planeService
       .list()
       .then(({ data, count }) => {
         res.status(200).json({
           status: "OK",
-          data: { airports: data },
+          data: { planes: data },
           meta: { total: count },
         });
       })
@@ -21,21 +21,17 @@ module.exports = {
 
   create(req, res) {
     const name = req.body.name;
-    const province = req.body.province;
-    const city = req.body.city;
-    const country = req.body.country;
+    const code = req.body.code;
     const status = req.body.status;
-    airportService
+    planeService
       .create({
+        code,
         name,
-        province,
-        city,
-        country,
         status,
       })
       .then((post) => {
         res.status(201).json({
-          status: "Create Airport successfully",
+          status: "Create Plane successfully",
           data: post,
         });
       })
@@ -48,17 +44,15 @@ module.exports = {
   },
 
   update(req, res) {
-    airportService
+    planeService
       .update(req.params.id, {
+        code: req.body.code,
         name: req.body.name,
-        province: req.body.province,
-        city: req.body.city,
-        country: req.body.country,
         status: req.body.status,
       })
       .then(() => {
         res.status(200).json({
-          status: "Update Airport successfully",
+          status: "Update Plane successfully",
         });
       })
       .catch((err) => {
@@ -70,7 +64,7 @@ module.exports = {
   },
 
   show(req, res) {
-    airportService
+    planeService
       .findByPk(req.params.id)
       .then((post) => {
         res.status(200).json({
@@ -87,11 +81,11 @@ module.exports = {
   },
 
   destroy(req, res) {
-    airportService
+    planeService
       .destroy(req.params.id)
       .then(() => {
         res.status(200).json({
-          status: `Delete Airport successfully`,
+          status: `Delete Plane successfully`,
         });
       })
       .catch((err) => {

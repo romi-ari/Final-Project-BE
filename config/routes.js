@@ -68,7 +68,7 @@ apiRouter.post("/api/v1/register", controllers.api.v1.userController.register);
 apiRouter.post(
   "/api/v1/createAdmin",
   controllers.api.v1.adminController.authorize,
-  // controllers.api.v1.adminController.verifyRoles("superAdmin"),
+  controllers.api.v1.adminController.verifyRoles("superAdmin"),
   controllers.api.v1.adminController.createAdmin
 );
 
@@ -78,18 +78,44 @@ apiRouter.get("/api/v1/airport", controllers.api.v1.airportController.list);
 apiRouter.post(
   "/api/v1/airport", 
   controllers.api.v1.adminController.authorize,
+  controllers.api.v1.adminController.verifyRoles("superAdmin", "admin"),
   controllers.api.v1.airportController.create
 );
 apiRouter.put(
   "/api/v1/airport/:id", 
   controllers.api.v1.adminController.authorize,
+  controllers.api.v1.adminController.verifyRoles("superAdmin", "admin"),
   controllers.api.v1.airportController.update
 );
 apiRouter.get('/api/v1/airport/:id', controllers.api.v1.airportController.show);
 apiRouter.delete(
   "/api/v1/airport/:id",
   controllers.api.v1.adminController.authorize,
+  controllers.api.v1.adminController.verifyRoles("superAdmin", "admin"),
   controllers.api.v1.airportController.destroy
+);
+
+//End Point Plane
+
+apiRouter.get("/api/v1/plane", controllers.api.v1.planeController.list);
+apiRouter.post(
+  "/api/v1/plane", 
+  controllers.api.v1.adminController.authorize,
+  controllers.api.v1.adminController.verifyRoles("superAdmin", "admin"),
+  controllers.api.v1.planeController.create
+);
+apiRouter.put(
+  "/api/v1/plane/:id", 
+  controllers.api.v1.adminController.authorize,
+  controllers.api.v1.adminController.verifyRoles("superAdmin", "admin"),
+  controllers.api.v1.planeController.update
+);
+apiRouter.get('/api/v1/plane/:id', controllers.api.v1.planeController.show);
+apiRouter.delete(
+  "/api/v1/plane/:id",
+  controllers.api.v1.adminController.authorize,
+  controllers.api.v1.adminController.verifyRoles("superAdmin", "admin"),
+  controllers.api.v1.planeController.destroy
 );
 
 

@@ -6,9 +6,11 @@
 const adminController = require("./adminController");
 const userController = require("./UserController");
 const airportController = require("./airportController");
+const planeController = require("./planeController");
 
 module.exports = {
   adminController,
   userController,
-  airportController
+  airportController,
+  planeController
 };
