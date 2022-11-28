@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     cloudinary_id: DataTypes.STRING,
   }, {
     sequelize,
+    freezeTableName: true,
     modelName: 'Receipt',
   });
   return Receipt;
