@@ -12,7 +12,7 @@ module.exports = {
       file_url:{
         type: Sequelize.STRING
       },
-      cloudinary_url: {
+      cloudinary_id: {
         type: Sequelize.STRING
       },
       createdAt: {
