@@ -21,7 +21,9 @@ module.exports = (sequelize, DataTypes) => {
     email: DataTypes.STRING,
     password: DataTypes.STRING,
     name: DataTypes.STRING,
-    username: DataTypes.STRING
+    username: DataTypes.STRING,
+    file_url: DataTypes.STRING,
+    cloudinary_id: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'User',

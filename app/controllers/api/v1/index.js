@@ -12,5 +12,5 @@ module.exports = {
   adminController,
   userController,
   airportController,
-  planeController
+
 };

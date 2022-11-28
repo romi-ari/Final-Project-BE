@@ -9,6 +9,9 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      file_url:{
+        type: Sequelize.STRING
+      },
       cloudinary_url: {
         type: Sequelize.STRING
       },
