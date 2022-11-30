@@ -17,7 +17,7 @@ module.exports = {
   async list() {
     try {
       const confirmation = await confirmationRepository.findAll();
-      const confirmationCount = await confirmationRepository.getTotalAirport();
+      const confirmationCount = await confirmationRepository.getTotalReceipt();
 
       return {
         data: confirmation,

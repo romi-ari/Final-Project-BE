@@ -14,8 +14,10 @@ module.exports = {
     });
   },
 
-  delete(id) {
-    return Receipt.destroy(id);
+  destroy(id) {
+    return Receipt.destroy({  
+      where: {id: id},
+      });
   },
 
   findByPk(id) {
