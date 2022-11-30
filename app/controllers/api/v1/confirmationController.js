@@ -22,7 +22,7 @@ module.exports = {
     async create(req, res){
         const fileBase64 = req.file.buffer.toString("base64")
         const file = `data:${req.file.mimetype};base64,${fileBase64}`
-        
+
         cloudinary.uploader.upload(file, { folder: 'backend-files' }, function (err, result) {
             if (!!err) {
                 res.status(400).json({
@@ -39,8 +39,7 @@ module.exports = {
             confirmationServices.create(body)
                 .then(() => {
                     res.status(201).json({
-                        status: "Created",
-                        data: confirmation
+                        status: "Created"
                     })
                 })
                 .catch((err) => {

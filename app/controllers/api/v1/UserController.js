@@ -6,6 +6,7 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const UserServices = require("../../../services/userServices");
+const cloudinary = require("../../../../config/cloudinary")
 const SALT = 10;
 
 //FUNCTION UNTUK ME ENCRYPT PASSWORD SAAT REGISTRASI
@@ -46,7 +47,6 @@ module.exports = {
   //FUNCTION UNTUK REGISTER
   async register(req, res) {
     const no_ktp = "";
-    const no_passport = "";
     const address = "";
     const date_of_birth = req.body.date_of_birth;
     const name = req.body.name;
@@ -54,9 +54,9 @@ module.exports = {
     const username = req.body.username;
     const sex = req.body.sex;
     const password = await encryptPassword(req.body.password);
+    const image = "";
     const user = await UserServices.create({
       no_ktp,
-      no_passport,
       sex,
       date_of_birth,
       address,
@@ -64,6 +64,7 @@ module.exports = {
       password,
       name,
       username,
+      image,
     });
     res.status(201).json({
       id: user.id,
@@ -75,24 +76,79 @@ module.exports = {
 
   async updateUser(req, res) {
     const no_ktp = req.body.no_ktp;
-    const no_passport = req.body.no_passport;
     const sex = req.body.sex;
     const date_of_birth = req.body.date_of_birth;
     const address = req.body.address;
     const email = req.body.email;
     const name = req.body.name;
     const username = req.body.username;
-    const password = !req.body.password ? req.user.password : await encryptPassword(req.body.password);
+    const image = req.body.image;
+    console.log(image)
+    const password = !req.body.password
+      ? req.user.password
+      : await encryptPassword(req.body.password);
+
+    if (image !== null || undefined) {
+
+      const oldimage = req.user.image
+
+        if (oldimage !== null) {
+            const getImageID = oldimage.split("/").pop().split(".")[0]
+            await cloudinary.uploader.destroy(`profile-pictures/${getImageID}`)
+        }
+      
+      const fileBase64 = req.file.buffer.toString("base64");
+      const file = `data:${req.file.mimetype};base64,${fileBase64}`;
+
+      cloudinary.uploader.upload(
+        file,
+        { folder: "profile-pictures" },
+        function (err, result) {
+          if (!!err) {
+            res.status(400).json({
+              status: "Update Failed",
+              errors: err.message,
+            });
+            return;
+          }
+
+          const image = result.url;
+
+          UserServices.update(req.user.id, {
+            no_ktp: no_ktp,
+            sex: sex,
+            date_of_birth: date_of_birth,
+            address: address,
+            email: email,
+            name: name,
+            username: username,
+            password: password,
+            image: image,
+          })
+            .then(() => {
+              res.status(200).json({
+                status: "updated",
+              });
+            })
+            .catch((err) => {
+              res.status(422).json({
+                status: "FAIL",
+                message: err.message,
+              });
+            });
+        }
+      );
+    }
+
     UserServices.update(req.user.id, {
       no_ktp: no_ktp,
-      no_passport: no_passport,
       sex: sex,
       date_of_birth: date_of_birth,
       address: address,
       email: email,
       name: name,
       username: username,
-      password : password,
+      password: password,
     })
       .then(() => {
         res.status(200).json({
