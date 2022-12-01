@@ -83,7 +83,6 @@ module.exports = {
     const name = req.body.name;
     const username = req.body.username;
     const image = req.body.image;
-    console.log(image)
     const password = !req.body.password
       ? req.user.password
       : await encryptPassword(req.body.password);
@@ -138,6 +137,7 @@ module.exports = {
             });
         }
       );
+      return;
     }
 
     UserServices.update(req.user.id, {
