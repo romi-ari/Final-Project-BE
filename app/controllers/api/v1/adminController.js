@@ -99,11 +99,11 @@ module.exports = {
 
   //FUNCTION LOGIN
   async loginAdmin(req, res) {
-    const email = req.body.email.toLowerCase(); // Biar case insensitive
+    const username = req.body.username
     const password = req.body.password;
 
     const admin = await AdminServices.findOne({
-      where: { email },
+      where: { username },
     });
 
     //pengecekan email
