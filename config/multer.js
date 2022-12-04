@@ -4,7 +4,7 @@ const path = require('path')
 
 const storage = multer.memoryStorage()
 
-// const maxSize = 1024 * 1024 * 2
+const maxSize = 1024 * 1024 * 2
 
 module.exports = multer({
     storage: storage,
@@ -15,6 +15,6 @@ module.exports = multer({
             cb("Format file must be PNG, JPG, JPEG, PDF, or ZIP", false);
         }
     },
-    // limits: { fileSize: maxSize }
+    limits: { fileSize: maxSize }
 }).single('file')
 

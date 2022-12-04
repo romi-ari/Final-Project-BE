@@ -125,7 +125,6 @@ apiRouter.post("/confirmation", limit, controllers.api.v1.confirmationController
 apiRouter.put("/confirmation/:id", limit, controllers.api.v1.confirmationController.update)
 apiRouter.delete("/confirmation/:id", limit, controllers.api.v1.confirmationController.destroy)
 
-
 apiRouter.use(controllers.api.main.onLost);
 apiRouter.use(controllers.api.main.onError);
 
