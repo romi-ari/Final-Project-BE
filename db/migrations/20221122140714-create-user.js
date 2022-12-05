@@ -12,11 +12,11 @@ module.exports = {
       no_ktp: {
         type: Sequelize.STRING
       },
-      sex: {
-        type: Sequelize.CHAR
+      gender: {
+        type: Sequelize.STRING
       },
       date_of_birth: {
-        type: Sequelize.DATE
+        type: Sequelize.DATEONLY
       },
       address: {
         type: Sequelize.STRING

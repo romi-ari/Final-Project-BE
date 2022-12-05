@@ -52,12 +52,12 @@ module.exports = {
     const name = req.body.name;
     const email = req.body.email;
     const username = req.body.username;
-    const sex = req.body.sex;
+    const gender = req.body.gender;
     const password = await encryptPassword(req.body.password);
     const image = "";
     const user = await UserServices.create({
       no_ktp,
-      sex,
+      gender,
       date_of_birth,
       address,
       email,
@@ -76,7 +76,7 @@ module.exports = {
 
   async updateUser(req, res) {
     const no_ktp = req.body.no_ktp;
-    const sex = req.body.sex;
+    const gender = req.body.gender;
     const date_of_birth = req.body.date_of_birth;
     const address = req.body.address;
     const email = req.body.email;
@@ -115,7 +115,7 @@ module.exports = {
 
           UserServices.update(req.user.id, {
             no_ktp: no_ktp,
-            sex: sex,
+            gender: gender,
             date_of_birth: date_of_birth,
             address: address,
             email: email,
@@ -142,7 +142,7 @@ module.exports = {
 
     UserServices.update(req.user.id, {
       no_ktp: no_ktp,
-      sex: sex,
+      gender: gender,
       date_of_birth: date_of_birth,
       address: address,
       email: email,
@@ -203,6 +203,7 @@ module.exports = {
       token,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
+      message : "Login Success"
     });
   },
 
