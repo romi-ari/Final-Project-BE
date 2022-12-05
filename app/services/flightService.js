@@ -17,7 +17,7 @@ module.exports = {
   async list() {
     try {
       const flights = await flightRepository.findAll();
-      const flightCount = await flightRepository.getTotalPlane();
+      const flightCount = await flightRepository.getTotalFlight();
 
       return {
         data: flights,
