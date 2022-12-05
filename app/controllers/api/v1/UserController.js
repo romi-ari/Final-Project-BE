@@ -166,7 +166,8 @@ module.exports = {
 
   //FUNCTION LOGIN
   async login(req, res) {
-    const username = req.body.username;
+    try {
+      const username = req.body.username;
     const password = req.body.password;
 
     const user = await UserServices.findOne({
@@ -205,6 +206,12 @@ module.exports = {
       updatedAt: user.updatedAt,
       message : "Login Success"
     });
+    } catch (error) {
+        console.error(error);
+        res.status(401).json({
+          message: error.message,
+      });
+    }
   },
 
   //FUNCTION UNTUK MENGETAHUI SIAPA YANG SEDANG MENGAKSES DATA
