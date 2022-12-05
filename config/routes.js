@@ -17,7 +17,7 @@ const apiRouter = express.Router();
 apiRouter.use(cors());
 apiRouter.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-// apiRouter.post("/api/v1/google", handleGoogleLoginOrRegister);
+apiRouter.post("/api/v1/google", handleGoogleLoginOrRegister);
 
 // apiRouter.get("/api/v1/cars", controllers.api.v1.carController.list);
 // apiRouter.post(
@@ -51,7 +51,7 @@ apiRouter.get(
 );
 apiRouter.put(
   "/api/v1/updateUser",
-  controllers.api.v1.userController.authorize,
+  controllers.api.v1.userController.authorize, limit,
   controllers.api.v1.userController.updateUser
 );
 
@@ -119,8 +119,11 @@ apiRouter.delete(
   controllers.api.v1.planeController.destroy
 );
 
-//cloudinary
-apiRouter.post("/confirmation", controllers.api.v1.paymentController, limit, controllers.api.v1.paymentController.create)
+//cloudinary upload file (receipt)
+apiRouter.get("/confirmation", limit, controllers.api.v1.confirmationController.list)
+apiRouter.post("/confirmation", limit, controllers.api.v1.confirmationController.create)
+apiRouter.put("/confirmation/:id", limit, controllers.api.v1.confirmationController.update)
+apiRouter.delete("/confirmation/:id", limit, controllers.api.v1.confirmationController.destroy)
 
 apiRouter.use(controllers.api.main.onLost);
 apiRouter.use(controllers.api.main.onError);

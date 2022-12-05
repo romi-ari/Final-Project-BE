@@ -12,11 +12,11 @@ module.exports = {
       no_ktp: {
         type: Sequelize.STRING
       },
-      sex: {
-        type: Sequelize.CHAR
+      gender: {
+        type: Sequelize.STRING
       },
       date_of_birth: {
-        type: Sequelize.DATE
+        type: Sequelize.DATEONLY
       },
       address: {
         type: Sequelize.STRING
@@ -33,15 +33,12 @@ module.exports = {
       username: {
         type: Sequelize.STRING
       },
+      image: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
-      },
-      file_url: {
-        type: Sequelize.STRING
-      },
-      cloudinary_id: {
-        type: Sequelize.STRING
       },
       updatedAt: {
         allowNull: false,

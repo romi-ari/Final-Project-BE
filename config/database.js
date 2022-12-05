@@ -1,18 +1,22 @@
 /**
  * @file Manages database connection configuration.
- * @author Fikri Rahmat Nurhidayat
+ * @author Kelompok 5
  */
 
 /** Destruct environment variable to get database configuration */
 const Sequelize = require("sequelize");
 
+const dotenv = require('dotenv')
+
+dotenv.config();
+
 const {
-  DB_USERNAME = "postgres",
-  DB_PASSWORD = "atCUKU2tMHMlZqwS0eVo",
-  DB_HOST = "containers-us-west-94.railway.app",
-  DB_NAME = "railway",
-  DB_PORT = "6742",
-  DB_URL = "postgresql://postgres:atCUKU2tMHMlZqwS0eVo@containers-us-west-94.railway.app:6742/railway",
+  DB_USERNAME = process.env.DB_USERNAME,
+  DB_PASSWORD = process.env.DB_PASSWORD,
+  DB_HOST = process.env.DB_HOST,
+  DB_NAME = process.env.DB_NAME,
+  DB_PORT = process.env.DB_PORT,
+  DB_URL = process.env.DB_URL,
 } = process.env;
 
 const db = new Sequelize(DB_URL, {

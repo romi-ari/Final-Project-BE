@@ -2,7 +2,7 @@
 
 /**
  * @file Run express.js
- * @author Fikri Rahmat Nurhidayat
+ * @author Kelompok 5
  */
 
 const app = require("../app")

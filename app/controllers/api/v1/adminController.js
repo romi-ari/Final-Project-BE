@@ -99,11 +99,11 @@ module.exports = {
 
   //FUNCTION LOGIN
   async loginAdmin(req, res) {
-    const email = req.body.email.toLowerCase(); // Biar case insensitive
+    const username = req.body.username
     const password = req.body.password;
 
     const admin = await AdminServices.findOne({
-      where: { email },
+      where: { username },
     });
 
     //pengecekan email
@@ -124,6 +124,7 @@ module.exports = {
     const token = createToken({
       id: admin.id,
       email: admin.email,
+      role: admin.role,
       createdAt: admin.createdAt,
       updatedAt: admin.updatedAt,
     });
@@ -155,9 +156,17 @@ module.exports = {
         process.env.JWT_SIGNATURE_KEY || "Rahasia"
       );
 
-      //PENCARIAN DATA USER BERDASARKAN DARI TOKEN ID YANG LOGIN
-      req.admin = await AdminServices.findByPk(tokenPayload.id);
-      next();
+      console.log(tokenPayload);
+
+      if (tokenPayload.role != undefined) {
+        //PENCARIAN DATA USER BERDASARKAN DARI TOKEN ID YANG LOGIN
+        req.admin = await AdminServices.findByPk(tokenPayload.id);
+        next();
+      } else {
+        res.status(401).json({
+          message: "You Cannot Access",
+        });
+      }
     } catch (err) {
       console.error(err);
       res.status(401).json({

@@ -1,6 +1,3 @@
-const multer = require("multer");
-const path = require("path");
-
 // Multer config
 const multer = require('multer')
 const path = require('path')
@@ -19,4 +16,5 @@ module.exports = multer({
         }
     },
     limits: { fileSize: maxSize }
-}).single('image')
+}).single('file')
+
