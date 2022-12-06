@@ -8,10 +8,6 @@ servers:
   - description: Development Server
     url: https://final-project-be-develop.up.railway.app/
 
-#------------------#
-#---Airport CRUD---#
-#------------------#
-
 tags:
   - name: Airport
     description: Contain every operation about Airport Resource
@@ -25,7 +21,7 @@ paths:
         - Airport
       responses:
         "200":
-          $ref: "#/components/responses/GetAirport"
+          $ref: "#/components/responses/GetAirportResponse"
         "400":
           $ref: "#/components/responses/ErrorResponse"
 
@@ -41,7 +37,7 @@ paths:
         $ref: "#/components/requestBodies/AirportRequest"
       responses:
         "200":
-          $ref: "#/components/responses/PostResponse"
+          $ref: "#/components/responses/PostAirportResponse"
         "401":
           $ref: "#/components/responses/UnauthorizedResponse"
         "403":
@@ -68,7 +64,7 @@ paths:
         $ref: "#/components/requestBodies/AirportUpdate"
       responses:
         "200":
-          $ref: "#/components/responses/PutResponse"
+          $ref: "#/components/responses/PutAirportResponse"
         "401":
           $ref: "#/components/responses/UnauthorizedResponse"
         "403":
@@ -77,11 +73,11 @@ paths:
     delete:
       security:
         - bearerAuth: []
-      summary: Delete Car By Id
-      operationId: DeleteCar
-      description: "Delete new car data to database \n\n Allowed roles: superadmin, admin"
+      summary: Delete Airport By Id
+      operationId: DeleteAirport
+      description: "Delete new Airport data to database \n\n Allowed roles: superadmin, admin"
       tags:
-        - Cars
+        - Airport
       parameters:
         - in: path
           name: id
@@ -92,18 +88,18 @@ paths:
             example: 1
       responses:
         "200":
-          $ref: "#/components/responses/DeleteResponse"
+          $ref: "#/components/responses/DeleteAirportResponse"
         "401":
           $ref: "#/components/responses/UnauthorizedResponse"
         "403":
           $ref: "#/components/responses/ForbiddenResponse"
 
     get:
-      summary: Get Car By ID
-      operationId: Get Car By Id
-      description: "Get new car data to database"
+      summary: Get Airport By ID
+      operationId: Get Airport By Id
+      description: "Get new Airport data to database"
       tags:
-        - Cars
+        - Airport
       parameters:
         - in: path
           name: id
@@ -117,10 +113,6 @@ paths:
           $ref: "#/components/responses/GetCarsById"
         "400":
           $ref: "#/components/responses/ErrorResponse"
-
-#------------------#
-#---Airport CRUD---#
-#------------------#
 
   /register:
     post:
@@ -303,12 +295,8 @@ components:
                 type: string
                 example: "iniadmin"
 
-#------------------#
-#-Airport Response-#
-#------------------#
-
-  AirportGetresponses:
-    GetAirport:
+  responses:
+    GetAirportResponse:
       description: Get data Airport success
       content:
         application/json:
@@ -331,7 +319,7 @@ components:
                     type: integer
                     example: 1
 
-    AirportPostResponse:
+    PostAirportResponse:
       description: create data airport succes
       content:
         application/json:
@@ -342,7 +330,7 @@ components:
                 type: string
                 example: Create Airport successfully
 
-    AirportPutResponse:
+    PutAirportResponse:
       description: Update data airport success
       content:
         application/json:
@@ -353,7 +341,7 @@ components:
                 type: string
                 example: Update Airport successfully
 
-    AirportDeleteResponse:
+    DeleteAirportResponse:
       description: Delete data car success
       content:
         application/json:
@@ -362,9 +350,9 @@ components:
             properties:
               status:
                 type: string
-                example: Delete Car successfully By superadmin@gmail.com
+                example: Delete Airport successfully
     
-    AirportErrorResponse:
+    ErrorResponse:
       description: Error Response
       content:
         application/json:
@@ -375,12 +363,8 @@ components:
                 type: string
                 example: Error
   
-#------------------#
-#-Airport Response-#
-#------------------#
-
     GetCarsById:
-      description: Get data car success with id = id
+      description: Get data airport success with id = id
       content:
         application/json:
           schema:
@@ -388,18 +372,10 @@ components:
             properties:
               status:
                 type: string
-                example: SUCCESS
-              datas:
-                type: object
-                properties:
-                  name:
-                    type: string
-                    example: "SUCCESS"
-                  message:
-                    type: string
-                  data:
-                    $ref: "#/components/schemas/Cars"
-
+                example: OK
+              data:
+                $ref: "#/components/schemas/AirportGetByID"
+                
     UnauthorizedResponse:
       description: Response when accessing or input data without using admin or superadmin account 
       content:
@@ -532,10 +508,6 @@ components:
                     example: "check user login"
 
   schemas:
-#-------------------#
-#--Airport Schemas--#
-#-------------------#
-
     AirportGet:
       type: array
       items:
@@ -562,6 +534,30 @@ components:
             type: string
             example: "2022-12-05T16:32:34.011Z"
     
+    AirportGetByID:
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Bandara Udara Internasional Soekarno–Hatta
+        province:
+          type: string
+          example: Banten
+        city:
+          type: string
+          example: Tangerang
+        country:
+          type: string
+          example: Indonesia
+        createAt:
+          type: string
+          example: "2022-12-05T16:32:34.011Z"
+        updateAt:
+          type: string
+          example: "2022-12-05T16:32:34.011Z"
+    
     AirportPost:
       type: object
       items:
@@ -585,8 +581,5 @@ components:
             type: string
             example: "On"
 
-#------------------#
-#-Airport Response-#
-#------------------#
 
           
