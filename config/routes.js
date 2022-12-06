@@ -169,6 +169,25 @@ apiRouter.delete(
   controllers.api.v1.ticketController.destroy
 );
 
+//END POINT Booking
+apiRouter.get("/api/v1/booking", controllers.api.v1.bookingController.list);
+apiRouter.post(
+  "/api/v1/booking", 
+  controllers.api.v1.adminController.authorize,
+  controllers.api.v1.bookingController.create
+);
+apiRouter.put(
+  "/api/v1/booking/:id", 
+  controllers.api.v1.adminController.authorize,
+  controllers.api.v1.bookingController.update
+);
+apiRouter.get('/api/v1/booking/:id', controllers.api.v1.bookingController.show);
+apiRouter.delete(
+  "/api/v1/booking/:id",
+  controllers.api.v1.adminController.authorize,
+  controllers.api.v1.bookingController.destroy
+);
+
 
 
 
