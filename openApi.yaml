@@ -1,37 +1,44 @@
 openapi: 3.0.0
 info:
-  title: Cars Manajement API
+  title: GoTravel API
   version: 0.0.1
 servers:
-  - description: Local Server
-    url: http://localhost:8000/
+  - description: Production Server
+    url: https://gotravel-production.up.railway.app/
+  - description: Development Server
+    url: https://final-project-be-develop.up.railway.app/
+
+#------------------#
+#---Airport CRUD---#
+#------------------#
+
 tags:
-  - name: Cars
-    description: Contain every operation about Cars Resource
+  - name: Airport
+    description: Contain every operation about Airport Resource
 paths:
-  /api/v1/cars:
+  /api/v1/airport:
     get:
-      summary: Get all Cars
-      operationId: Get all Car
-      description: "Get new car data to database"
+      summary: Get all Airport
+      operationId: Get all Airport
+      description: "Get new Airport data to database"
       tags:
-        - Cars
+        - Airport
       responses:
         "200":
-          $ref: "#/components/responses/GetCars"
+          $ref: "#/components/responses/GetAirport"
         "400":
           $ref: "#/components/responses/ErrorResponse"
 
     post:
       security:
         - bearerAuth: []
-      operationId: createCar
-      summary: Create Data Car
-      description: "Add new car data to database \n\n Allowed roles: superadmin, admin"
+      operationId: createAirport
+      summary: Create Data Airport
+      description: "Add new Airport data to database \n\n Allowed roles: superadmin, admin"
       tags:
-        - Cars
+        - Airport
       requestBody:
-        $ref: "#/components/requestBodies/CarsRequest"
+        $ref: "#/components/requestBodies/AirportRequest"
       responses:
         "200":
           $ref: "#/components/responses/PostResponse"
@@ -40,15 +47,15 @@ paths:
         "403":
           $ref: "#/components/responses/ForbiddenResponse"
 
-  /api/v1/cars/{id}:
+  /api/v1/airport/{id}:
     put:
       security:
         - bearerAuth: []
-      summary: Update Car By Id
-      operationId: UpdateCar
-      description: "Update new car data to database \n\n Allowed roles: superadmin, admin"
+      summary: Update Airport By Id
+      operationId: UpdateAirport
+      description: "Update new Airport data to database \n\n Allowed roles: superadmin, admin"
       tags:
-        - Cars
+        - Airport
       parameters:
         - in: path
           name: id
@@ -58,7 +65,7 @@ paths:
             type: number
             example: 1
       requestBody:
-        $ref: "#/components/requestBodies/CarUpdate"
+        $ref: "#/components/requestBodies/AirportUpdate"
       responses:
         "200":
           $ref: "#/components/responses/PutResponse"
@@ -110,6 +117,10 @@ paths:
           $ref: "#/components/responses/GetCarsById"
         "400":
           $ref: "#/components/responses/ErrorResponse"
+
+#------------------#
+#---Airport CRUD---#
+#------------------#
 
   /register:
     post:
@@ -190,29 +201,41 @@ components:
       scheme: bearer
       bearerFormat: JWT
   requestBodies:
-    CarsRequest:
-      description: Create Car Data
+    AirportRequest:
+      description: Create Airport Data
       required: true
       content:
         application/json:
           schema:
             type: object
             properties:
+              id:
+                type: integer
+                example: 1
               name:
                 type: string
-                example: "BMW"
-              rentPerDay:
-                type: integer
-                example: 200000
-              type:
+                example: Bandara Udara Internasional Soekarno–Hatta
+              province:
                 type: string
-                example: "Small"
-              image:
+                example: Banten
+              city:
                 type: string
-                example: "bmw.jpg"
+                example: Tangerang
+              country:
+                type: string
+                example: Indonesia
+              status:
+                type: string
+                example: Indonesia
+              createAt:
+                type: string
+                example: "2022-12-05T16:32:34.011Z"
+              updateAt:
+                type: string
+                example: "2022-12-05T16:32:34.011Z"
 
-    CarUpdate:
-      description: Update Car Data
+    AirportUpdate:
+      description: Update Airport Data
       required: true
       content:
         application/json:
@@ -221,16 +244,19 @@ components:
             properties:
               name:
                 type: string
-                example: "BMW"
-              rentPerDay:
-                type: integer
-                example: 200000
-              type:
+                example: Bandara Udara Internasional Soekarno–Hatta
+              province:
                 type: string
-                example: "Small"
-              image:
+                example: Banten
+              city:
                 type: string
-                example: "bmw.jpg"
+                example: Tangerang
+              country:
+                type: string
+                example: Indonesia
+              status:
+                type: string
+                example: Indonesia
 
     MemberRequest:
       description: Create Member Data Required fields [email, password]
@@ -277,9 +303,13 @@ components:
                 type: string
                 example: "iniadmin"
 
-  responses:
-    GetCars:
-      description: Get data car success
+#------------------#
+#-Airport Response-#
+#------------------#
+
+  AirportGetresponses:
+    GetAirport:
+      description: Get data Airport success
       content:
         application/json:
           schema:
@@ -287,20 +317,22 @@ components:
             properties:
               status:
                 type: string
-                example: SUCCESS
-              datas:
+                example: OK
+              data:
                 type: object
                 properties:
-                  name:
-                    type: string
-                    example: "SUCCESS"
-                  message:
-                    type: string
-                  data:
-                    $ref: "#/components/schemas/Cars"
+                  airports:
+                    $ref: "#/components/schemas/AirportGet"
+              properties:
+              meta:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 1
 
-    PostResponse:
-      description: create data car success
+    AirportPostResponse:
+      description: create data airport succes
       content:
         application/json:
           schema:
@@ -308,20 +340,10 @@ components:
             properties:
               status:
                 type: string
-                example: SUCCESS
-              datas:
-                type: object
-                properties:
-                  name:
-                    type: string
-                    example: "SUCCESS"
-                  message:
-                    type: string
-                  data:
-                    $ref: "#/components/schemas/Cars"
+                example: Create Airport successfully
 
-    PutResponse:
-      description: Update data car success
+    AirportPutResponse:
+      description: Update data airport success
       content:
         application/json:
           schema:
@@ -329,19 +351,9 @@ components:
             properties:
               status:
                 type: string
-                example: SUCCESS
-              datas:
-                type: object
-                properties:
-                  name:
-                    type: string
-                    example: "SUCCESS"
-                  message:
-                    type: string
-                  data:
-                    $ref: "#/components/schemas/Cars"
+                example: Update Airport successfully
 
-    DeleteResponse:
+    AirportDeleteResponse:
       description: Delete data car success
       content:
         application/json:
@@ -351,6 +363,21 @@ components:
               status:
                 type: string
                 example: Delete Car successfully By superadmin@gmail.com
+    
+     AirportErrorResponse:
+      description: Error Response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: Error
+  
+#------------------#
+#-Airport Response-#
+#------------------#
 
     GetCarsById:
       description: Get data car success with id = id
@@ -373,36 +400,16 @@ components:
                   data:
                     $ref: "#/components/schemas/Cars"
 
-    ErrorResponse:
-      description: Error Response
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: string
-                example: Error
-
     UnauthorizedResponse:
-      description: Response when accessing protected endpoint without access
+      description: Response when accessing or input data without using admin or superadmin account 
       content:
         application/json:
           schema:
             type: object
             properties:
-              status:
+              message:
                 type: string
-                example: FAIL
-              data:
-                type: object
-                properties:
-                  name:
-                    type: string
-                    example: "UNAUTHORIZED"
-                  message:
-                    type: string
-                    example: "Access is not granted"
+                example: "Unauthorized"
 
     ForbiddenResponse:
       description: Response when accessing protected endpoint with access but sufficient access
@@ -525,36 +532,61 @@ components:
                     example: "check user login"
 
   schemas:
-    Cars:
+#-------------------#
+#--Airport Schemas--#
+#-------------------#
+
+    AirportGet:
+      type: array
+      items:
+        properties:
+          id:
+            type: integer
+            example: 1
+          name:
+            type: string
+            example: Bandara Udara Internasional Soekarno–Hatta
+          province:
+            type: string
+            example: Banten
+          city:
+            type: string
+            example: Tangerang
+          country:
+            type: string
+            example: Indonesia
+          createAt:
+            type: string
+            example: "2022-12-05T16:32:34.011Z"
+          updateAt:
+            type: string
+            example: "2022-12-05T16:32:34.011Z"
+    
+    AirportPost:
       type: object
-      properties:
-        id:
-          type: integer
-          example: 1
-        name:
-          type: string
-          example: BMW
-        rentPerDay:
-          type: integer
-          example: 200000
-        type:
-          type: string
-          example: Small
-        image:
-          type: string
-          example: mobil.jpg
-        createBy:
-          type: string
-          example: user@example.com
-        updateBy:
-          type: string
-          example: user@example.com
-        deleteBy:
-          type: string
-          example: user@example.com
-        createdAt:
-          type: string
-          example: "2021-07-30 17:00:00 +0700"
-        updatedAt:
-          type: string
-          example: "2021-07-30 17:00:00 +0700"
+      items:
+        properties:
+          id:
+            type: integer
+            example: 1
+          name:
+            type: string
+            example: Bandara Udara Internasional Soekarno–Hatta
+          province:
+            type: string
+            example: Banten
+          city:
+            type: string
+            example: Tangerang
+          country:
+            type: string
+            example: Indonesia
+          status:
+            type: string
+            example: "On"
+
+#------------------#
+#-Airport Response-#
+#------------------#
+
+          
