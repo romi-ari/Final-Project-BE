@@ -125,6 +125,53 @@ apiRouter.post("/confirmation", limit, controllers.api.v1.confirmationController
 apiRouter.put("/confirmation/:id", limit, controllers.api.v1.confirmationController.update)
 apiRouter.delete("/confirmation/:id", limit, controllers.api.v1.confirmationController.destroy)
 
+//END POINT FLIGHT
+apiRouter.get("/api/v1/flight", controllers.api.v1.flightController.list);
+apiRouter.post(
+  "/api/v1/flight", 
+  controllers.api.v1.adminController.authorize,
+  controllers.api.v1.adminController.verifyRoles("superAdmin", "admin"),
+  controllers.api.v1.flightController.create
+);
+apiRouter.put(
+  "/api/v1/flight/:id", 
+  controllers.api.v1.adminController.authorize,
+  controllers.api.v1.adminController.verifyRoles("superAdmin", "admin"),
+  controllers.api.v1.flightController.update
+);
+apiRouter.get('/api/v1/flight/:id', controllers.api.v1.flightController.show);
+apiRouter.delete(
+  "/api/v1/flight/:id",
+  controllers.api.v1.adminController.authorize,
+  controllers.api.v1.adminController.verifyRoles("superAdmin", "admin"),
+  controllers.api.v1.flightController.destroy
+);
+
+//END POINT TICKET
+apiRouter.get("/api/v1/ticket", controllers.api.v1.ticketController.list);
+apiRouter.post(
+  "/api/v1/ticket", 
+  controllers.api.v1.adminController.authorize,
+  controllers.api.v1.adminController.verifyRoles("superAdmin", "admin"),
+  controllers.api.v1.ticketController.create
+);
+apiRouter.put(
+  "/api/v1/ticket/:id", 
+  controllers.api.v1.adminController.authorize,
+  controllers.api.v1.adminController.verifyRoles("superAdmin", "admin"),
+  controllers.api.v1.ticketController.update
+);
+apiRouter.get('/api/v1/ticket/:id', controllers.api.v1.ticketController.show);
+apiRouter.delete(
+  "/api/v1/ticket/:id",
+  controllers.api.v1.adminController.authorize,
+  controllers.api.v1.adminController.verifyRoles("superAdmin", "admin"),
+  controllers.api.v1.ticketController.destroy
+);
+
+
+
+
 apiRouter.use(controllers.api.main.onLost);
 apiRouter.use(controllers.api.main.onError);
 

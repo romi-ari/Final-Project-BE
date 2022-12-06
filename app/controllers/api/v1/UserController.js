@@ -174,6 +174,8 @@ module.exports = {
       where: { username },
     });
 
+
+    
     //pengecekan username
     if (!user) {
       res.status(404).json({ message: "Username tidak ditemukan" });

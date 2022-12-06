@@ -1,13 +1,13 @@
-const ticketService = require("../../../services/ticketService");
+const flightService = require("../../../services/flightService");
 
 module.exports = {
   list(req, res) {
-    ticketService
+    flightService
       .list()
       .then(({ data, count }) => {
         res.status(200).json({
           status: "OK",
-          data: { ticket: data },
+          data: { flights: data },
           meta: { total: count },
         });
       })
@@ -20,18 +20,22 @@ module.exports = {
   },
 
   create(req, res) {
-    const id_flight = req.body.id_flight;
-    const price = req.body.price;
-    const date = req.body.date;
-    ticketService
+    const id_plane = req.body.id_plane;
+    const from_airport_id = req.body.from_airport_id;
+    const to_airport_id = req.body.to_airport_id;
+    const arrival_time = req.body.arrival_time;
+    const departure_time = req.body.departure_time;
+    flightService
       .create({
-        id_flight,
-        price,
-        date,
+        from_airport_id,
+        to_airport_id,
+        id_plane,
+        arrival_time,
+        departure_time,
       })
       .then((post) => {
         res.status(201).json({
-          status: "Create Ticket successfully",
+          status: "Create Flight successfully",
           data: post,
         });
       })
@@ -44,11 +48,13 @@ module.exports = {
   },
 
   update(req, res) {
-    ticketService
+    flightService
       .update(req.params.id, {
-        id_flight: req.body.id_flight,
-        price: req.body.price,
-        date: req.body.date,
+        id_plane : req.body.id_plane,
+        from_airport_id : req.body.from_airport_id,
+        to_airport_id : req.body.to_airport_id,
+        arrival_time : req.body.arrival_time,
+        departure_time : req.body.departure_time,
       })
       .then(() => {
         res.status(200).json({
@@ -64,7 +70,7 @@ module.exports = {
   },
 
   show(req, res) {
-    ticketService
+    flightService
       .findByPk(req.params.id)
       .then((post) => {
         res.status(200).json({
@@ -81,11 +87,11 @@ module.exports = {
   },
 
   destroy(req, res) {
-    ticketService
+    flightService
       .destroy(req.params.id)
       .then(() => {
         res.status(200).json({
-          status: `Delete Ticket successfully`,
+          status: `Delete Flight successfully`,
         });
       })
       .catch((err) => {

@@ -108,7 +108,7 @@ module.exports = {
 
     //pengecekan email
     if (!admin) {
-      res.status(404).json({ message: "Email tidak ditemukan" });
+      res.status(404).json({ message: "Username tidak ditemukan" });
       return;
     }
 
