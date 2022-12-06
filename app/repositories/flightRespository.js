@@ -29,7 +29,7 @@ module.exports = {
   },
 
   findAll() {
-    return Flight.findAll();
+    return Flight.findAll({include: [{all:true, nested:true}]});
   },
 
   getTotalFlight() {

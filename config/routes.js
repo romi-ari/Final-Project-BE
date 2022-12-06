@@ -147,6 +147,28 @@ apiRouter.delete(
   controllers.api.v1.flightController.destroy
 );
 
+//END POINT TICKET
+apiRouter.get("/api/v1/ticket", controllers.api.v1.ticketController.list);
+apiRouter.post(
+  "/api/v1/ticket", 
+  controllers.api.v1.adminController.authorize,
+  controllers.api.v1.adminController.verifyRoles("superAdmin", "admin"),
+  controllers.api.v1.ticketController.create
+);
+apiRouter.put(
+  "/api/v1/ticket/:id", 
+  controllers.api.v1.adminController.authorize,
+  controllers.api.v1.adminController.verifyRoles("superAdmin", "admin"),
+  controllers.api.v1.ticketController.update
+);
+apiRouter.get('/api/v1/ticket/:id', controllers.api.v1.ticketController.show);
+apiRouter.delete(
+  "/api/v1/ticket/:id",
+  controllers.api.v1.adminController.authorize,
+  controllers.api.v1.adminController.verifyRoles("superAdmin", "admin"),
+  controllers.api.v1.ticketController.destroy
+);
+
 
 
 
