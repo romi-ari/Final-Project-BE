@@ -3,7 +3,7 @@ const flightService = require("../../../services/flightService");
 module.exports = {
   list(req, res) {
     flightService
-      .list({include: [{ all: true, nested: true }]})
+      .list()
       .then(({ data, count }) => {
         res.status(200).json({
           status: "OK",
