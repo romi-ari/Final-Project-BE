@@ -1,13 +1,13 @@
-const ticketService = require("../../../services/ticketService");
+const bookingService = require("../../../services/bookingService");
 
 module.exports = {
   list(req, res) {
-    ticketService
+    bookingService
       .list()
       .then(({ data, count }) => {
         res.status(200).json({
           status: "OK",
-          data: { ticket: data },
+          data: { booking: data },
           meta: { total: count },
         });
       })
@@ -20,18 +20,31 @@ module.exports = {
   },
 
   create(req, res) {
-    const id_booking = req.body.id_booking;
-    const price = req.body.price;
-    const date = req.body.date;
-    ticketService
+    const id_flight = req.body.flight;
+    const id_user = req.user.id;
+    const seat = req.body.seat;
+    const baggage = req.body.baggage;
+    const food = req.body.food;
+    const name = req.body.name;
+    const homephone = req.body.homephone;
+    const mobilephone = req.body.mobilephone;
+    const totalprice = req.body.totalprice;
+    bookingService
       .create({
-        id_booking,
-        price,
-        date,
+        id_flight,
+        id_user,
+        seat,
+        baggage,
+        id_plane,
+        food,
+        name,
+        homephone,
+        mobilephone,
+        totalprice,
       })
       .then((post) => {
         res.status(201).json({
-          status: "Create Ticket successfully",
+          status: "Create Booking successfully",
           data: post,
         });
       })
@@ -44,15 +57,21 @@ module.exports = {
   },
 
   update(req, res) {
-    ticketService
+    bookingService
       .update(req.params.id, {
         id_booking: req.body.id_booking,
-        price: req.body.price,
-        date: req.body.date,
+        id_user: req.user.id_user,
+        seat: req.body.seat,
+        baggage: req.body.baggage,
+        food: req.body.food,
+        name: req.body.name,
+        homephone: req.body.homephone,
+        mobilephone: req.body.mobilephone,
+        totalprice: req.body.totalprice,
       })
       .then(() => {
         res.status(200).json({
-          status: "Update Ticket successfully",
+          status: "Update Booking successfully",
         });
       })
       .catch((err) => {
@@ -64,7 +83,7 @@ module.exports = {
   },
 
   show(req, res) {
-    ticketService
+    bookingService
       .findByPk(req.params.id)
       .then((post) => {
         res.status(200).json({
@@ -81,11 +100,11 @@ module.exports = {
   },
 
   destroy(req, res) {
-    ticketService
+    bookingService
       .destroy(req.params.id)
       .then(() => {
         res.status(200).json({
-          status: `Delete Ticket successfully`,
+          status: `Delete Booking successfully`,
         });
       })
       .catch((err) => {
