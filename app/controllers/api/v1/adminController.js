@@ -160,7 +160,8 @@ module.exports = {
 
       if (tokenPayload.role != undefined) {
         //PENCARIAN DATA USER BERDASARKAN DARI TOKEN ID YANG LOGIN
-        req.admin = await AdminServices.findByPk(tokenPayload.id);
+        req.user = await AdminServices.findByPk(tokenPayload.id);
+        console.log(req.admin);
         next();
       } else {
         res.status(401).json({
@@ -176,7 +177,7 @@ module.exports = {
   },
   verifyRoles(...allowedRoles) {
     return (req, res, next) => {
-      userRole = Object.values(req.admin)[0].role;
+      userRole = Object.values(req.user.role);
       console.log(userRole);
       if (!userRole)
         return res.status(401).json({

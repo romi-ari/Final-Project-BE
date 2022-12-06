@@ -20,8 +20,11 @@ module.exports = {
   },
 
   create(req, res) {
-    const id_flight = req.body.flight;
-    const id_user = req.user.id;
+    console.log("masuk booking");
+    const id_flight = req.body.id_flight;
+    console.log(id_flight);
+    const id_user = req.user.id
+    console.log(id_user);
     const seat = req.body.seat;
     const baggage = req.body.baggage;
     const food = req.body.food;
@@ -35,7 +38,6 @@ module.exports = {
         id_user,
         seat,
         baggage,
-        id_plane,
         food,
         name,
         homephone,
