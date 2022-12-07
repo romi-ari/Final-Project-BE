@@ -177,7 +177,7 @@ module.exports = {
   },
   verifyRoles(...allowedRoles) {
     return (req, res, next) => {
-      userRole = Object.values(req.admin.role);
+      userRole = req.admin.role
       console.log(userRole);
       if (!userRole)
         return res.status(401).json({
