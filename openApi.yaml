@@ -11,7 +11,19 @@ servers:
 tags:
   - name: Airport
     description: Contain every operation about Airport Resource
+  - name: Plane
+    description: Contain every operation about Plane Resource
+  - name: Flight
+    description: Contain every operation about Flight Resource
+  - name: Booking
+    description: Contain every operation about Booking Resource
+  - name: Ticket
+    description: Contain every operation about Ticket Resource
+
 paths:
+ 
+  #---Airport Operation---#
+
   /api/v1/airport:
     get:
       summary: Get all Airport
@@ -44,6 +56,26 @@ paths:
           $ref: "#/components/responses/ForbiddenResponse"
 
   /api/v1/airport/{id}:
+    get:
+      summary: Get Airport By ID
+      operationId: Get Airport By Id
+      description: "Get new Airport data to database"
+      tags:
+        - Airport
+      parameters:
+        - in: path
+          name: id
+          description: The id of the Post
+          required: true
+          schema:
+            type: number
+            example: 1
+      responses:
+        "200":
+          $ref: "#/components/responses/GetAirportById"
+        "400":
+          $ref: "#/components/responses/ErrorResponse"
+  
     put:
       security:
         - bearerAuth: []
@@ -94,12 +126,46 @@ paths:
         "403":
           $ref: "#/components/responses/ForbiddenResponse"
 
+  #---Plane Operation---#
+  
+  /api/v1/plane:
     get:
-      summary: Get Airport By ID
-      operationId: Get Airport By Id
-      description: "Get new Airport data to database"
+      summary: Get all Plane
+      operationId: Get all Plane
+      description: "Get new Plane data to database"
       tags:
-        - Airport
+        - Plane
+      responses:
+        "200":
+          $ref: "#/components/responses/GetPlaneResponse"
+        "400":
+          $ref: "#/components/responses/ErrorResponse"
+
+    post:
+      security:
+        - bearerAuth: []
+      operationId: createPlane
+      summary: Create Data Plane
+      description: "Add new Plane data to database \n\n Allowed roles: superadmin, admin"
+      tags:
+        - Plane
+      requestBody:
+        $ref: "#/components/requestBodies/PlaneRequest"
+      responses:
+        "200":
+          $ref: "#/components/responses/PostPlaneResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "403":
+          $ref: "#/components/responses/ForbiddenResponse"
+  
+  /api/v1/plane/{id}:
+    get:
+      summary: Get Plane By ID
+      operationId: Get Plane By Id
+      description: "Get new Plane data to database"
+      tags:
+        - Plane
       parameters:
         - in: path
           name: id
@@ -110,9 +176,82 @@ paths:
             example: 1
       responses:
         "200":
-          $ref: "#/components/responses/GetCarsById"
+          $ref: "#/components/responses/GetPlaneById"
         "400":
           $ref: "#/components/responses/ErrorResponse"
+  
+    put:
+      security:
+        - bearerAuth: []
+      summary: Update Plane By Id
+      operationId: UpdatePlane
+      description: "Update new Plane data to database \n\n Allowed roles: superadmin, admin"
+      tags:
+        - Plane
+      parameters:
+        - in: path
+          name: id
+          description: The id of the Post
+          required: true
+          schema:
+            type: number
+            example: 1
+      requestBody:
+        $ref: "#/components/requestBodies/PlaneUpdate"
+      responses:
+        "200":
+          $ref: "#/components/responses/PutPlaneResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "403":
+          $ref: "#/components/responses/ForbiddenResponse"
+  
+    delete:
+      security:
+        - bearerAuth: []
+      summary: Delete Plane By Id
+      operationId: DeletePlane
+      description: "Delete new Plane data to database \n\n Allowed roles: superadmin, admin"
+      tags:
+        - Plane
+      parameters:
+        - in: path
+          name: id
+          description: The id of the Post
+          required: true
+          schema:
+            type: number
+            example: 1
+      responses:
+        "200":
+          $ref: "#/components/responses/DeletePlaneResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "403":
+          $ref: "#/components/responses/ForbiddenResponse"
+
+  #---Flight Operation---#
+
+  /api/v1/flight:
+    get:
+      summary: Get all Flight
+      operationId: Get all Flight
+      description: "Get new Flight data to database"
+      tags:
+        - Flight
+      responses:
+        "200":
+          $ref: "#/components/responses/GetFlightResponse"
+        "400":
+          $ref: "#/components/responses/ErrorResponse"
+
+  /api/v1/flight/{id}:
+
+  #---Booking Operation---#
+
+  #---Ticket Operation---#
+
+  #---Admin and SuperAdmin---#
 
   /register:
     post:
@@ -193,6 +332,9 @@ components:
       scheme: bearer
       bearerFormat: JWT
   requestBodies:
+
+    #---Airport RequestBodies---#
+
     AirportRequest:
       description: Create Airport Data
       required: true
@@ -201,9 +343,6 @@ components:
           schema:
             type: object
             properties:
-              id:
-                type: integer
-                example: 1
               name:
                 type: string
                 example: Bandara Udara Internasional Soekarno–Hatta
@@ -219,12 +358,6 @@ components:
               status:
                 type: string
                 example: Indonesia
-              createAt:
-                type: string
-                example: "2022-12-05T16:32:34.011Z"
-              updateAt:
-                type: string
-                example: "2022-12-05T16:32:34.011Z"
 
     AirportUpdate:
       description: Update Airport Data
@@ -250,6 +383,52 @@ components:
                 type: string
                 example: Indonesia
 
+    #---Plane RequestBodies---#   
+
+    PlaneRequest:
+      description: Create Plane Data
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                example: 100
+              name:
+                type: string
+                example: Boeing 777-300ER
+              status:
+                type: string
+                example: "On"
+
+    PlaneUpdate:
+      description: Update Plane Data
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                example: 100
+              name:
+                type: string
+                example: Boeing 777-300ER
+              status:
+                type: string
+                example: "On"
+    
+    #---Flight RequestBodies---#
+
+
+    #---Booking RequestBodies---#
+
+    #---Ticket Operation---#
+  
+    #---User RequestBodies---#
     MemberRequest:
       description: Create Member Data Required fields [email, password]
       required: true
@@ -264,6 +443,8 @@ components:
               password:
                 type: string
                 example: "inimember"
+
+    #---Admin and SuperAdmin RequestBodies---#
 
     AdminRequest:
       description: Create Admin Data Required fields [email, password]
@@ -296,6 +477,9 @@ components:
                 example: "iniadmin"
 
   responses:
+
+    #---Airport Response---#
+
     GetAirportResponse:
       description: Get data Airport success
       content:
@@ -318,6 +502,19 @@ components:
                   count:
                     type: integer
                     example: 1
+
+    GetAirportById:
+      description: Get data airport success with id = id
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: OK
+              data:
+                $ref: "#/components/schemas/AirportGetByID"
 
     PostAirportResponse:
       description: create data airport succes
@@ -342,7 +539,7 @@ components:
                 example: Update Airport successfully
 
     DeleteAirportResponse:
-      description: Delete data car success
+      description: Delete data plane success
       content:
         application/json:
           schema:
@@ -352,6 +549,113 @@ components:
                 type: string
                 example: Delete Airport successfully
     
+    #---Plane Response---#
+
+    GetPlaneResponse:
+      description: Get data plane success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: OK
+              data:
+                type: object
+                properties:
+                  planes:
+                    $ref: "#/components/schemas/PlaneGet"
+              properties:
+              meta:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    example: 1
+    
+    PostPlaneResponse:
+      description: create data plane success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: Create Plane successfully
+              data:
+                type: object
+                properties:
+                  planes:
+                    $ref: "#/components/schemas/PlanePost"
+    
+    GetPlaneById:
+      description: Get data plane success with id = id
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: OK
+              data:
+                $ref: "#/components/schemas/PlaneGetByID"
+
+    PutPlaneResponse:
+      description: Update data plane success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: Update plane successfully
+    
+    DeletePlaneResponse:
+      description: Delete data plane success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: Delete Plane successfully
+    
+    #---Flight Operation---#
+
+    GetFlightResponse:
+      description: Get data flight success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: OK
+              data:
+                type: object
+                properties:
+                  flights:
+                    $ref: "#/components/schemas/FlightGet"
+              properties:
+              meta:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    example: 1
+
+    #---Booking Operation---#
+
+    #---Ticket Operation---#
+
+    #---Error Response---#
+
     ErrorResponse:
       description: Error Response
       content:
@@ -362,20 +666,9 @@ components:
               status:
                 type: string
                 example: Error
-  
-    GetCarsById:
-      description: Get data airport success with id = id
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: string
-                example: OK
-              data:
-                $ref: "#/components/schemas/AirportGetByID"
-                
+
+    #---Unauthorized Response---#
+
     UnauthorizedResponse:
       description: Response when accessing or input data without using admin or superadmin account 
       content:
@@ -387,6 +680,8 @@ components:
                 type: string
                 example: "Unauthorized"
 
+    #---Forbidden Response---#
+
     ForbiddenResponse:
       description: Response when accessing protected endpoint with access but sufficient access
       content:
@@ -397,15 +692,11 @@ components:
               status:
                 type: string
                 example: FAIL
-              data:
-                type: object
-                properties:
-                  name:
-                    type: string
-                    example: "FORBIDDEN"
-                  message:
-                    type: string
-                    example: "you don't have permission"
+              message:
+                type: string
+                example: "you don't have permission"
+
+    #---Register Response---#
 
     RegisterResponse:
       description: Created Member
@@ -427,6 +718,8 @@ components:
                     type: string
                     example: "create user successfully"
 
+    #---Admin Response---#
+    
     AdminResponse:
       description: Created Admin
       content:
@@ -446,6 +739,8 @@ components:
                   message:
                     type: string
                     example: "create Admin successfully"
+
+    #---Login Response---#
 
     LoginResponse:
       description: Login
@@ -467,6 +762,8 @@ components:
                     type: string
                     example: "login successfully"
 
+    #---Unprocessable Response---#
+
     UnprocessableRespon:
       description: Unprocessable Entity, check missing fields from requestBody
       content:
@@ -486,6 +783,8 @@ components:
                   message:
                     type: string
                     example: "check missing fields from requestBody"
+
+    #---WhoAmI Response---#
 
     WhoAmIRespon:
       description: Get User Login
@@ -508,58 +807,11 @@ components:
                     example: "check user login"
 
   schemas:
+
+    #---Airport Schemas---#
+
     AirportGet:
       type: array
-      items:
-        properties:
-          id:
-            type: integer
-            example: 1
-          name:
-            type: string
-            example: Bandara Udara Internasional Soekarno–Hatta
-          province:
-            type: string
-            example: Banten
-          city:
-            type: string
-            example: Tangerang
-          country:
-            type: string
-            example: Indonesia
-          createAt:
-            type: string
-            example: "2022-12-05T16:32:34.011Z"
-          updateAt:
-            type: string
-            example: "2022-12-05T16:32:34.011Z"
-    
-    AirportGetByID:
-      properties:
-        id:
-          type: integer
-          example: 1
-        name:
-          type: string
-          example: Bandara Udara Internasional Soekarno–Hatta
-        province:
-          type: string
-          example: Banten
-        city:
-          type: string
-          example: Tangerang
-        country:
-          type: string
-          example: Indonesia
-        createAt:
-          type: string
-          example: "2022-12-05T16:32:34.011Z"
-        updateAt:
-          type: string
-          example: "2022-12-05T16:32:34.011Z"
-    
-    AirportPost:
-      type: object
       items:
         properties:
           id:
@@ -580,6 +832,236 @@ components:
           status:
             type: string
             example: "On"
+          createdAt:
+            type: string
+            example: "2022-12-05T16:32:34.011Z"
+          updatedAt:
+            type: string
+            example: "2022-12-05T16:32:34.011Z"
+    
+    AirportGetByID:
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Bandara Udara Internasional Soekarno–Hatta
+        province:
+          type: string
+          example: Banten
+        city:
+          type: string
+          example: Tangerang
+        country:
+          type: string
+          example: Indonesia
+        status:
+          type: string
+          example: "On"
+        createdAt:
+          type: string
+          example: "2022-12-05T16:32:34.011Z"
+        updatedAt:
+          type: string
+          example: "2022-12-05T16:32:34.011Z"
+    
+    AirportPost:
+      type: object
+      items:
+        properties:
+          name:
+            type: string
+            example: Bandara Udara Internasional Soekarno–Hatta
+          province:
+            type: string
+            example: Banten
+          city:
+            type: string
+            example: Tangerang
+          country:
+            type: string
+            example: Indonesia
+          status:
+            type: string
+            example: "On"
 
+    #---Plane Schemas---#
 
-          
+    PlaneGet:
+      type: array
+      items:
+        properties:
+          id:
+            type: integer
+            example: 1
+          code:
+            type: integer
+            example: 100
+          name:
+            type: string
+            example: Boeing 777-300ER
+          status:
+            type: string
+            example: "On"
+          createdAt:
+            type: string
+            example: "2022-12-05T16:32:34.011Z"
+          updatedAt:
+            type: string
+            example: "2022-12-05T16:32:34.011Z"
+
+    PlanePost:
+      properties:
+        id:
+          type: integer
+          example: 1
+        code:
+          type: integer
+          example: 100
+        name:
+          type: string
+          example: Boeing 777-300ER
+        status:
+          type: string
+          example: "On"
+        createdAt:
+            type: string
+            example: "2022-12-05T16:32:34.011Z"
+        updatedAt:
+          type: string
+          example: "2022-12-05T16:32:34.011Z"
+    
+    PlaneGetByID:
+      properties:
+        id:
+          type: integer
+          example: 1
+        code:
+          type: integer
+          example: 100
+        name:
+          type: string
+          example: Boeing 777-300ER
+        status:
+          type: string
+          example: "On"
+        createdAt:
+          type: string
+          example: "2022-12-05T16:32:34.011Z"
+        updatedAt:
+          type: string
+          example: "2022-12-05T16:32:34.011Z"
+
+    #---Flight Schemas---#
+
+    FlightGet:
+      type: array
+      items:
+        properties:
+          id:
+            type: integer
+            example: 1
+          id_plane:
+            type: integer
+            example: 2
+          from_airport_id:
+            type: integer
+            example: 1
+          to_airport_id:
+            type: integer
+            example: 3
+          kelas:
+            type: string
+            example: Ekonomi
+          available_seats:
+            type: integer
+            example: 100
+          price:
+            type: integer
+            example: 120000 
+          arrival_time:
+            type: string
+            example: "2022-12-06T15:06:22.516Z"
+          departure_time:
+            type: string
+            example: "2022-12-06T15:06:22.516Z" 
+          createdAt:
+            type: string
+            example: "2022-12-05T16:32:34.011Z"
+          updatedAt:
+            type: string
+            example: "2022-12-05T16:32:34.011Z"
+          plane:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 2
+              code:
+                type: integer
+                example: 101
+              name:
+                type: string
+                example: Boeing 777-300ER
+              status:
+                type: string
+                example: "On"
+              createdAt:
+                type: string
+                example: "2022-12-05T16:32:34.011Z"
+              updatedAt:
+                type: string
+                example: "2022-12-05T16:32:34.011Z"
+          FromAirpot:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 2
+              name:
+                type: string
+                example: Bandara Udara Internasional Soekarno–Hatta
+              status:
+                type: string
+                example: "On"
+              createdAt:
+                type: string
+                example: "2022-12-05T16:32:34.011Z"
+              updatedAt:
+                type: string
+                example: "2022-12-05T16:32:34.011Z"
+          ToAirpot:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 3
+              name:
+                type: string
+                example: Bandara Udara Internasional Juanda
+              province:
+                type: string
+                example: Jawa Timur
+              city:
+                type: string
+                example: Sidoarjo
+              country:
+                type: string
+                example: Indonesia
+              status:
+                type: string
+                example: "On"
+              createdAt:
+                type: string
+                example: "2022-12-05T16:32:34.011Z"
+              updatedAt:
+                type: string
+                example: "2022-12-05T16:32:34.011Z"
+          Bookings:
+            type: object
+            properties:
+
+    #---Booking Schemas---#
+
+    #---Ticket Schemas---#
