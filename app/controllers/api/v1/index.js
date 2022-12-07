@@ -11,6 +11,7 @@ const confirmationController = require("./confirmationController");
 const flightController = require("./flightController");
 const ticketController = require("./ticketController");
 const bookingController = require("./bookingController");
+const whislistController = require("./whislistController");
 
 module.exports = {
   adminController,
@@ -20,5 +21,6 @@ module.exports = {
   confirmationController,
   flightController,
   ticketController,
-  bookingController
+  bookingController,
+  whislistController,
 };
