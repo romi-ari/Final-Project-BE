@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
       id_plane: DataTypes.INTEGER,
       from_airport_id: DataTypes.INTEGER,
       to_airport_id: DataTypes.INTEGER,
-      class: DataTypes.STRING,
+      kelas: DataTypes.STRING,
       available_seats: DataTypes.INTEGER,
       price : DataTypes.INTEGER,
       arrival_time: DataTypes.DATE,

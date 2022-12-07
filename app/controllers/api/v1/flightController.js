@@ -23,6 +23,9 @@ module.exports = {
     const id_plane = req.body.id_plane;
     const from_airport_id = req.body.from_airport_id;
     const to_airport_id = req.body.to_airport_id;
+    const kelas = req.body.kelas;
+    const available_seats = req.body.available_seats;
+    const price = req.body.price;
     const arrival_time = req.body.arrival_time;
     const departure_time = req.body.departure_time;
     flightService
@@ -30,6 +33,9 @@ module.exports = {
         from_airport_id,
         to_airport_id,
         id_plane,
+        kelas,
+        available_seats,
+        price,
         arrival_time,
         departure_time,
       })
@@ -53,6 +59,9 @@ module.exports = {
         id_plane : req.body.id_plane,
         from_airport_id : req.body.from_airport_id,
         to_airport_id : req.body.to_airport_id,
+        kelas : req.body.kelas,
+        available_seats : req.body.available_seats,
+        price : req.body.price,
         arrival_time : req.body.arrival_time,
         departure_time : req.body.departure_time,
       })

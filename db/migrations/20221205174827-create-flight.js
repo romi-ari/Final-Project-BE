@@ -36,7 +36,7 @@ module.exports = {
         onDelete: 'CASCADE',
         onUpdate : 'CASCADE'
       },
-      class: {
+      kelas: {
         type: Sequelize.STRING
       },
       available_seats: {
