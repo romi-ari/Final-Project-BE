@@ -1,4 +1,4 @@
-const whislostRepository = require("../repositories/whislostRepository");
+const whislostRepository = require("../repositories/whislistRepository");
 
 module.exports = {
   create(requestBody) {
