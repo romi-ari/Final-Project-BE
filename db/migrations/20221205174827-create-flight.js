@@ -36,6 +36,15 @@ module.exports = {
         onDelete: 'CASCADE',
         onUpdate : 'CASCADE'
       },
+      class: {
+        type: Sequelize.STRING
+      },
+      available_seats: {
+        type: Sequelize.INTEGER
+      },
+      price: {
+        type: Sequelize.INTEGER
+      },
       arrival_time: {
         type: Sequelize.DATE
       },
