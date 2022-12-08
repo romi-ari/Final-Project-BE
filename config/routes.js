@@ -173,7 +173,7 @@ apiRouter.delete(
 apiRouter.get("/api/v1/booking", controllers.api.v1.bookingController.list);
 apiRouter.post(
   "/api/v1/booking", 
-  controllers.api.v1.adminController.authorize,
+  controllers.api.v1.userController.authorize,
   controllers.api.v1.bookingController.create
 );
 apiRouter.put(
