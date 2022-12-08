@@ -244,10 +244,199 @@ paths:
           $ref: "#/components/responses/GetFlightResponse"
         "400":
           $ref: "#/components/responses/ErrorResponse"
+    
+    post:
+      security:
+        - bearerAuth: []
+      operationId: createFlight
+      summary: Create Data Flight
+      description: "Add new Flight data to database \n\n Allowed roles: superadmin, admin"
+      tags:
+        - Flight
+      requestBody:
+        $ref: "#/components/requestBodies/FlightRequest"
+      responses:
+        "200":
+          $ref: "#/components/responses/PostFlightResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "403":
+          $ref: "#/components/responses/ForbiddenResponse"
 
   /api/v1/flight/{id}:
+    get:
+      summary: Get Flight By ID
+      operationId: Get Flight By Id
+      description: "Get new Flight data to database"
+      tags:
+        - Flight
+      parameters:
+        - in: path
+          name: id
+          description: The id of the Post
+          required: true
+          schema:
+            type: number
+            example: 1
+      responses:
+        "200":
+          $ref: "#/components/responses/GetFlightById"
+        "400":
+          $ref: "#/components/responses/ErrorResponse"
+    
+    put:
+      security:
+        - bearerAuth: []
+      summary: Update Flight By Id
+      operationId: UpdateFlight
+      description: "Update new Flight data to database \n\n Allowed roles: superadmin, admin"
+      tags:
+        - Flight
+      parameters:
+        - in: path
+          name: id
+          description: The id of the Post
+          required: true
+          schema:
+            type: number
+            example: 1
+      requestBody:
+        $ref: "#/components/requestBodies/FlightUpdate"
+      responses:
+        "200":
+          $ref: "#/components/responses/PutFlightResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "403":
+          $ref: "#/components/responses/ForbiddenResponse"
+
+    delete:
+      security:
+        - bearerAuth: []
+      summary: Delete Flight By Id
+      operationId: DeleteFlight
+      description: "Delete new Flight data to database \n\n Allowed roles: superadmin, admin"
+      tags:
+        - Flight
+      parameters:
+        - in: path
+          name: id
+          description: The id of the Post
+          required: true
+          schema:
+            type: number
+            example: 1
+      responses:
+        "200":
+          $ref: "#/components/responses/DeleteFlightResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "403":
+          $ref: "#/components/responses/ForbiddenResponse"
 
   #---Booking Operation---#
+
+  /api/v1/booking:
+    get:
+      summary: Get all Booking
+      operationId: Get all Booking
+      description: "Get new Booking data to database"
+      tags:
+        - Booking
+      responses:
+        "200":
+          $ref: "#/components/responses/GetBookingResponse"
+        "400":
+          $ref: "#/components/responses/ErrorResponse"
+    
+    post:
+      security:
+        - bearerAuth: []
+      operationId: createBooking
+      summary: Create Data Booking
+      description: "Add new Booking data to database \n\n Allowed roles: superadmin, admin"
+      tags:
+        - Booking
+      requestBody:
+        $ref: "#/components/requestBodies/BookingRequest"
+      responses:
+        "200":
+          $ref: "#/components/responses/PostBookingResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "403":
+          $ref: "#/components/responses/ForbiddenResponse"
+
+  /api/v1/booking/{id}:
+    get:
+      summary: Get Booking By ID
+      operationId: Get Booking By Id
+      description: "Get new Booking data to database"
+      tags:
+        - Booking
+      parameters:
+        - in: path
+          name: id
+          description: The id of the Post
+          required: true
+          schema:
+            type: number
+            example: 1
+      responses:
+        "200":
+          $ref: "#/components/responses/GetBookingById"
+        "400":
+          $ref: "#/components/responses/ErrorResponse"
+    
+    put:
+      security:
+        - bearerAuth: []
+      summary: Update Booking By Id
+      operationId: UpdateBooking
+      description: "Update new Booking data to database \n\n Allowed roles: superadmin, admin"
+      tags:
+        - Booking
+      parameters:
+        - in: path
+          name: id
+          description: The id of the Post
+          required: true
+          schema:
+            type: number
+            example: 1
+      requestBody:
+        $ref: "#/components/requestBodies/BookingUpdate"
+      responses:
+        "200":
+          $ref: "#/components/responses/PutBookingResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "403":
+          $ref: "#/components/responses/ForbiddenResponse"
+
+    delete:
+      security:
+        - bearerAuth: []
+      summary: Delete Booking By Id
+      operationId: DeleteBooking
+      description: "Delete new Booking data to database \n\n Allowed roles: superadmin, admin"
+      tags:
+        - Booking
+      parameters:
+        - in: path
+          name: id
+          description: The id of the Post
+          required: true
+          schema:
+            type: number
+            example: 1
+      responses:
+        "200":
+          $ref: "#/components/responses/DeleteBookingResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "403":
+          $ref: "#/components/responses/ForbiddenResponse"
 
   #---Ticket Operation---#
 
@@ -423,8 +612,148 @@ components:
     
     #---Flight RequestBodies---#
 
+    FlightRequest:
+      description: Create Airport Data
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 1
+              id_plane:
+                type: integer
+                example: 2
+              from_airport_id:
+                type: integer
+                example: 1
+              to_airport_id:
+                type: integer
+                example: 3
+              kelas:
+                type: string
+                example: Ekonomi
+              available_seats:
+                type: integer
+                example: 100
+              price:
+                type: integer
+                example: 120000 
+              arrival_time:
+                type: string
+                example: "2022-12-06T15:06:22.516Z"
+              departure_time:
+                type: string
+                example: "2022-12-06T15:06:22.516Z"
+    
+    FlightUpdate:
+      description: Update Flight Data
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              from_airport_id:
+                type: integer
+                example: 1
+              to_airport_id:
+                type: integer
+                example: 3
+              id_plane:
+                type: integer
+                example: 2
+              kelas:
+                type: string
+                example: Ekonomi
+              available_seats:
+                type: integer
+                example: 100
+              price:
+                type: integer
+                example: 120000 
+              arrival_time:
+                type: string
+                example: "2022-12-06T15:06:22.516Z"
+              departure_time:
+                type: string
+                example: "2022-12-06T15:06:22.516Z"
 
     #---Booking RequestBodies---#
+
+    BookingRequest:
+      description: Create Booking Data
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id_flight:
+                type: integer
+                example: 1
+              id_user:
+                type: integer
+                example: 1
+              seat:
+                type: integer
+                example: 5
+              baggage:
+                type: integer
+                example: 1
+              food:
+                type: boolean
+                example: true
+              name:
+                type: string
+                example: Bukan Orang
+              homephone:
+                type: string
+                example: 08123456
+              mobilephone:
+                type: integer
+                example: 08123456
+              totalprice:
+                type: integer
+                example: 1000000
+
+    BookingUpdate:
+      description: Update Booking Data
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id_flight:
+                type: integer
+                example: 1
+              id_user:
+                type: integer
+                example: 1
+              seat:
+                type: integer
+                example: 50
+              baggage:
+                type: integer
+                example: 50
+              food:
+                type: boolean
+                example: true
+              name:
+                type: string
+                example: Ini Orang
+              homephone:
+                type: string
+                example: 08123456
+              mobilephone:
+                type: integer
+                example: 08123456
+              totalprice:
+                type: integer
+                example: 2000000
 
     #---Ticket Operation---#
   
@@ -649,8 +978,159 @@ components:
                   total:
                     type: integer
                     example: 1
+    
+    PostFlightResponse:
+      description: create data flight succes
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: Create Flight successfully
+    
+    GetFlightById:
+      description: Get data Flight success with id = id
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: OK
+              data:
+                $ref: "#/components/schemas/FlightGetByID"
+
+    PutFlightResponse:
+      description: Update data flight success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: Update Flight successfully
+    
+    DeleteFlightResponse:
+      description: Delete data flight success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: Delete Flight successfully
 
     #---Booking Operation---#
+
+    GetBookingResponse:
+      description: Get data flight success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: OK
+              data:
+                type: object
+                properties:
+                  booking:
+                    $ref: "#/components/schemas/BookingGet"
+              properties:
+              meta:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    example: 1
+
+    PostBookingResponse:
+      description: create data Booking succes
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: Create Booking successfully
+              data:
+                type: object
+                properties:
+                  id_flight:
+                    type: integer
+                    example: 1
+                  id_user:
+                    type: integer
+                    example: 1
+                  seat:
+                    type: integer
+                    example: 5
+                  baggage:
+                    type: integer
+                    example: 1
+                  food:
+                    type: boolean
+                    example: true
+                  name:
+                    type: string
+                    example: Bukan Orang
+                  homephone:
+                    type: string
+                    example: 08123456
+                  mobilephone:
+                    type: integer
+                    example: 08123456
+                  totalprice:
+                    type: integer
+                    example: 1000000
+                  updatedAt:
+                    type: string
+                    example: "2022-12-08T13:30:39.034Z"
+                  createdAt:
+                    type: string
+                    example: "2022-12-08T13:30:39.034Z"
+
+    GetBookingById:
+      description: Get data Booking success with id = id
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: OK
+              data:
+                $ref: "#/components/schemas/BookingGetByID"
+    
+    PutBookingResponse:
+      description: Update data Booking success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: Update Booking successfully
+    
+    DeleteBookingResponse:
+      description: Delete data Booking success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: Delete Booking successfully
 
     #---Ticket Operation---#
 
@@ -1018,7 +1498,7 @@ components:
             properties:
               id:
                 type: integer
-                example: 2
+                example: 1
               name:
                 type: string
                 example: Bandara Udara Internasional Soekarno–Hatta
@@ -1062,6 +1542,283 @@ components:
             type: object
             properties:
 
+    FlightGetByID:
+      properties:
+        id:
+          type: integer
+          example: 1
+        id_plane:
+          type: integer
+          example: 2
+        from_airport_id:
+          type: integer
+          example: 1
+        to_airport_id:
+          type: integer
+          example: 3
+        kelas:
+          type: string
+          example: Ekonomi
+        available_seats:
+          type: integer
+          example: 100
+        price:
+          type: integer
+          example: 120000 
+        arrival_time:
+          type: string
+          example: "2022-12-06T15:06:22.516Z"
+        departure_time:
+          type: string
+          example: "2022-12-06T15:06:22.516Z" 
+        createdAt:
+          type: string
+          example: "2022-12-05T16:32:34.011Z"
+        updatedAt:
+          type: string
+          example: "2022-12-05T16:32:34.011Z"
+
     #---Booking Schemas---#
 
+    BookingGet:
+      type: array
+      items:
+        properties:
+          id:
+            type: integer
+            example: 1
+          id_flight:
+            type: integer
+            example: 1
+          id_user:
+            type: integer
+            example: 2
+          seat:
+            type: integer
+            example: 5
+          baggage:
+            type: integer
+            example: 1
+          food:
+            type: boolean
+            example: true
+          name:
+            type: string
+            example: Bukan Orang
+          homephone:
+            type: string
+            example: 08123456
+          mobilephone:
+            type: string
+            example: 08123456
+          totalprice:
+            type: integer
+            example: 1000000
+          createdAt:
+            type: string
+            example: "2022-12-05T16:32:34.011Z"
+          updatedAt:
+            type: string
+            example: "2022-12-05T16:32:34.011Z"
+          Flight:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 1
+              id_plane:
+                type: integer
+                example: 2
+              from_airport_id:
+                type: integer
+                example: 1
+              to_airport_id:
+                type: integer
+                example: 3
+              kelas:
+                type: string
+                example: Ekonomi
+              available_seats:
+                type: integer
+                example: 100
+              price:
+                type: integer
+                example: 120000 
+              arrival_time:
+                type: string
+                example: "2022-12-06T15:06:22.516Z"
+              departure_time:
+                type: string
+                example: "2022-12-06T15:06:22.516Z" 
+              createdAt:
+                type: string
+                example: "2022-12-05T16:32:34.011Z"
+              updatedAt:
+                type: string
+                example: "2022-12-05T16:32:34.011Z"
+              Plane:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 2
+                  id_plane:
+                    type: integer
+                    example: 2
+                  from_airport_id:
+                    type: integer
+                    example: 1
+                  to_airport_id:
+                    type: integer
+                    example: 3
+                  kelas:
+                    type: string
+                    example: Ekonomi
+                  available_seats:
+                    type: integer
+                    example: 100
+                  price:
+                    type: integer
+                    example: 120000 
+                  arrival_time:
+                    type: string
+                    example: "2022-12-06T15:06:22.516Z"
+                  departure_time:
+                    type: string
+                    example: "2022-12-06T15:06:22.516Z" 
+                  createdAt:
+                    type: string
+                    example: "2022-12-05T16:32:34.011Z"
+                  updatedAt:
+                    type: string
+                    example: "2022-12-05T16:32:34.011Z"
+              FromAirpot:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  name:
+                    type: string
+                    example: Bandara Udara Internasional Soekarno–Hatta
+                  status:
+                    type: string
+                    example: "On"
+                  createdAt:
+                    type: string
+                    example: "2022-12-05T16:32:34.011Z"
+                  updatedAt:
+                    type: string
+                    example: "2022-12-05T16:32:34.011Z"
+              ToAirpot:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 3
+                  name:
+                    type: string
+                    example: Bandara Udara Internasional Juanda
+                  province:
+                    type: string
+                    example: Jawa Timur
+                  city:
+                    type: string
+                    example: Sidoarjo
+                  country:
+                    type: string
+                    example: Indonesia
+                  status:
+                    type: string
+                    example: "On"
+                  createdAt:
+                    type: string
+                    example: "2022-12-05T16:32:34.011Z"
+                  updatedAt:
+                    type: string
+                    example: "2022-12-05T16:32:34.011Z"  
+          User:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 2
+              no_ktp:
+                type: string
+                example: 43211234
+              gender:
+                type: string
+                example: L
+              date_of_birth:
+                type: string
+                example: "2022-12-01"
+              address:
+                type: string
+                example: "Jl.Rengginang"
+              email:
+                type: string
+                example: "badu@mail.com"
+              password:
+                type: string
+                example: "$2a$10$wSSZliEv0WX7l17UmE4zMeyYluacWP0W0pk85zcnto0/GqR3ioYA."
+              name:
+                type: string
+                example: "badu oke"
+              username:
+                type: string
+                example: "badu"
+              image:
+                type: string
+                example: ""
+              createdAt:
+                type: string
+                example: "2022-12-05T16:32:34.011Z"
+              updatedAt:
+                type: string
+                example: "2022-12-05T16:32:34.011Z"
+              Whislists:
+                type: object
+                properties:
+          Ticket:
+            type: object
+            properties:
+
+    BookingGetByID:
+      properties:
+        id:
+          type: integer
+          example: 1
+        id_flight:
+          type: integer
+          example: 1
+        id_user:
+          type: integer
+          example: 2
+        seat:
+          type: integer
+          example: 5
+        baggage:
+          type: integer
+          example: 1
+        food:
+          type: boolean
+          example: true
+        name:
+          type: string
+          example: Bukan Orang
+        homephone:
+          type: string
+          example: 08123456
+        mobilephone:
+          type: string
+          example: 08123456
+        totalprice:
+          type: integer
+          example: 1000000
+        createdAt:
+          type: string
+          example: "2022-12-05T16:32:34.011Z"
+        updatedAt:
+          type: string
+          example: "2022-12-05T16:32:34.011Z"
     #---Ticket Schemas---#
