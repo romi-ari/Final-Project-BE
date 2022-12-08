@@ -178,13 +178,13 @@ apiRouter.post(
 );
 apiRouter.put(
   "/api/v1/booking/:id", 
-  controllers.api.v1.adminController.authorize,
+  controllers.api.v1.userController.authorize,
   controllers.api.v1.bookingController.update
 );
 apiRouter.get('/api/v1/booking/:id', controllers.api.v1.bookingController.show);
 apiRouter.delete(
   "/api/v1/booking/:id",
-  controllers.api.v1.adminController.authorize,
+  controllers.api.v1.userController.authorize,
   controllers.api.v1.bookingController.destroy
 );
 
