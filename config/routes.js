@@ -21,7 +21,7 @@ apiRouter.post(
   controllers.api.v1.handleGoogleLoginOrRegister
 );
 
-// End Point Airport
+// End Point User
 
 apiRouter.post("/api/v1/login", controllers.api.v1.userController.login);
 apiRouter.get(
