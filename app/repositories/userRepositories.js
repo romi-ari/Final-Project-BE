@@ -29,8 +29,16 @@ module.exports = {
   findAll() {
     return User.findAll();
   },
+  
+  findByRole(role) {
+    return User.findAll({where: { role: role }});
+  },
 
   getTotalUser() {
     return User.count();
+  },
+
+  getTotalUserByRole(role) {
+    return User.count({where: { role: role }});
   },
 };

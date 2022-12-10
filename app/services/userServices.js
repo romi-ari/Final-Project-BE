@@ -17,7 +17,21 @@ module.exports = {
   async list() {
     try {
       const users = await userRepository.findAll();
-      const userCount = await userRepository.getTotalUsers();
+      const userCount = await userRepository.getTotalUser();
+
+      return {
+        data: users,
+        count: userCount,
+      };
+    } catch (err) {
+      throw err;
+    }
+  },
+
+  async listByRole(role) {
+    try {
+      const users = await userRepository.findByRole(role);
+      const userCount = await userRepository.getTotalUserByRole(role);
 
       return {
         data: users,
