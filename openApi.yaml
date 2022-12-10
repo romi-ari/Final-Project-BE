@@ -19,6 +19,10 @@ tags:
     description: Contain every operation about Booking Resource
   - name: Ticket
     description: Contain every operation about Ticket Resource
+  - name: User
+   description: Contain every operation about User Resource
+  - name: Admin
+   description: Contain every operation about Admin Resource
 
 paths:
  
@@ -28,7 +32,7 @@ paths:
     get:
       summary: Get all Airport
       operationId: Get all Airport
-      description: "Get new Airport data to database"
+      description: "Get new Airport data from database"
       tags:
         - Airport
       responses:
@@ -59,7 +63,7 @@ paths:
     get:
       summary: Get Airport By ID
       operationId: Get Airport By Id
-      description: "Get new Airport data to database"
+      description: "Get new Airport data from database"
       tags:
         - Airport
       parameters:
@@ -81,7 +85,7 @@ paths:
         - bearerAuth: []
       summary: Update Airport By Id
       operationId: UpdateAirport
-      description: "Update new Airport data to database \n\n Allowed roles: superadmin, admin"
+      description: "Update Airport data to database \n\n Allowed roles: superadmin, admin"
       tags:
         - Airport
       parameters:
@@ -107,7 +111,7 @@ paths:
         - bearerAuth: []
       summary: Delete Airport By Id
       operationId: DeleteAirport
-      description: "Delete new Airport data to database \n\n Allowed roles: superadmin, admin"
+      description: "Delete Airport data from database \n\n Allowed roles: superadmin, admin"
       tags:
         - Airport
       parameters:
@@ -132,7 +136,7 @@ paths:
     get:
       summary: Get all Plane
       operationId: Get all Plane
-      description: "Get new Plane data to database"
+      description: "Get Plane data from database"
       tags:
         - Plane
       responses:
@@ -163,7 +167,7 @@ paths:
     get:
       summary: Get Plane By ID
       operationId: Get Plane By Id
-      description: "Get new Plane data to database"
+      description: "Get Plane data from database"
       tags:
         - Plane
       parameters:
@@ -185,7 +189,7 @@ paths:
         - bearerAuth: []
       summary: Update Plane By Id
       operationId: UpdatePlane
-      description: "Update new Plane data to database \n\n Allowed roles: superadmin, admin"
+      description: "Update Plane data from database \n\n Allowed roles: superadmin, admin"
       tags:
         - Plane
       parameters:
@@ -211,7 +215,7 @@ paths:
         - bearerAuth: []
       summary: Delete Plane By Id
       operationId: DeletePlane
-      description: "Delete new Plane data to database \n\n Allowed roles: superadmin, admin"
+      description: "Delete Plane data from database \n\n Allowed roles: superadmin, admin"
       tags:
         - Plane
       parameters:
@@ -236,7 +240,7 @@ paths:
     get:
       summary: Get all Flight
       operationId: Get all Flight
-      description: "Get new Flight data to database"
+      description: "Get Flight data from database"
       tags:
         - Flight
       responses:
@@ -267,7 +271,7 @@ paths:
     get:
       summary: Get Flight By ID
       operationId: Get Flight By Id
-      description: "Get new Flight data to database"
+      description: "Get Flight data from database"
       tags:
         - Flight
       parameters:
@@ -289,7 +293,7 @@ paths:
         - bearerAuth: []
       summary: Update Flight By Id
       operationId: UpdateFlight
-      description: "Update new Flight data to database \n\n Allowed roles: superadmin, admin"
+      description: "Update Flight data from database \n\n Allowed roles: superadmin, admin"
       tags:
         - Flight
       parameters:
@@ -315,7 +319,7 @@ paths:
         - bearerAuth: []
       summary: Delete Flight By Id
       operationId: DeleteFlight
-      description: "Delete new Flight data to database \n\n Allowed roles: superadmin, admin"
+      description: "Delete Flight data from database \n\n Allowed roles: superadmin, admin"
       tags:
         - Flight
       parameters:
@@ -340,7 +344,7 @@ paths:
     get:
       summary: Get all Booking
       operationId: Get all Booking
-      description: "Get new Booking data to database"
+      description: "Get Booking data from database"
       tags:
         - Booking
       responses:
@@ -371,7 +375,7 @@ paths:
     get:
       summary: Get Booking By ID
       operationId: Get Booking By Id
-      description: "Get new Booking data to database"
+      description: "Get Booking data from database"
       tags:
         - Booking
       parameters:
@@ -393,7 +397,7 @@ paths:
         - bearerAuth: []
       summary: Update Booking By Id
       operationId: UpdateBooking
-      description: "Update new Booking data to database \n\n Allowed roles: superadmin, admin"
+      description: "Update Booking data from database \n\n Allowed roles: superadmin, admin"
       tags:
         - Booking
       parameters:
@@ -419,7 +423,7 @@ paths:
         - bearerAuth: []
       summary: Delete Booking By Id
       operationId: DeleteBooking
-      description: "Delete new Booking data to database \n\n Allowed roles: superadmin, admin"
+      description: "Delete Booking data from database \n\n Allowed roles: superadmin, admin"
       tags:
         - Booking
       parameters:
@@ -444,7 +448,7 @@ paths:
     get:
       summary: Get all Ticket
       operationId: Get all Ticket
-      description: "Get new Ticket data to database"
+      description: "Get Ticket data from database"
       tags:
         - Ticket
       responses:
@@ -475,7 +479,7 @@ paths:
     get:
       summary: Get Ticket By ID
       operationId: Get Ticket By Id
-      description: "Get new Ticket data to database"
+      description: "Get Ticket data from database"
       tags:
         - Ticket
       parameters:
@@ -497,7 +501,7 @@ paths:
         - bearerAuth: []
       summary: Update Ticket By Id
       operationId: UpdateTicket
-      description: "Update new Ticket data to database \n\n Allowed roles: superadmin, admin"
+      description: "Update Ticket data from database \n\n Allowed roles: superadmin, admin"
       tags:
         - Ticket
       parameters:
@@ -523,7 +527,7 @@ paths:
         - bearerAuth: []
       summary: Delete Ticket By Id
       operationId: DeleteTicket
-      description: "Delete new Ticket data to database \n\n Allowed roles: superadmin, admin"
+      description: "Delete Ticket data from database \n\n Allowed roles: superadmin, admin"
       tags:
         - Ticket
       parameters:
@@ -541,6 +545,57 @@ paths:
           $ref: "#/components/responses/UnauthorizedResponse"
         "403":
           $ref: "#/components/responses/ForbiddenResponse"
+
+  #---User Operation---#
+  
+  /api/v1/register:
+    post:
+      tags:
+        - User
+      summary: Register new User
+      description: Register new account
+      requestBody:
+        $ref: "#/components/requestBodies/UserPostRequest"
+      responses:
+        "200":
+          $ref: "#/components/responses/PostUserResponse"
+        "400":
+          $ref: "#/components/responses/ErrorResponse"
+        "403":
+          $ref: "#/components/responses/UnprocessableRespon"
+
+  /api/v1/login:
+    post:
+      tags:
+        - User
+      summary: Login
+      description: Login
+      operationId: Login
+      requestBody:
+        $ref: "#/components/requestBodies/UserLoginRequest"
+      responses:
+        "200":
+          $ref: "#/components/responses/LoginUserResponse"
+        "400":
+          $ref: "#/components/responses/ErrorResponse"
+        "403":
+          $ref: "#/components/responses/UnprocessableRespon"
+
+  /api/v1/profile:
+    get:
+      summary: Get Profile after user login
+      description: "Get Profile user data from database"
+      tags:
+        - User
+      responses:
+        "200":
+          $ref: "#/components/responses/GetUserResponse"
+        "400":
+          $ref: "#/components/responses/ErrorResponse"
+
+  /api/v1/updateUser:
+
+  #---Admin Operation---#
 
   #---Admin and SuperAdmin---#
 
@@ -622,6 +677,7 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
+      
   requestBodies:
 
     #---Airport RequestBodies---#
@@ -896,8 +952,44 @@ components:
                 example: "2022-12-08T13:30:39.034Z"
 
     #---User RequestBodies---#
-    MemberRequest:
-      description: Create Member Data Required fields [email, password]
+    UserPostRequest:
+      description: Create User Data Required fields [gender, date_of_birth, address, email, password, name, username]
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              no_ktp:
+                type: string
+                example: ""
+              gender:
+                type: string
+                example: L
+              date_of_birth:
+                type: string
+                example: "4022-12-12"
+              address:
+                type: string
+                example: JL.abcde
+              email:
+                type: string
+                example: abdul@email.com
+              password:
+                type: string
+                example: abdul
+              name:
+                type: string
+                example: abdul ok
+              username:
+                type: string
+                example: abdul
+              image:
+                type: string
+                example: ""
+    
+    UserLoginRequest:
+      description: Create Admin Data Required fields [email or username, password]
       required: true
       content:
         application/json:
@@ -906,10 +998,10 @@ components:
             properties:
               email:
                 type: string
-                example: "member@gmai.com"
+                example: "abdul@mail.com"
               password:
                 type: string
-                example: "inimember"
+                example: "abdul"
 
     #---Admin and SuperAdmin RequestBodies---#
 
@@ -942,6 +1034,21 @@ components:
               password:
                 type: string
                 example: "iniadmin"
+   
+    MemberRequest:
+        description: Login [email, password]
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: "abdul@mail.com"
+                password:
+                  type: string
+                  example: "abdul"
 
   responses:
 
@@ -1166,7 +1273,7 @@ components:
     #---Booking Operation---#
 
     GetBookingResponse:
-      description: Get data flight success
+      description: Get data Booking success
       content:
         application/json:
           schema:
@@ -1361,6 +1468,98 @@ components:
               status:
                 type: string
                 example: Delete Ticket successfully
+    
+    #---User Response---#
+
+    GetUserResponse:
+      description: Get data Profile success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 1
+              no_ktp:
+                type: string
+                example: ""
+              gender:
+                type: string
+                example: L
+              date_of_birth:
+                type: string
+                example: "2022-12-01"
+              address:
+                type: string
+                example: ""
+              email:
+                type: string
+                example: "badu@mail.com"
+              password:
+                type: string
+                example: "$2a$10$wSSZliEv0WX7l17UmE4zMeyYluacWP0W0pk85zcnto0/GqR3ioYA."
+              name:
+                type: string
+                example: "badu oke"
+              username:
+                type: string
+                example: "badu"
+              image:
+                type: string
+                example: ""
+              createdAt:
+                type: string
+                example: "2022-12-05T16:32:34.011Z"
+              updatedAt:
+                type: string
+                example: "2022-12-05T16:32:34.011Z"
+    
+    PostUserResponse:
+      description: Created User
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 1
+              email:
+                type: string
+                example: abdul@email.com
+              createdAt:
+                type: string
+                example: "2022-12-10T06:38:13.614Z"
+              updatedAt:
+                type: string
+                example: "2022-12-10T06:38:13.614Z"
+
+    LoginUserResponse:
+      description: Login User
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 1
+              email:
+                type: string
+                example: abdul@email.com
+              username:
+                type: string
+                example: abdul
+              token:
+                type: string
+                example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiZW1haWwiOiJhYmR1bEBtYWlsLmNvbSIsImNyZWF0ZWRBdCI6IjIwMjItMTItMTBUMDY6Mzg6MTMuNjE0WiIsInVwZGF0ZWRBdCI6IjIwMjItMTItMTBUMDY6Mzg6MTMuNjE0WiIsImlhdCI6MTY3MDY1NDMyOX0.Cj8N4f4kThOAIJy4vPc68h-CSzdA3aM8tln3NU6KjP4"
+              createdAt:
+                type: string
+                example: "2022-12-10T06:38:13.614Z"
+              updatedAt:
+                type: string
+                example: "2022-12-10T06:38:13.614Z"
 
     #---Error Response---#
 
@@ -1425,6 +1624,26 @@ components:
                   message:
                     type: string
                     example: "create user successfully"
+    
+    UserResponse:
+      description: Created Admin
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: success
+              data:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: "Success"
+                  message:
+                    type: string
+                    example: "create Admin successfully"
 
     #---Admin Response---#
     
@@ -1973,7 +2192,7 @@ components:
                 example: 2
               no_ktp:
                 type: string
-                example: 43211234
+                example: ""
               gender:
                 type: string
                 example: L
@@ -1982,7 +2201,7 @@ components:
                 example: "2022-12-01"
               address:
                 type: string
-                example: "Jl.Rengginang"
+                example: ""
               email:
                 type: string
                 example: "badu@mail.com"
@@ -2232,7 +2451,7 @@ components:
                     example: 2
                   no_ktp:
                     type: string
-                    example: 43211234
+                    example: ""
                   gender:
                     type: string
                     example: L
@@ -2241,7 +2460,7 @@ components:
                     example: "2022-12-01"
                   address:
                     type: string
-                    example: "Jl.Rengginang"
+                    example: ""
                   email:
                     type: string
                     example: "badu@mail.com"
@@ -2287,3 +2506,6 @@ components:
         createdAt:
           type: string
           example: "2022-12-05T16:32:34.011Z"
+
+    #---User Schema---#
+        
