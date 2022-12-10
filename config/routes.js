@@ -39,35 +39,43 @@ apiRouter.post("/api/v1/google", handleGoogleLoginOrRegister);
 //   controllers.api.v1.carController.verifyRoles("superAdmin", "admin"),
 //   controllers.api.v1.carController.destroy
 // );
-apiRouter.get(
-  "/api/v1/profile",
+
+//End point User
+apiRouter.get("/api/v1/profile",
   controllers.api.v1.userController.authorize,
   controllers.api.v1.userController.whoAmI
 );
+
+apiRouter.put("/api/v1/updateUser",
+  controllers.api.v1.userController.authorize, limit,
+  controllers.api.v1.userController.updateUser
+);
+
+apiRouter.post("/api/v1/login",
+  controllers.api.v1.userController.login);
+
+apiRouter.post("/api/v1/register", 
+  controllers.api.v1.userController.register);
+
+//End point Admin/SuperAdmin
 apiRouter.get(
   "/api/v1/profileAdmin",
   controllers.api.v1.adminController.authorize,
   controllers.api.v1.adminController.whoAmI
-);
-apiRouter.put(
-  "/api/v1/updateUser",
-  controllers.api.v1.userController.authorize, limit,
-  controllers.api.v1.userController.updateUser
 );
 
 apiRouter.post(
   "/api/v1/loginAdmin",
   controllers.api.v1.adminController.loginAdmin
 );
+
 apiRouter.put(
   "/api/v1/updateAdmin",
   controllers.api.v1.adminController.authorize,
   controllers.api.v1.adminController.updateAdmin
 );
-apiRouter.post("/api/v1/login", controllers.api.v1.userController.login);
-apiRouter.post("/api/v1/register", controllers.api.v1.userController.register);
-apiRouter.post(
-  "/api/v1/createAdmin",
+
+apiRouter.post("/api/v1/createAdmin",
   controllers.api.v1.adminController.authorize,
   controllers.api.v1.adminController.verifyRoles("superAdmin"),
   controllers.api.v1.adminController.createAdmin
@@ -168,6 +176,46 @@ apiRouter.delete(
   controllers.api.v1.adminController.verifyRoles("superAdmin", "admin"),
   controllers.api.v1.ticketController.destroy
 );
+
+//END POINT Booking
+apiRouter.get("/api/v1/booking", controllers.api.v1.bookingController.list);
+apiRouter.post(
+  "/api/v1/booking", 
+  controllers.api.v1.userController.authorize,
+  controllers.api.v1.bookingController.create
+);
+apiRouter.put(
+  "/api/v1/booking/:id", 
+  controllers.api.v1.userController.authorize,
+  controllers.api.v1.bookingController.update
+);
+apiRouter.get('/api/v1/booking/:id', controllers.api.v1.bookingController.show);
+apiRouter.delete(
+  "/api/v1/booking/:id",
+  controllers.api.v1.userController.authorize,
+  controllers.api.v1.bookingController.destroy
+);
+
+
+//END POINT Whislist
+apiRouter.get("/api/v1/whislist", controllers.api.v1.whislistController.list);
+apiRouter.post(
+  "/api/v1/whislist", 
+  controllers.api.v1.adminController.authorize,
+  controllers.api.v1.whislistController.create
+);
+apiRouter.put(
+  "/api/v1/whislist/:id", 
+  controllers.api.v1.adminController.authorize,
+  controllers.api.v1.whislistController.update
+);
+apiRouter.get('/api/v1/whislist/:id', controllers.api.v1.whislistController.show);
+apiRouter.delete(
+  "/api/v1/whislist/:id",
+  controllers.api.v1.adminController.authorize,
+  controllers.api.v1.whislistController.destroy
+);
+
 
 
 

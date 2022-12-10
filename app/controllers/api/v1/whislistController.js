@@ -1,13 +1,13 @@
-const flightService = require("../../../services/flightService");
+const whislistService = require("../../../services/whislistService");
 
 module.exports = {
   list(req, res) {
-    flightService
+    whislistService
       .list()
       .then(({ data, count }) => {
         res.status(200).json({
           status: "OK",
-          data: { flights: data },
+          data: { whislist: data },
           meta: { total: count },
         });
       })
@@ -20,28 +20,16 @@ module.exports = {
   },
 
   create(req, res) {
-    const id_plane = req.body.id_plane;
-    const from_airport_id = req.body.from_airport_id;
-    const to_airport_id = req.body.to_airport_id;
-    const kelas = req.body.kelas;
-    const available_seats = req.body.available_seats;
-    const price = req.body.price;
-    const arrival_time = req.body.arrival_time;
-    const departure_time = req.body.departure_time;
-    flightService
+    const id_user = req.user.id;
+    const id_flight = req.body.id_flight;
+    whislistService
       .create({
-        from_airport_id,
-        to_airport_id,
-        id_plane,
-        kelas,
-        available_seats,
-        price,
-        arrival_time,
-        departure_time,
+        id_user,
+        id_flight,
       })
       .then((post) => {
         res.status(201).json({
-          status: "Create Flight successfully",
+          status: "Create Whislist successfully",
           data: post,
         });
       })
@@ -54,20 +42,14 @@ module.exports = {
   },
 
   update(req, res) {
-    flightService
+    whislistService
       .update(req.params.id, {
-        id_plane : req.body.id_plane,
-        from_airport_id : req.body.from_airport_id,
-        to_airport_id : req.body.to_airport_id,
-        kelas : req.body.kelas,
-        available_seats : req.body.available_seats,
-        price : req.body.price,
-        arrival_time : req.body.arrival_time,
-        departure_time : req.body.departure_time,
+        id_user : req.user.id,
+        id_flight : req.body.id_flight,
       })
       .then(() => {
         res.status(200).json({
-          status: "Update Flight successfully",
+          status: "Update Whislist successfully",
         });
       })
       .catch((err) => {
@@ -79,7 +61,7 @@ module.exports = {
   },
 
   show(req, res) {
-    flightService
+    whislistService
       .findByPk(req.params.id)
       .then((post) => {
         res.status(200).json({
@@ -96,11 +78,11 @@ module.exports = {
   },
 
   destroy(req, res) {
-    flightService
+    whislistService
       .destroy(req.params.id)
       .then(() => {
         res.status(200).json({
-          status: `Delete Flight successfully`,
+          status: `Delete Whislist successfully`,
         });
       })
       .catch((err) => {

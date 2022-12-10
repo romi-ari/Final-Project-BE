@@ -1,13 +1,13 @@
-const flightService = require("../../../services/flightService");
+const bookingService = require("../../../services/bookingService");
 
 module.exports = {
   list(req, res) {
-    flightService
+    bookingService
       .list()
       .then(({ data, count }) => {
         res.status(200).json({
           status: "OK",
-          data: { flights: data },
+          data: { booking: data },
           meta: { total: count },
         });
       })
@@ -20,28 +20,30 @@ module.exports = {
   },
 
   create(req, res) {
-    const id_plane = req.body.id_plane;
-    const from_airport_id = req.body.from_airport_id;
-    const to_airport_id = req.body.to_airport_id;
-    const kelas = req.body.kelas;
-    const available_seats = req.body.available_seats;
-    const price = req.body.price;
-    const arrival_time = req.body.arrival_time;
-    const departure_time = req.body.departure_time;
-    flightService
+    const id_flight = req.body.id_flight;
+    const id_user = req.user.id
+    const seat = req.body.seat;
+    const baggage = req.body.baggage;
+    const food = req.body.food;
+    const name = req.body.name;
+    const homephone = req.body.homephone;
+    const mobilephone = req.body.mobilephone;
+    const totalprice = req.body.totalprice;
+    bookingService
       .create({
-        from_airport_id,
-        to_airport_id,
-        id_plane,
-        kelas,
-        available_seats,
-        price,
-        arrival_time,
-        departure_time,
+        id_flight,
+        id_user,
+        seat,
+        baggage,
+        food,
+        name,
+        homephone,
+        mobilephone,
+        totalprice,
       })
       .then((post) => {
         res.status(201).json({
-          status: "Create Flight successfully",
+          status: "Create Booking successfully",
           data: post,
         });
       })
@@ -54,20 +56,21 @@ module.exports = {
   },
 
   update(req, res) {
-    flightService
+    bookingService
       .update(req.params.id, {
-        id_plane : req.body.id_plane,
-        from_airport_id : req.body.from_airport_id,
-        to_airport_id : req.body.to_airport_id,
-        kelas : req.body.kelas,
-        available_seats : req.body.available_seats,
-        price : req.body.price,
-        arrival_time : req.body.arrival_time,
-        departure_time : req.body.departure_time,
+        id_booking: req.body.id_booking,
+        id_user: req.user.id_user,
+        seat: req.body.seat,
+        baggage: req.body.baggage,
+        food: req.body.food,
+        name: req.body.name,
+        homephone: req.body.homephone,
+        mobilephone: req.body.mobilephone,
+        totalprice: req.body.totalprice,
       })
       .then(() => {
         res.status(200).json({
-          status: "Update Flight successfully",
+          status: "Update Booking successfully",
         });
       })
       .catch((err) => {
@@ -79,7 +82,7 @@ module.exports = {
   },
 
   show(req, res) {
-    flightService
+    bookingService
       .findByPk(req.params.id)
       .then((post) => {
         res.status(200).json({
@@ -96,11 +99,11 @@ module.exports = {
   },
 
   destroy(req, res) {
-    flightService
+    bookingService
       .destroy(req.params.id)
       .then(() => {
         res.status(200).json({
-          status: `Delete Flight successfully`,
+          status: `Delete Booking successfully`,
         });
       })
       .catch((err) => {

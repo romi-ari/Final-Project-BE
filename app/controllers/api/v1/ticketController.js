@@ -20,12 +20,12 @@ module.exports = {
   },
 
   create(req, res) {
-    const id_flight = req.body.id_flight;
+    const id_booking = req.body.id_booking;
     const price = req.body.price;
     const date = req.body.date;
     ticketService
       .create({
-        id_flight,
+        id_booking,
         price,
         date,
       })
@@ -46,13 +46,13 @@ module.exports = {
   update(req, res) {
     ticketService
       .update(req.params.id, {
-        id_flight: req.body.id_flight,
+        id_booking: req.body.id_booking,
         price: req.body.price,
         date: req.body.date,
       })
       .then(() => {
         res.status(200).json({
-          status: "Update Flight successfully",
+          status: "Update Ticket successfully",
         });
       })
       .catch((err) => {
