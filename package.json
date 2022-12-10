@@ -4,8 +4,8 @@
   "main": "app/index.js",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon bin/www",
-    "develop": "nodemon -q bin/www",
+    "start": "node bin/www",
+    "develop": "node -q bin/www",
     "db:create": "./node_modules/.bin/sequelize-cli db:create",
     "db:drop": "./node_modules/.bin/sequelize-cli db:drop",
     "db:migrate": "./node_modules/.bin/sequelize-cli db:migrate",
