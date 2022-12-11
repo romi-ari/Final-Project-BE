@@ -46,10 +46,10 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       arrival_time: {
-        type: Sequelize.DATE
+        type: Sequelize.STRING
       },
       departure_time: {
-        type: Sequelize.DATE
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
