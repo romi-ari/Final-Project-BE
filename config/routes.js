@@ -21,9 +21,12 @@ apiRouter.post(
   controllers.api.v1.handleGoogleLoginOrRegister
 );
 
-// End Point User
+//Login untuk member, admin, superAdmin  
 
 apiRouter.post("/api/v1/login", controllers.api.v1.userController.login);
+
+// End Point User
+
 apiRouter.get(
   "/api/v1/profile",
   controllers.api.v1.userController.authorize,
@@ -36,6 +39,9 @@ apiRouter.put(
   controllers.api.v1.userController.updateUser
 );
 apiRouter.post("/api/v1/register", controllers.api.v1.userController.register);
+
+//Admin and superAdmin Operation
+
 apiRouter.post(
   "/api/v1/createAdmin",
   controllers.api.v1.userController.authorize,

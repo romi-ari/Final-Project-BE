@@ -19,6 +19,8 @@ tags:
     description: Contain every operation about Booking Resource
   - name: Ticket
     description: Contain every operation about Ticket Resource
+  - name: Login
+    description: Contain every operation about Login Resource
   - name: User
    description: Contain every operation about User Resource
   - name: Admin
@@ -546,6 +548,25 @@ paths:
         "403":
           $ref: "#/components/responses/ForbiddenResponse"
 
+  #---Login User Operation---#
+
+  /api/v1/login:
+    post:
+      tags:
+        - Login
+      summary: Login
+      description: Login
+      operationId: Login
+      requestBody:
+        $ref: "#/components/requestBodies/UserLoginRequest"
+      responses:
+        "200":
+          $ref: "#/components/responses/LoginUserResponse"
+        "400":
+          $ref: "#/components/responses/ErrorResponse"
+        "403":
+          $ref: "#/components/responses/UnprocessableRespon"
+
   #---User Operation---#
   
   /api/v1/register:
@@ -559,23 +580,6 @@ paths:
       responses:
         "200":
           $ref: "#/components/responses/PostUserResponse"
-        "400":
-          $ref: "#/components/responses/ErrorResponse"
-        "403":
-          $ref: "#/components/responses/UnprocessableRespon"
-
-  /api/v1/login:
-    post:
-      tags:
-        - User
-      summary: Login
-      description: Login
-      operationId: Login
-      requestBody:
-        $ref: "#/components/requestBodies/UserLoginRequest"
-      responses:
-        "200":
-          $ref: "#/components/responses/LoginUserResponse"
         "400":
           $ref: "#/components/responses/ErrorResponse"
         "403":
@@ -596,6 +600,61 @@ paths:
   /api/v1/updateUser:
 
   #---Admin Operation---#
+
+  /api/v1/user:
+    get:
+      summary: Get all User
+      operationId: Get all User
+      description: "Get all user data from database"
+      tags:
+        - Admin
+      responses:
+        "200":
+          $ref: "#/components/responses/GetAllUserResponse"
+        "400":
+          $ref: "#/components/responses/ErrorResponse"
+
+  /api/v1/Admin:
+    get:
+      summary: Get admin
+      operationId: Get admin
+      description: "Get admin data from database"
+      tags:
+        - Admin
+      responses:
+        "200":
+          $ref: "#/components/responses/GetAdminResponse"
+        "400":
+          $ref: "#/components/responses/ErrorResponse"
+
+  /api/v1/Member:
+    get:
+      summary: Get Member
+      operationId: Get Member
+      description: "Get member data from database"
+      tags:
+        - Admin
+      responses:
+        "200":
+          $ref: "#/components/responses/GetMemberResponse"
+        "400":
+          $ref: "#/components/responses/ErrorResponse"
+
+  /api/v1/createAdmin:
+    post:
+      tags:
+        - Admin
+      summary: Register new admin
+      description: Register new account
+      requestBody:
+        $ref: "#/components/requestBodies/CreateAdminPostRequest"
+      responses:
+        "200":
+          $ref: "#/components/responses/PostAdminResponse"
+        "400":
+          $ref: "#/components/responses/ErrorResponse"
+        "403":
+          $ref: "#/components/responses/UnprocessableRespon"
 
   #---Admin and SuperAdmin---#
 
@@ -987,7 +1046,10 @@ components:
               image:
                 type: string
                 example: ""
-    
+              role:
+                type: string
+                example: "member"
+
     UserLoginRequest:
       description: Create Admin Data Required fields [email or username, password]
       required: true
@@ -1049,6 +1111,45 @@ components:
                 password:
                   type: string
                   example: "abdul"
+    
+    CreateAdminPostRequest:
+      description: Create Admin Data Required fields [no_ktp, gender, date_of_birth, address, email, password, name, username, role]
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              no_ktp:
+                type: string
+                example: "12345678"
+              gender:
+                type: string
+                example: L
+              date_of_birth:
+                type: string
+                example: "2022-12-01"
+              address:
+                type: string
+                example: Jalan Suroyo No. 161 Mayangan Kota Probolonggo Indonesia
+              email:
+                type: string
+                example: admin@mail.com
+              password:
+                type: string
+                example: admin
+              name:
+                type: string
+                example: saya admin
+              username:
+                type: string
+                example: admin
+              image:
+                type: string
+                example: ""
+              role:
+                type: string
+                example: admin
 
   responses:
 
@@ -1646,7 +1747,96 @@ components:
                     example: "create Admin successfully"
 
     #---Admin Response---#
+
+    GetAllUserResponse:
+      description: Get data all user success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: OK
+              data:
+                type: object
+                properties:
+                  user:
+                    $ref: "#/components/schemas/UserGet"
+              properties:
+              meta:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    example: 3
     
+    GetAdminResponse:
+      description: Get data admin success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: OK
+              data:
+                type: object
+                properties:
+                  user:
+                    $ref: "#/components/schemas/AdminGet"
+              properties:
+              meta:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    example: 1
+
+    GetMemberResponse:
+      description: Get data member success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: OK
+              data:
+                type: object
+                properties:
+                  user:
+                    $ref: "#/components/schemas/MemberGet"
+              properties:
+              meta:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    example: 1
+    
+    PostAdminResponse:
+      description: Created Admin
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 1
+              email:
+                type: string
+                example: admin@mail.com
+              createdAt:
+                type: string
+                example: "2022-12-10T06:38:13.614Z"
+              updatedAt:
+                type: string
+                example: "2022-12-10T06:38:13.614Z"
+
     AdminResponse:
       description: Created Admin
       content:
@@ -2508,4 +2698,168 @@ components:
           example: "2022-12-05T16:32:34.011Z"
 
     #---User Schema---#
+
+    #--Admin Schema---#
+    UserGet:
+      type: array
+      items:
+        properties:
+          id:
+            type: integer
+          no_ktp:
+            type: integer
+          gender:
+            type: string
+          date_of_birth:
+            type: string
+          address:
+            type: string
+          email:
+            type: string
+          password:
+            type: string
+          name:
+            type: string
+          username:
+            type: string
+          image:
+            type: string
+          role:
+            type: string
+          createdAt:
+            type: string
+          updatedAt:
+            type: string
+        example:
+          - id: 1
+            no_ktp: 12345678
+            gender: L
+            date_of_birth: "2022-12-01"
+            address: "Jalan Suroyo No. 161 Mayangan Kota Probolonggo Indonesia"
+            email: "superadmin@gmail.com"
+            password: "$2a$10$VHBTldj2eZ9qjIROb8HeCOvPhfsfeqhyu82p1UplJOYk9yhcusply"
+            name: super admin
+            username: superAdmin
+            image: ""
+            role: superAdmin
+            createdAt: "2022-12-05T16:32:34.011Z"
+            updatedAt: "2022-12-05T16:32:34.011Z"
+          - id: 2
+            no_ktp: 12345678
+            gender: L
+            date_of_birth: "2022-12-01"
+            address: "Jalan Suroyo No. 161 Mayangan Kota Probolonggo Indonesia"
+            email: "user@gmail.com"
+            password: "$2a$10$VHBTldj2eZ9qjIROb8HeCOvPhfsfeqhyu82p1UplJOYk9yhcusply"
+            name: User
+            username: user
+            image: ""
+            role: member
+            createdAt: "2022-12-05T16:32:34.011Z"
+            updatedAt: "2022-12-05T16:32:34.011Z"
+          - id: 3
+            no_ktp: 12345678
+            gender: L
+            date_of_birth: "2022-12-01"
+            address: "Jalan Suroyo No. 161 Mayangan Kota Probolonggo Indonesia"
+            email: "admin@gmail.com"
+            password: "$2a$10$VHBTldj2eZ9qjIROb8HeCOvPhfsfeqhyu82p1UplJOYk9yhcusply"
+            name: Admin
+            username: admin
+            image: ""
+            role: admin
+            createdAt: "2022-12-05T16:32:34.011Z"
+            updatedAt: "2022-12-05T16:32:34.011Z"
+
+    AdminGet:
+      type: array
+      items:
+        properties:
+          id:
+            type: integer
+          no_ktp:
+            type: integer
+          gender:
+            type: string
+          date_of_birth:
+            type: string
+          address:
+            type: string
+          email:
+            type: string
+          password:
+            type: string
+          name:
+            type: string
+          username:
+            type: string
+          image:
+            type: string
+          role:
+            type: string
+          createdAt:
+            type: string
+          updatedAt:
+            type: string
+        example:
+          - id: 1
+            no_ktp: 12345678
+            gender: L
+            date_of_birth: "2022-12-01"
+            address: "Jalan Suroyo No. 161 Mayangan Kota Probolonggo Indonesia"
+            email: "admin@gmail.com"
+            password: "$2a$10$VHBTldj2eZ9qjIROb8HeCOvPhfsfeqhyu82p1UplJOYk9yhcusply"
+            name: Admin
+            username: admin
+            image: ""
+            role: admin
+            createdAt: "2022-12-05T16:32:34.011Z"
+            updatedAt: "2022-12-05T16:32:34.011Z"
+    
+    MemberGet:
+      type: array
+      items:
+        properties:
+          id:
+            type: integer
+          no_ktp:
+            type: integer
+          gender:
+            type: string
+          date_of_birth:
+            type: string
+          address:
+            type: string
+          email:
+            type: string
+          password:
+            type: string
+          name:
+            type: string
+          username:
+            type: string
+          image:
+            type: string
+          role:
+            type: string
+          createdAt:
+            type: string
+          updatedAt:
+            type: string
+        example:
+          - id: 1
+            no_ktp: 12345678
+            gender: L
+            date_of_birth: "2022-12-01"
+            address: "Jalan Suroyo No. 161 Mayangan Kota Probolonggo Indonesia"
+            email: "user@gmail.com"
+            password: "$2a$10$VHBTldj2eZ9qjIROb8HeCOvPhfsfeqhyu82p1UplJOYk9yhcusply"
+            name: User
+            username: user
+            image: ""
+            role: member
+            createdAt: "2022-12-05T16:32:34.011Z"
+            updatedAt: "2022-12-05T16:32:34.011Z"
+    
+
         

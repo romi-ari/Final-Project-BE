@@ -1,6 +1,6 @@
 /**
  * @file contains function that handle trivial request
- * @author Fikri Rahmat Nurhidayat
+ * @author GoTravel Kelompok 5 FSW 2
  */
 
 module.exports = {

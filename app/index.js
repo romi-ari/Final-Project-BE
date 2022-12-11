@@ -1,6 +1,6 @@
 /**
  * @file Bootstrap express.js server
- * @author Fikri Rahmat Nurhidayat
+ * @author GoTravel Kelompok 5 FSW 2
  */
 
 const express = require("express");

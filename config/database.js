@@ -1,6 +1,6 @@
 /**
  * @file Manages database connection configuration.
- * @author Kelompok 5
+ * @author GoTravel Kelompok 5 FSW 2
  */
 
 /** Destruct environment variable to get database configuration */
