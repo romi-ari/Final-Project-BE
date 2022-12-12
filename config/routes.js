@@ -241,6 +241,33 @@ apiRouter.delete("/api/v1/booking/:id",
   controllers.api.v1.bookingController.destroy
 );
 
+//END POINT Whislist
+
+apiRouter.get("/api/v1/whislist", 
+  controllers.api.v1.whislistController.list
+);
+
+apiRouter.post("/api/v1/whislist",
+  controllers.api.v1.userController.authorize,
+  controllers.api.v1.whislistController.create
+);
+
+apiRouter.put("/api/v1/whislist/:id",
+  controllers.api.v1.userController.authorize,
+  controllers.api.v1.whislistController.update
+);
+
+apiRouter.get("/api/v1/whislist/:id", 
+  controllers.api.v1.whislistController.show
+);
+
+apiRouter.delete("/api/v1/whislist/:id",
+  controllers.api.v1.userController.authorize,
+  controllers.api.v1.whislistController.destroy
+);
+
+
+
 apiRouter.use(controllers.api.main.onLost);
 apiRouter.use(controllers.api.main.onError);
 
