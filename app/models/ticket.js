@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
   Ticket.init({
     id_booking: DataTypes.INTEGER,
     price: DataTypes.INTEGER,
-    date: DataTypes.STRING
+    date: DataTypes.DATE
   }, {
     sequelize,
     modelName: 'Ticket',

@@ -22,7 +22,7 @@ module.exports = {
         id_plane:1,
         kelas:"Economy Class",
         available_seats: 80,
-        price:100000,
+        price:1000000,
         arrival_time: "09:06",
         departure_time:"10:06",
         createdAt: new Date(),
@@ -152,6 +152,7 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
+    return queryInterface.bulkDelete('Flights', null, {});
     /**
      * Add commands to revert seed here.
      *
