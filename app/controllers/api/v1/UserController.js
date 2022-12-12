@@ -249,6 +249,34 @@
        });
    },
  
+  //user Delete
+
+  async userDelete(req, res) {
+    try{
+      const id = req.params.id;
+
+      const user = await UserServices.delete({
+        where: {id}
+      });
+
+      //pengecekan username
+      if (!user) {
+        res.status(404).json({ message: "id user tidak ditemukan" });
+        return;
+      }
+
+      res.status(200).json({
+        status: `Delete User successfully`,
+      })
+
+    } catch (error) {
+        console.error(error);
+        res.status(401).json({
+          message: error.message,
+        });
+      }
+  },
+
    //FUNCTION LOGIN
    async login(req, res) {
      try {
