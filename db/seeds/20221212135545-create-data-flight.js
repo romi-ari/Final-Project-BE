@@ -13,6 +13,8 @@ module.exports = {
         price:1000000,
         arrival_time: "2022-12-12T14:00:00.259Z",
         departure_time:"2022-12-12T15:00:00.259Z",
+        arrival_timed: "14:00",
+        departure_timed:"15:00",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -25,6 +27,8 @@ module.exports = {
         price:1000000,
         arrival_time: "2022-12-14T14:00:00.259Z",
         departure_time:"2022-12-14T15:00:00.259Z",
+        arrival_timed: "14:00",
+        departure_timed:"15:00",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -37,6 +41,8 @@ module.exports = {
         price:2000000,
         arrival_time: "2022-12-16T16:00:00.259Z",
         departure_time:"2022-12-16T17:00:00.259Z",
+        arrival_timed: "16:00",
+        departure_timed:"17:00",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -49,6 +55,8 @@ module.exports = {
         price:2000000,
         arrival_time: "2022-12-18T16:00:00.259Z",
         departure_time:"2022-12-18T17:00:00.259Z",
+        arrival_timed: "16:00",
+        departure_timed:"17:00",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -61,6 +69,8 @@ module.exports = {
         price:3000000,
         arrival_time: "2022-12-20T18:00:00.259Z",
         departure_time:"2022-12-20T19:00:00.259Z",
+        arrival_timed: "18:00",
+        departure_timed:"19:00",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -73,6 +83,8 @@ module.exports = {
         price:3000000,
         arrival_time: "2022-12-22T18:00:00.259Z",
         departure_time:"2022-12-22T19:00:00.259Z",
+        arrival_timed: "18:00",
+        departure_timed:"19:00",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -85,6 +97,8 @@ module.exports = {
         price:1000000,
         arrival_time: "2022-12-24T20:00:00.259Z",
         departure_time:"2022-12-24T21:00:00.259Z",
+        arrival_timed: "20:00",
+        departure_timed:"21:00",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -97,6 +111,8 @@ module.exports = {
         price:1000000,
         arrival_time: "2022-12-26T20:00:00.259Z",
         departure_time:"2022-12-26T21:00:00.259Z",
+        arrival_timed: "20:00",
+        departure_timed:"21:00",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -109,6 +125,8 @@ module.exports = {
         price:2100000,
         arrival_time: "2023-01-01T09:00:00.259Z",
         departure_time:"2023-01-01T10:00:00.259Z",
+        arrival_timed: "09:00",
+        departure_timed:"10:00",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -121,6 +139,8 @@ module.exports = {
         price:2100000,
         arrival_time: "2023-01-03T09:00:00.259Z",
         departure_time:"2023-01-03T10:00:00.259Z",
+        arrival_timed: "09:00",
+        departure_timed:"10:00",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -133,6 +153,8 @@ module.exports = {
         price:3100000,
         arrival_time: "2023-01-05T11:00:00.259Z",
         departure_time:"2023-01-05T12:00:00.259Z",
+        arrival_timed: "11:00",
+        departure_timed:"12:00",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -145,6 +167,8 @@ module.exports = {
         price:3100000,
         arrival_time: "2023-01-07T11:00:00.259Z",
         departure_time:"2023-01-07T12:00:00.259Z",
+        arrival_timed: "11:00",
+        departure_timed:"12:00",
         createdAt: new Date(),
         updatedAt: new Date()
       },

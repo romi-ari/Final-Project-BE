@@ -23,11 +23,13 @@ module.exports = {
     const id_booking = req.body.id_booking;
     const price = req.body.price;
     const date = req.body.date;
+    const dates = req.body.dates;
     ticketService
       .create({
         id_booking,
         price,
         date,
+        dates,
       })
       .then((post) => {
         res.status(201).json({
@@ -49,6 +51,7 @@ module.exports = {
         id_booking: req.body.id_booking,
         price: req.body.price,
         date: req.body.date,
+        dates: req.body.dates,
       })
       .then(() => {
         res.status(200).json({

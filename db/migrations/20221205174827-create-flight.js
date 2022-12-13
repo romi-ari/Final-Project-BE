@@ -51,6 +51,12 @@ module.exports = {
       departure_time: {
         type: Sequelize.DATE
       },
+      arrival_timed: {
+        type: Sequelize.STRING
+      },
+      departure_timed: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
