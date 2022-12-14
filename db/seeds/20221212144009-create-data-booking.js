@@ -8,8 +8,6 @@ module.exports = {
         id_flight:1,
         id_user:1,
         seat:1,
-        baggage:1,
-        food:true,
         name:"budi",
         homephone:"073123456",
         mobilephone:"073123456",

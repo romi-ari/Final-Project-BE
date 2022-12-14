@@ -11,6 +11,8 @@ module.exports = {
         kelas:"Economy Class",
         available_seats: 80,
         price:1000000,
+        baggage:20,
+        food:true,
         arrival_time: "14:00",
         departure_time:"15:00",
         flight_date:"2022-12-12",
