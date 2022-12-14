@@ -46,10 +46,10 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       baggage: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       food: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.STRING
       },
       arrival_time: {
         type: Sequelize.STRING
