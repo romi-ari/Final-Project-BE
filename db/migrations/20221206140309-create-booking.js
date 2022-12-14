@@ -48,6 +48,9 @@ module.exports = {
       totalprice: {
         type: Sequelize.INTEGER
       },
+      booking_date: {
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

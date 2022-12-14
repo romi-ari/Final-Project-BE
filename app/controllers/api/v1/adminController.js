@@ -1,6 +1,6 @@
 /**
  * @file contains authentication request handler and its business logic
- * @author Fikri Rahmat Nurhidayat
+ * @author GoTravel Kelompok 5 FSW 2
  */
 
 const bcrypt = require("bcryptjs");
@@ -10,30 +10,44 @@ const SALT = 10;
 
 //FUNCTION UNTUK ME ENCRYPT PASSWORD SAAT REGISTRASI
 function encryptPassword(password) {
-  return new Promise((resolve, reject) => {
-    bcrypt.hash(password, SALT, (err, encryptedPassword) => {
-      if (!!err) {
-        reject(err);
-        return;
-      }
+  try {
+    return new Promise((resolve, reject) => {
+      bcrypt.hash(password, SALT, (err, encryptedPassword) => {
+        if (!!err) {
+          reject(err);
+          return;
+        }
 
-      resolve(encryptedPassword);
+        resolve(encryptedPassword);
+      });
     });
-  });
+  } catch (error) {
+    res.status(422).json({
+      status: "FAIL",
+      message: error.message,
+    });
+  }
 }
 
 //FUNCTION CHECK PASSWORD
 function checkPassword(encryptedPassword, password) {
-  return new Promise((resolve, reject) => {
-    bcrypt.compare(password, encryptedPassword, (err, isPasswordCorrect) => {
-      if (!!err) {
-        reject(err);
-        return;
-      }
+  try {
+    return new Promise((resolve, reject) => {
+      bcrypt.compare(password, encryptedPassword, (err, isPasswordCorrect) => {
+        if (!!err) {
+          reject(err);
+          return;
+        }
 
-      resolve(isPasswordCorrect);
+        resolve(isPasswordCorrect);
+      });
     });
-  });
+  } catch (error) {
+    res.status(422).json({
+      status: "FAIL",
+      message: error.message,
+    });
+  }
 }
 
 //FUNCTION membuat token yg akan di kirimakan ke client
@@ -47,27 +61,34 @@ module.exports = {
 
   //FUNCTION UNTUK MEMBUAT ADMIN
   async createAdmin(req, res) {
-    const email = req.body.email;
-    const name = req.body.name;
-    const username = req.body.username;
-    const role = "admin";
-    const password = await encryptPassword(req.body.password);
-    const admin = await AdminServices.create({
-      email,
-      password,
-      name,
-      username,
-      role,
-    });
-    res.status(201).json({
-      id: admin.id,
-      email: admin.email,
-      name: admin.name,
-      username: admin.username,
-      role: admin.role,
-      createdAt: admin.createdAt,
-      updatedAt: admin.updatedAt,
-    });
+    try {
+      const email = req.body.email;
+      const name = req.body.name;
+      const username = req.body.username;
+      const role = "admin";
+      const password = await encryptPassword(req.body.password);
+      const admin = await AdminServices.create({
+        email,
+        password,
+        name,
+        username,
+        role,
+      });
+      res.status(201).json({
+        id: admin.id,
+        email: admin.email,
+        name: admin.name,
+        username: admin.username,
+        role: admin.role,
+        createdAt: admin.createdAt,
+        updatedAt: admin.updatedAt,
+      });
+    } catch (error) {
+      res.status(422).json({
+        status: "FAIL",
+        message: error.message,
+      });
+    }
   },
 
   async updateAdmin(req, res) {
@@ -99,51 +120,65 @@ module.exports = {
 
   //FUNCTION LOGIN
   async loginAdmin(req, res) {
-    const username = req.body.username
-    const password = req.body.password;
+    try {
+      const username = req.body.username;
+      const password = req.body.password;
 
-    const admin = await AdminServices.findOne({
-      where: { username },
-    });
+      const admin = await AdminServices.findOne({
+        where: { username },
+      });
 
-    //pengecekan email
-    if (!admin) {
-      res.status(404).json({ message: "Username tidak ditemukan" });
-      return;
+      //pengecekan email
+      if (!admin) {
+        res.status(404).json({ message: "Username tidak ditemukan" });
+        return;
+      }
+
+      //pengecekan password yang telah di compare dari method checkPassword()
+      const isPasswordCorrect = await checkPassword(admin.password, password);
+      //PENGECEKAN JIKA PASSWORD SALAH
+      if (!isPasswordCorrect) {
+        res.status(401).json({ message: "Password salah!" });
+        return;
+      }
+
+      //TOKEN DI BUAT DARI METHOD createToken(), LALU DI MASUKUAN KE DALAM KE DALAM TOKEN
+      const token = createToken({
+        id: admin.id,
+        email: admin.email,
+        role: admin.role,
+        createdAt: admin.createdAt,
+        updatedAt: admin.updatedAt,
+      });
+
+      //RESPON YANG DI TAMPILKAN KE CLIENT
+      res.status(201).json({
+        id: admin.id,
+        email: admin.email,
+        name: admin.name,
+        username: admin.username,
+        token,
+        createdAt: admin.createdAt,
+        updatedAt: admin.updatedAt,
+      });
+    } catch (error) {
+      res.status(422).json({
+        status: "FAIL",
+        message: error.message,
+      });
     }
-
-    //pengecekan password yang telah di compare dari method checkPassword()
-    const isPasswordCorrect = await checkPassword(admin.password, password);
-    //PENGECEKAN JIKA PASSWORD SALAH
-    if (!isPasswordCorrect) {
-      res.status(401).json({ message: "Password salah!" });
-      return;
-    }
-
-    //TOKEN DI BUAT DARI METHOD createToken(), LALU DI MASUKUAN KE DALAM KE DALAM TOKEN
-    const token = createToken({
-      id: admin.id,
-      email: admin.email,
-      role: admin.role,
-      createdAt: admin.createdAt,
-      updatedAt: admin.updatedAt,
-    });
-
-    //RESPON YANG DI TAMPILKAN KE CLIENT
-    res.status(201).json({
-      id: admin.id,
-      email: admin.email,
-      name: admin.name,
-      username: admin.username,
-      token,
-      createdAt: admin.createdAt,
-      updatedAt: admin.updatedAt,
-    });
   },
 
   //FUNCTION UNTUK MENGETAHUI SIAPA YANG SEDANG MENGAKSES DATA
   async whoAmI(req, res) {
-    res.status(200).json(req.admin);
+    try {
+      res.status(200).json(req.admin);
+    } catch (error) {
+      res.status(422).json({
+        status: "FAIL",
+        message: error.message,
+      });
+    }
   },
 
   //FUNCTION UNTUK PENGECEKAN SAAT LOGIN
@@ -176,22 +211,29 @@ module.exports = {
     }
   },
   verifyRoles(...allowedRoles) {
-    return (req, res, next) => {
-      userRole = req.admin.role
-      console.log(userRole);
-      if (!userRole)
-        return res.status(401).json({
-          status: "FAIL",
-          message: "you don't have role",
-        });
-      const rolesArray = [...allowedRoles];
-      const result = rolesArray.includes(userRole);
-      if (!result)
-        return res.status(401).json({
-          status: "FAIL",
-          message: "you don't have permission",
-        });
-      next();
-    };
+    try {
+      return (req, res, next) => {
+        userRole = req.admin.role;
+        console.log(userRole);
+        if (!userRole)
+          return res.status(401).json({
+            status: "FAIL",
+            message: "you don't have role",
+          });
+        const rolesArray = [...allowedRoles];
+        const result = rolesArray.includes(userRole);
+        if (!result)
+          return res.status(401).json({
+            status: "FAIL",
+            message: "you don't have permission",
+          });
+        next();
+      };
+    } catch (error) {
+      res.status(422).json({
+        status: "FAIL",
+        message: error.message,
+      });
+    }
   },
 };

@@ -31,7 +31,8 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     homephone: DataTypes.STRING,
     mobilephone: DataTypes.STRING,
-    totalprice: DataTypes.INTEGER
+    totalprice: DataTypes.INTEGER,
+    booking_date: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Booking',

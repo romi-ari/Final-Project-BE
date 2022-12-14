@@ -29,6 +29,7 @@ module.exports = {
     const homephone = req.body.homephone;
     const mobilephone = req.body.mobilephone;
     const totalprice = req.body.totalprice;
+    const booking_date = req.body.booking_date;
     bookingService
       .create({
         id_flight,
@@ -40,6 +41,7 @@ module.exports = {
         homephone,
         mobilephone,
         totalprice,
+        booking_date,
       })
       .then((post) => {
         res.status(201).json({
@@ -67,6 +69,7 @@ module.exports = {
         homephone: req.body.homephone,
         mobilephone: req.body.mobilephone,
         totalprice: req.body.totalprice,
+        booking_date: req.body.booking_date
       })
       .then(() => {
         res.status(200).json({

@@ -2,7 +2,7 @@
 
 /**
  * @file Run express.js
- * @author Kelompok 5
+ * @author GoTravel Kelompok 5 FSW 2
  */
 
 const app = require("../app")

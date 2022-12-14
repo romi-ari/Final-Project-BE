@@ -1,6 +1,6 @@
 /**
  * @file contains entry point of controllers api module
- * @author Fikri Rahmat Nurhidayat
+ * @author GoTravel Kelompok 5 FSW 2
  */
 
 const main = require("./main");

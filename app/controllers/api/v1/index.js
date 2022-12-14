@@ -1,6 +1,6 @@
 /**
  * @file contains entry point of controllers api v1 module
- * @author Fikri Rahmat Nurhidayat
+ * @author GoTravel Kelompok 5 FSW 2
  */
 
  const adminController = require("./adminController");
@@ -11,6 +11,7 @@
  const flightController = require("./flightController");
  const ticketController = require("./ticketController");
  const bookingController = require("./bookingController");
+ const whislistController = require("./whislistController");
  const handleGoogleLoginOrRegister = require("./handleGoogleLoginOrRegister");
  
  module.exports = {
@@ -22,6 +23,7 @@
    flightController,
    ticketController,
    bookingController,
+   whislistController,
    handleGoogleLoginOrRegister
  };
  

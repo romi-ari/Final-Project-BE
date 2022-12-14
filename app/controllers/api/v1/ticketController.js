@@ -21,13 +21,11 @@ module.exports = {
 
   create(req, res) {
     const id_booking = req.body.id_booking;
-    const price = req.body.price;
     const date = req.body.date;
+    const dates = req.body.dates;
     ticketService
       .create({
         id_booking,
-        price,
-        date,
       })
       .then((post) => {
         res.status(201).json({
@@ -47,8 +45,6 @@ module.exports = {
     ticketService
       .update(req.params.id, {
         id_booking: req.body.id_booking,
-        price: req.body.price,
-        date: req.body.date,
       })
       .then(() => {
         res.status(200).json({

@@ -1,6 +1,6 @@
 /**
  * @file Manages database connection configuration.
- * @author Kelompok 5
+ * @author GoTravel Kelompok 5 FSW 2
  */
 
 /** Destruct environment variable to get database configuration */
@@ -53,35 +53,42 @@ module.exports = {
   db
 };
 
+/**Local Test*/
 
+// const Sequelize = require("sequelize");
+
+// const dotenv = require('dotenv')
+
+// dotenv.config();
 
 // const {
-//   DB_USERNAME = "root",
-//   DB_PASSWORD = "",
-//   DB_HOST = "127.0.0.1",
-//   DB_NAME = "db_fp",
+//   DB_USERNAME = process.env.DB_USERNAME,
+//   DB_PASSWORD = process.env.DB_PASSWORD,
+//   DB_HOST = process.env.DB_HOST,
+//   DB_NAME = process.env.DB_NAME,
 // } = process.env;
 
 // module.exports = {
 //   development: {
 //     username: DB_USERNAME,
 //     password: DB_PASSWORD,
-//     database: `${DB_NAME}_development`,
+//     database: DB_NAME,
 //     host: DB_HOST,
-//     dialect: "mysql",
+//     dialect: "postgres",
 //   },
 //   test: {
 //     username: DB_USERNAME,
 //     password: DB_PASSWORD,
-//     database: `${DB_NAME}_test`,
+//     database: DB_NAME,
 //     host: DB_HOST,
-//     dialect: "mysql",
+//     dialect: "postgres",
 //   },
 //   production: {
 //     username: DB_USERNAME,
 //     password: DB_PASSWORD,
-//     database: `${DB_NAME}_production`,
+//     database: DB_NAME,
 //     host: DB_HOST,
-//     dialect: "mysql",
+//     dialect: "postgres",
 //   },
 // };
+
