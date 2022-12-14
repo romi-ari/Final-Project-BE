@@ -28,8 +28,7 @@ module.exports = {
     const price = req.body.price;
     const arrival_time = req.body.arrival_time;
     const departure_time = req.body.departure_time;
-    const arrival_timed = req.body.arrival_timed;
-    const departure_timed = req.body.departure_timed;
+    const flight_date = req.body.flight_date;
     flightService
       .create({
         from_airport_id,
@@ -40,8 +39,7 @@ module.exports = {
         price,
         arrival_time,
         departure_time,
-        arrival_timed,
-        departure_timed,
+        flight_date,
       })
       .then((post) => {
         res.status(201).json({
@@ -68,8 +66,7 @@ module.exports = {
         price : req.body.price,
         arrival_time : req.body.arrival_time,
         departure_time : req.body.departure_time,
-        arrival_timed : req.body.arrival_timed,
-        departure_timed : req.body.departure_timed,
+        flight_date : req.body.flight_date,
       })
       .then(() => {
         res.status(200).json({

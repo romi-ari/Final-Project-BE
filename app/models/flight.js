@@ -33,10 +33,9 @@ module.exports = (sequelize, DataTypes) => {
       kelas: DataTypes.STRING,
       available_seats: DataTypes.INTEGER,
       price : DataTypes.INTEGER,
-      arrival_time: DataTypes.DATE,
-      departure_time: DataTypes.DATE,
-      arrival_timed: DataTypes.STRING,
-      departure_timed: DataTypes.STRING,
+      arrival_time: DataTypes.STRING,
+      departure_time: DataTypes.STRING,
+      flight_date: DataTypes.STRING,
     },
     {
       sequelize,

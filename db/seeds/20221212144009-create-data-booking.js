@@ -14,6 +14,7 @@ module.exports = {
         homephone:"073123456",
         mobilephone:"073123456",
         totalprice:null,
+        booking_date:null,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -27,6 +28,7 @@ module.exports = {
         homephone:"073123456",
         mobilephone:"073123456",
         totalprice:null,
+        booking_date:null,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -40,6 +42,7 @@ module.exports = {
         homephone:"073123456",
         mobilephone:"073123456",
         totalprice:null,
+        booking_date:null,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -53,6 +56,7 @@ module.exports = {
         homephone:"073123456",
         mobilephone:"073123456",
         totalprice:null,
+        booking_date:null,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -66,6 +70,7 @@ module.exports = {
         homephone:"073123456",
         mobilephone:"073123456",
         totalprice:null,
+        booking_date:null,
         createdAt: new Date(),
         updatedAt: new Date()
       },
