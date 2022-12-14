@@ -45,6 +45,12 @@ module.exports = {
       price: {
         type: Sequelize.INTEGER
       },
+      baggage: {
+        type: Sequelize.INTEGER
+      },
+      food: {
+        type: Sequelize.BOOLEAN
+      },
       arrival_time: {
         type: Sequelize.STRING
       },

@@ -30,12 +30,6 @@ module.exports = {
       seat: {
         type: Sequelize.INTEGER
       },
-      baggage: {
-        type: Sequelize.INTEGER
-      },
-      food: {
-        type: Sequelize.BOOLEAN
-      },
       name: {
         type: Sequelize.STRING
       },

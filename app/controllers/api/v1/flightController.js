@@ -26,6 +26,8 @@ module.exports = {
     const kelas = req.body.kelas;
     const available_seats = req.body.available_seats;
     const price = req.body.price;
+    const baggage = req.body.baggage;
+    const food = req.body.food;
     const arrival_time = req.body.arrival_time;
     const departure_time = req.body.departure_time;
     const flight_date = req.body.flight_date;
@@ -37,6 +39,8 @@ module.exports = {
         kelas,
         available_seats,
         price,
+        baggage,
+        food,
         arrival_time,
         departure_time,
         flight_date,
@@ -64,6 +68,8 @@ module.exports = {
         kelas : req.body.kelas,
         available_seats : req.body.available_seats,
         price : req.body.price,
+        baggage : req.body.baggage,
+        food : req.body.food,
         arrival_time : req.body.arrival_time,
         departure_time : req.body.departure_time,
         flight_date : req.body.flight_date,

@@ -23,8 +23,6 @@ module.exports = {
     const id_flight = req.body.id_flight;
     const id_user = req.user.id
     const seat = req.body.seat;
-    const baggage = req.body.baggage;
-    const food = req.body.food;
     const name = req.body.name;
     const homephone = req.body.homephone;
     const mobilephone = req.body.mobilephone;
@@ -35,8 +33,6 @@ module.exports = {
         id_flight,
         id_user,
         seat,
-        baggage,
-        food,
         name,
         homephone,
         mobilephone,
@@ -63,8 +59,6 @@ module.exports = {
         id_booking: req.body.id_booking,
         id_user: req.user.id_user,
         seat: req.body.seat,
-        baggage: req.body.baggage,
-        food: req.body.food,
         name: req.body.name,
         homephone: req.body.homephone,
         mobilephone: req.body.mobilephone,
