@@ -196,7 +196,7 @@ apiRouter.get("/api/v1/ticket",
 
 apiRouter.post("/api/v1/ticket",
   controllers.api.v1.userController.authorize,
-  controllers.api.v1.userController.verifyRoles("superAdmin", "admin"),
+  controllers.api.v1.userController.verifyRoles("member"),
   controllers.api.v1.ticketController.create
 );
 
