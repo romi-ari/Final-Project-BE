@@ -28,7 +28,8 @@ module.exports = {
         onUpdate : 'CASCADE'
       },
       seat: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        autoIncrement: true
       },
       name: {
         type: Sequelize.STRING
