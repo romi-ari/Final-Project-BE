@@ -4,7 +4,7 @@
  */
 
  const adminController = require("./adminController");
- const userController = require("./UserController");
+ const {UserController, encryptPassword, createToken} = require("./UserController");
  const airportController = require("./airportController");
  const planeController = require("./planeController");
  const confirmationController = require("./confirmationController");
@@ -16,7 +16,9 @@
  
  module.exports = {
    adminController,
-   userController,
+   UserController,
+   encryptPassword,
+   createToken,
    airportController,
    planeController,
    confirmationController,

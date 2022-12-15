@@ -6,7 +6,7 @@ module.exports = {
     return queryInterface.bulkInsert("Users", [
       {
         email: "superadmin@gmail.com",
-        password: await controllers.api.v1.userController.encryptPassword(
+        password: await controllers.api.v1.encryptPassword(
           "superadmin"
         ),
         role: "superAdmin",
@@ -21,7 +21,7 @@ module.exports = {
       },
       {
         email: "user@gmail.com",
-        password: await controllers.api.v1.userController.encryptPassword(
+        password: await controllers.api.v1.encryptPassword(
           "user"
         ),
         role: "member",
@@ -36,7 +36,7 @@ module.exports = {
       },
       {
         email: "admin@gmail.com",
-        password: await controllers.api.v1.userController.encryptPassword(
+        password: await controllers.api.v1.encryptPassword(
           "admin"
         ),
         role: "admin",
