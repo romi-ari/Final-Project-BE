@@ -5,9 +5,9 @@ const now = dayjs();
 const isoDate = now.toISOString();
 const controllers = require("../app/controllers");
 
-const encryptedPassword = async(password) => {
-  return await controllers.api.v1.encryptPassword(password)
-}
+const encryptedPassword = async (password) => {
+  return await controllers.api.v1.encryptPassword(password);
+};
 
 const mock = {
   RES: {
@@ -18,7 +18,7 @@ const mock = {
   USER: {
     id: 1,
     email: "user@gmail.com",
-    password: toString(encryptedPassword("user")),
+    password: bcrypt.hashSync("user", SALT),
     role: "member",
     name: "User",
     username: "user",
@@ -33,7 +33,7 @@ const mock = {
   ADMIN: {
     id: 1,
     email: "admin@gmail.com",
-    password: toString(encryptedPassword("admin")),
+    password: bcrypt.hashSync("admin", SALT),
     role: "admin",
     name: "Admin",
     username: "admin",
@@ -48,7 +48,7 @@ const mock = {
   SUPERADMIN: {
     id: 1,
     email: "superadmin@gmail.com",
-    password: toString(encryptedPassword("admin")),
+    password: bcrypt.hashSync("superadmin", SALT),
     role: "superAdmin",
     name: "Super Admin",
     username: "superAdmin",
@@ -60,24 +60,70 @@ const mock = {
     updatedAt: new Date(),
   },
 
+  AIRPORT: {
+    id: 1,
+    name: "Bandara Udara Internasional Ngurah Rai",
+    province: "Bali",
+    city: "Denpasar",
+    country: "Indonesia",
+    status: "On",
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+
+  PLANE: {
+    id: 1,
+    code: 100,
+    name: "Boeing 777-300ER",
+    status: "On",
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+
+  FLIGHT: {
+    id: 1,
+    id_plane: 1,
+    from_airport_id: 1,
+    to_airport_id: 2,
+    kelas: "First Class",
+    available_seats: 20,
+    price: 3100000,
+    arrival_time: "11:00",
+    departure_time: "12:00",
+    flight_date: "2022-12-28",
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+
+  BOOKING: {
+    id: 1,
+    id_flight: 1,
+    id_user: 1,
+    seat: 1,
+    baggage: 1,
+    food: true,
+    name: "ucok",
+    homephone: "073123456",
+    mobilephone: "073123456",
+    totalprice: 120000,
+    booking_date: "2022-12-28",
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+
   TICKET: {
     id: 1,
-    category: "ROUND_TRIP",
-    from: "JAKARTA",
-    to: "MEDAN",
-    departureTime: isoDate,
-    returnTime: now.add(1, "day").toISOString(),
-    price: 980000,
-    flightNumber: "AX31V",
-    duration: 32,
-    imageId: "string",
-    imageUrl: "string.com/image.png",
-    description: "Lorem ipsum blbalaldanlwdj",
-    createdBy: 1,
-    createdAt: isoDate,
-    updatedBy: 1,
-    updatedAt: isoDate,
-    deletedAt: isoDate,
+    id_booking: 1,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+
+  WHISLIST: {
+    id: 1,
+    id_flight: 1,
+    id_user: 1,
+    createdAt: new Date(),
+    updatedAt: new Date(),
   },
 };
 

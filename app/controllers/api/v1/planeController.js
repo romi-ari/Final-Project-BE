@@ -1,98 +1,108 @@
-const planeService = require("../../../services/planeService");
+class planeController {
+  constructor(planeService) {
+    this.planeService = planeService;
+  }
 
-module.exports = {
-  list(req, res) {
-    planeService
-      .list()
-      .then(({ data, count }) => {
-        res.status(200).json({
-          status: "OK",
-          data: { planes: data },
-          meta: { total: count },
-        });
-      })
-      .catch((err) => {
-        res.status(400).json({
-          status: "FAIL",
-          message: err.message,
-        });
+  list = async (req, res) => {
+    try {
+      const listPlane = await this.planeService.list();
+      res.status(200).json({
+        status: "OK",
+        data: { planes: listPlane },
+        meta: { count: listPlane.length },
       });
-  },
+    } catch (error) {
+      res.status(400).json({
+        status: "FAIL",
+        message: error.message,
+      });
+    }
+  };
 
-  create(req, res) {
-    const name = req.body.name;
-    const code = req.body.code;
-    const status = req.body.status;
-    planeService
-      .create({
+  showById = async (req, res) => {
+    try {
+      const plane = await this.planeService.findByPk(req.params.id);
+
+      if (!plane) {
+        res.status(404).json({ message: "id plane tidak ditemukan" });
+        return;
+      }
+      res.status(200).json({
+        status: "OK",
+        data: plane,
+      });
+    } catch (error) {
+      res.status(400).json({
+        status: "FAIL",
+        message: error.message,
+      });
+    }
+  };
+
+  create = async (req, res) => {
+    try {
+      const name = req.body.name;
+      const code = req.body.code;
+      const status = req.body.status;
+      const plane = await this.planeService.create({
         code,
         name,
         status,
-      })
-      .then((post) => {
-        res.status(201).json({
-          status: "Create Plane successfully",
-          data: post,
-        });
-      })
-      .catch((err) => {
-        res.status(422).json({
-          status: "FAIL",
-          message: err.message,
-        });
       });
-  },
+      res.status(201).json({
+        status: "Create plane successfully",
+        data: plane,
+      });
+    } catch (error) {
+      res.status(400).json({
+        status: "FAIL",
+        message: error.message,
+      });
+    }
+  };
 
-  update(req, res) {
-    planeService
-      .update(req.params.id, {
+  update = async (req, res) => {
+    try {
+      const plane = await this.planeService.update(req.params.id, {
         code: req.body.code,
         name: req.body.name,
         status: req.body.status,
-      })
-      .then(() => {
-        res.status(200).json({
-          status: "Update Plane successfully",
-        });
-      })
-      .catch((err) => {
-        res.status(422).json({
-          status: "FAIL",
-          message: err.message,
-        });
       });
-  },
+      if (plane == 0) {
+        res.status(404).json({ message: "id plane tidak ditemukan" });
+        return;
+      }
+      res.status(200).json({
+        status: "Update plane successfully",
+      });
+    } catch (error) {
+      res.status(400).json({
+        status: "FAIL",
+        message: error.message,
+      });
+    }
+  };
 
-  show(req, res) {
-    planeService
-      .findByPk(req.params.id)
-      .then((post) => {
-        res.status(200).json({
-          status: "OK",
-          data: post,
-        });
-      })
-      .catch((err) => {
-        res.status(422).json({
-          status: "FAIL",
-          message: err.message,
-        });
-      });
-  },
+  destroy = async (req, res) => {
+    try {
+      const plane = await this.planeService.destroy(req.params.id);
 
-  destroy(req, res) {
-    planeService
-      .destroy(req.params.id)
-      .then(() => {
-        res.status(200).json({
-          status: `Delete Plane successfully`,
-        });
-      })
-      .catch((err) => {
-        res.status(422).json({
-          status: "FAIL",
-          message: err.message,
-        });
+      if (!plane) {
+        res.status(404).json({ message: "id plane tidak ditemukan" });
+        return;
+      }
+      res.status(200).json({
+        status: "SUCCESS",
+        status: `Delete plane successfully`,
       });
-  },
-};
+    } catch (error) {
+      res.status(400).json({
+        status: "FAIL",
+        message: error.message,
+      });
+    }
+  };
+}
+
+module.exports = planeController;
+

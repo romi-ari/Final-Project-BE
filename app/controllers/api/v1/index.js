@@ -3,7 +3,6 @@
  * @author GoTravel Kelompok 5 FSW 2
  */
 
- const adminController = require("./adminController");
  const {UserController, encryptPassword, createToken} = require("./UserController");
  const airportController = require("./airportController");
  const planeController = require("./planeController");
@@ -15,7 +14,6 @@
  const handleGoogleLoginOrRegister = require("./handleGoogleLoginOrRegister");
  
  module.exports = {
-   adminController,
    UserController,
    encryptPassword,
    createToken,

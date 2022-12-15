@@ -21,7 +21,7 @@ module.exports = {
   },
 
   findByPk(id) {
-    return Flight.findByPk(id);
+    return Flight.findByPk(id, {include: [{all:true, nested:true}]});
   },
 
   findOne(id) {

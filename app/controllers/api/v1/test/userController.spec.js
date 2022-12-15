@@ -5,7 +5,6 @@ const mock = require("../../../../../test/mock");
 describe("UserController", () => {
   const mockUser = {
     ...mock.USER,
-    password: "$2a$10$ZAvQkbrpp.ReR0ztuK.wiu7xI1PP5m9lVhIOgOp1QLdeHBcU59LYm",
   };
   const mockUser2 = {
     ...mock.USER,
@@ -146,7 +145,7 @@ describe("UserController", () => {
   });
 
   describe("#updateuser", () => {
-    it("should res.status(200) and res.json with user instance if success", async () => {
+    it("should res.status(200) if success", async () => {
       const mockReq = {
         user: mockUser,
         body: {
@@ -224,7 +223,7 @@ describe("UserController", () => {
   });
 
   describe("#login", () => {
-    it("should res.status(201) on delete success", async () => {
+    it("should res.status(201) on login success", async () => {
       const mockReq = {
         body: {
           username: mockUser.username,
@@ -255,7 +254,7 @@ describe("UserController", () => {
     it("should res.status(404) if username not found", async () => {
       const mockReq = {
         body: {
-          username: mockUser.username,
+          username: "username",
           password: "user",
         },
       };

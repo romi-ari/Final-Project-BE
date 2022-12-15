@@ -1,94 +1,101 @@
-const ticketService = require("../../../services/ticketService");
+class ticketController {
+  constructor(ticketService) {
+    this.ticketService = ticketService;
+  }
 
-module.exports = {
-  list(req, res) {
-    ticketService
-      .list()
-      .then(({ data, count }) => {
-        res.status(200).json({
-          status: "OK",
-          data: { ticket: data },
-          meta: { total: count },
-        });
-      })
-      .catch((err) => {
-        res.status(400).json({
-          status: "FAIL",
-          message: err.message,
-        });
+  list = async (req, res) => {
+    try {
+      const listTicket = await this.ticketService.list();
+      res.status(200).json({
+        status: "OK",
+        data: { tickets: listTicket },
+        meta: { count: listTicket.length },
       });
-  },
+    } catch (error) {
+      res.status(400).json({
+        status: "FAIL",
+        message: error.message,
+      });
+    }
+  };
 
-  create(req, res) {
-    const id_booking = req.body.id_booking;
-    const date = req.body.date;
-    const dates = req.body.dates;
-    ticketService
-      .create({
-        id_booking,
-      })
-      .then((post) => {
-        res.status(201).json({
-          status: "Create Ticket successfully",
-          data: post,
-        });
-      })
-      .catch((err) => {
-        res.status(422).json({
-          status: "FAIL",
-          message: err.message,
-        });
-      });
-  },
+  showById = async (req, res) => {
+    try {
+      const ticket = await this.ticketService.findByPk(req.params.id);
 
-  update(req, res) {
-    ticketService
-      .update(req.params.id, {
-        id_booking: req.body.id_booking,
-      })
-      .then(() => {
-        res.status(200).json({
-          status: "Update Ticket successfully",
-        });
-      })
-      .catch((err) => {
-        res.status(422).json({
-          status: "FAIL",
-          message: err.message,
-        });
+      if (!ticket) {
+        res.status(404).json({ message: "id ticket tidak ditemukan" });
+        return;
+      }
+      res.status(200).json({
+        status: "OK",
+        data: ticket,
       });
-  },
+    } catch (error) {
+      res.status(400).json({
+        status: "FAIL",
+        message: error.message,
+      });
+    }
+  };
 
-  show(req, res) {
-    ticketService
-      .findByPk(req.params.id)
-      .then((post) => {
-        res.status(200).json({
-          status: "OK",
-          data: post,
-        });
-      })
-      .catch((err) => {
-        res.status(422).json({
-          status: "FAIL",
-          message: err.message,
-        });
+  create = async (req, res) => {
+    try {
+      const id_booking = req.body.id_booking;
+      const ticket = await this.ticketService.create({
+        id_booking
       });
-  },
+      res.status(201).json({
+        status: "Create ticket successfully",
+        data: ticket,
+      });
+    } catch (error) {
+      res.status(400).json({
+        status: "FAIL",
+        message: error.message,
+      });
+    }
+  };
 
-  destroy(req, res) {
-    ticketService
-      .destroy(req.params.id)
-      .then(() => {
-        res.status(200).json({
-          status: `Delete Ticket successfully`,
-        });
-      })
-      .catch((err) => {
-        res.status(422).json({
-          status: "FAIL",
-          message: err.message,
-        });
+  update = async (req, res) => {
+    try {
+      const ticket = await this.ticketService.update(req.params.id, {
+        id_booking: req.body.id_booking
       });
-  },
-};
+      if (ticket == 0) {
+        res.status(404).json({ message: "id ticket tidak ditemukan" });
+        return;
+      }
+      res.status(200).json({
+        status: "Update ticket successfully",
+      });
+    } catch (error) {
+      res.status(400).json({
+        status: "FAIL",
+        message: error.message,
+      });
+    }
+  };
+
+  destroy = async (req, res) => {
+    try {
+      const ticket = await this.ticketService.destroy(req.params.id);
+
+      if (!ticket) {
+        res.status(404).json({ message: "id ticket tidak ditemukan" });
+        return;
+      }
+      res.status(200).json({
+        status: "SUCCESS",
+        status: `Delete ticket successfully`,
+      });
+    } catch (error) {
+      res.status(400).json({
+        status: "FAIL",
+        message: error.message,
+      });
+    }
+  };
+}
+
+module.exports = ticketController;

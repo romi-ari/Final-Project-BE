@@ -22,7 +22,7 @@ module.exports = {
   },
 
   findByPk(id) {
-    return Whislist.findByPk(id);
+    return Whislist.findByPk(id, {include: [{all:true, nested:true}]});
   },
 
   findOne(id) {

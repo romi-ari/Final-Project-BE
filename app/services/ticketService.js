@@ -15,13 +15,7 @@ module.exports = {
 
   async list() {
     try {
-      const tickets = await ticketRepository.findAll();
-      const ticketCount = await ticketRepository.getTotalTicket();
-
-      return {
-        data: tickets,
-        count: ticketCount,
-      };
+      return await ticketRepository.findAll();
     } catch (err) {
       throw err;
     }

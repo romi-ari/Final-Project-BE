@@ -22,7 +22,7 @@ module.exports = {
   },
 
   findByPk(id) {
-    return Ticket.findByPk(id);
+    return Ticket.findByPk(id, {include: [{all:true, nested:true}]});
   },
 
   findOne(id) {

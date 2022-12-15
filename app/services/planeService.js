@@ -16,13 +16,7 @@ module.exports = {
 
   async list() {
     try {
-      const planes = await planeRepository.findAll();
-      const planeCount = await planeRepository.getTotalPlane();
-
-      return {
-        data: planes,
-        count: planeCount,
-      };
+      return await planeRepository.findAll();
     } catch (err) {
       throw err;
     }

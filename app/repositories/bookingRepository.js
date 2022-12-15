@@ -21,7 +21,7 @@ module.exports = {
   },
 
   findByPk(id) {
-    return Booking.findByPk(id);
+    return Booking.findByPk(id, {include: [{all:true, nested:true}]});
   },
 
   findOne(id) {

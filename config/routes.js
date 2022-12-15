@@ -4,7 +4,15 @@ const YAML = require("yamljs");
 const swaggerUi = require("swagger-ui-express");
 const limit = require("./limitSize");
 const cors = require("cors");
-const userServices = require("../app/services/userServices");
+const {
+  userService,
+  airportService,
+  bookingService,
+  planeService,
+  flightService,
+  ticketService,
+  whislistService
+} = require("../app/services");
 
 const swaggerDocument = YAML.load("./openApi.yaml");
 
@@ -14,42 +22,40 @@ apiRouter.use(cors());
 
 //API Docoumentation
 
-apiRouter.use("/api-docs",
-  swaggerUi.serve, swaggerUi.setup(swaggerDocument)
-);
+apiRouter.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 //Google Login API
 
-apiRouter.post("/api/v1/google",
+apiRouter.post(
+  "/api/v1/google",
   controllers.api.v1.handleGoogleLoginOrRegister
 );
 
-const userController = new controllers.api.v1.UserController(userServices);
+const userController = new controllers.api.v1.UserController(userService);
 
-//Login untuk member, admin, superAdmin  
+//Login untuk member, admin, superAdmin
 
-apiRouter.post("/api/v1/login", 
-  userController.login
-);
+apiRouter.post("/api/v1/login", userController.login);
 
 // End Point User
 
-apiRouter.get("/api/v1/profile",
+apiRouter.get(
+  "/api/v1/profile",
   userController.authorize,
   userController.whoAmI
 );
 
-apiRouter.put("/api/v1/updateUser",
+apiRouter.put(
+  "/api/v1/updateUser",
   userController.authorize,
   limit,
   userController.updateUser
 );
 
-apiRouter.post("/api/v1/register", 
-  userController.register
-);
+apiRouter.post("/api/v1/register", userController.register);
 
-apiRouter.delete("/api/v1/deleteUser/:id", 
+apiRouter.delete(
+  "/api/v1/deleteUser/:id",
   userController.authorize,
   userController.authorizeUser,
   userController.deleteUser
@@ -57,219 +63,239 @@ apiRouter.delete("/api/v1/deleteUser/:id",
 
 //Admin and superAdmin Operation
 
-apiRouter.post("/api/v1/createAdmin",
+apiRouter.post(
+  "/api/v1/createAdmin",
   userController.authorize,
   userController.authorizeSuperAdmin,
   userController.createAdmin
 );
 
-  // get all user
+// get all user
 
-apiRouter.get("/api/v1/user",
+apiRouter.get(
+  "/api/v1/user",
   userController.authorize,
   userController.authorizeAdmin,
   userController.listUser
 );
 
-  // get all admin
+// get all admin
 
-apiRouter.get("/api/v1/Admin",
+apiRouter.get(
+  "/api/v1/Admin",
   userController.authorize,
   userController.authorizeAdmin,
   userController.listAdmin
-); 
+);
 
-  // get all member
+// get all member
 
-apiRouter.get("/api/v1/Member",
+apiRouter.get(
+  "/api/v1/Member",
   userController.authorize,
   userController.authorizeAdmin,
   userController.listMember
-); 
+);
 
 //End Point Airport
 
-apiRouter.get("/api/v1/airport", 
-  controllers.api.v1.airportController.list
+const airportController = new controllers.api.v1.airportController(
+  airportService
 );
 
-apiRouter.post("/api/v1/airport",
+apiRouter.get("/api/v1/airport", airportController.list);
+
+apiRouter.post(
+  "/api/v1/airport",
   userController.authorize,
   userController.authorizeAdmin,
-  controllers.api.v1.airportController.create
+  airportController.create
 );
 
-apiRouter.put("/api/v1/airport/:id",
+apiRouter.put(
+  "/api/v1/airport/:id",
   userController.authorize,
   userController.authorizeAdmin,
-  controllers.api.v1.airportController.update
+  airportController.update
 );
 
-apiRouter.get("/api/v1/airport/:id", 
-  controllers.api.v1.airportController.show
-);
+apiRouter.get("/api/v1/airport/:id", airportController.showById);
 
-apiRouter.delete("/api/v1/airport/:id",
+apiRouter.delete(
+  "/api/v1/airport/:id",
   userController.authorize,
   userController.authorizeAdmin,
-  controllers.api.v1.airportController.destroy
+  airportController.destroy
 );
 
 //End Point Plane
 
-apiRouter.get("/api/v1/plane", 
-  controllers.api.v1.planeController.list
-);
+const planeController = new controllers.api.v1.planeController(planeService);
 
-apiRouter.post("/api/v1/plane",
+apiRouter.get("/api/v1/plane", planeController.list);
+
+apiRouter.post(
+  "/api/v1/plane",
   userController.authorize,
   userController.authorizeAdmin,
-  controllers.api.v1.planeController.create
+  planeController.create
 );
 
-apiRouter.put("/api/v1/plane/:id",
+apiRouter.put(
+  "/api/v1/plane/:id",
   userController.authorize,
   userController.authorizeAdmin,
-  controllers.api.v1.planeController.update
+  planeController.update
 );
 
-apiRouter.get("/api/v1/plane/:id", 
-  controllers.api.v1.planeController.show
-);
+apiRouter.get("/api/v1/plane/:id", planeController.showById);
 
-apiRouter.delete("/api/v1/plane/:id",
+apiRouter.delete(
+  "/api/v1/plane/:id",
   userController.authorize,
   userController.authorizeAdmin,
-  controllers.api.v1.planeController.destroy
+  planeController.destroy
 );
 
 //cloudinary upload file (receipt)
 
-apiRouter.get("/confirmation",
+apiRouter.get(
+  "/confirmation",
   limit,
   controllers.api.v1.confirmationController.list
 );
 
-apiRouter.post("/confirmation",
+apiRouter.post(
+  "/confirmation",
   limit,
   controllers.api.v1.confirmationController.create
 );
 
-apiRouter.put("/confirmation/:id",
+apiRouter.put(
+  "/confirmation/:id",
   limit,
   controllers.api.v1.confirmationController.update
 );
-apiRouter.delete("/confirmation/:id",
+apiRouter.delete(
+  "/confirmation/:id",
   limit,
   controllers.api.v1.confirmationController.destroy
 );
 
 //END POINT FLIGHT
-apiRouter.get("/api/v1/flight", 
-  controllers.api.v1.flightController.list
-);
 
-apiRouter.post("/api/v1/flight",
+const flightController = new controllers.api.v1.flightController(flightService);
+
+apiRouter.get("/api/v1/flight", flightController.list);
+
+apiRouter.post(
+  "/api/v1/flight",
   userController.authorize,
   userController.authorizeAdmin,
-  controllers.api.v1.flightController.create
+  flightController.create
 );
 
-apiRouter.put("/api/v1/flight/:id",
+apiRouter.put(
+  "/api/v1/flight/:id",
   userController.authorize,
   userController.authorizeAdmin,
-  controllers.api.v1.flightController.update
+  flightController.update
 );
 
-apiRouter.get("/api/v1/flight/:id", 
-  controllers.api.v1.flightController.show
-);
+apiRouter.get("/api/v1/flight/:id", flightController.showById);
 
-apiRouter.delete("/api/v1/flight/:id",
+apiRouter.delete(
+  "/api/v1/flight/:id",
   userController.authorize,
   userController.authorizeAdmin,
-  controllers.api.v1.flightController.destroy
+  flightController.destroy
 );
 
 //END POINT TICKET
 
-apiRouter.get("/api/v1/ticket", 
-  controllers.api.v1.ticketController.list
-);
+const ticketController = new controllers.api.v1.ticketController(ticketService);
 
-apiRouter.post("/api/v1/ticket",
+apiRouter.get("/api/v1/ticket", ticketController.list);
+
+apiRouter.post(
+  "/api/v1/ticket",
   userController.authorize,
   userController.authorizeUser,
-  controllers.api.v1.ticketController.create
+  ticketController.create
 );
 
-apiRouter.put("/api/v1/ticket/:id",
+apiRouter.put(
+  "/api/v1/ticket/:id",
   userController.authorize,
   userController.authorizeAdmin,
-  controllers.api.v1.ticketController.update
+  ticketController.update
 );
 
-apiRouter.get("/api/v1/ticket/:id", 
-  controllers.api.v1.ticketController.show
-);
+apiRouter.get("/api/v1/ticket/:id", ticketController.showById);
 
-apiRouter.delete("/api/v1/ticket/:id",
+apiRouter.delete(
+  "/api/v1/ticket/:id",
   userController.authorize,
   userController.authorizeAdmin,
-  controllers.api.v1.ticketController.destroy
+  ticketController.destroy
 );
 
 //END POINT Booking
 
-apiRouter.get("/api/v1/booking", 
-  controllers.api.v1.bookingController.list
+const bookingController = new controllers.api.v1.bookingController(
+  bookingService
 );
 
-apiRouter.post("/api/v1/booking",
+apiRouter.get("/api/v1/booking", bookingController.list);
+
+apiRouter.post(
+  "/api/v1/booking",
   userController.authorize,
-  controllers.api.v1.bookingController.create
+  bookingController.create
 );
 
-apiRouter.put("/api/v1/booking/:id",
+apiRouter.put(
+  "/api/v1/booking/:id",
   userController.authorize,
-  controllers.api.v1.bookingController.update
+  bookingController.update
 );
 
-apiRouter.get("/api/v1/booking/:id", 
-  controllers.api.v1.bookingController.show
-);
+apiRouter.get("/api/v1/booking/:id", bookingController.showById);
 
-apiRouter.delete("/api/v1/booking/:id",
+apiRouter.delete(
+  "/api/v1/booking/:id",
   userController.authorize,
-  controllers.api.v1.bookingController.destroy
+  bookingController.destroy
 );
 
 //END POINT Whislist
 
-apiRouter.get("/api/v1/whislist", 
-  controllers.api.v1.whislistController.list
-);
+const whislistController = new controllers.api.v1.whislistController(whislistService);
 
-apiRouter.post("/api/v1/whislist",
+apiRouter.get("/api/v1/whislist", whislistController.list);
+
+apiRouter.post(
+  "/api/v1/whislist",
   userController.authorize,
-  controllers.api.v1.whislistController.create
+  whislistController.create
 );
 
-apiRouter.put("/api/v1/whislist/:id",
+apiRouter.put(
+  "/api/v1/whislist/:id",
   userController.authorize,
-  controllers.api.v1.whislistController.update
+  whislistController.update
 );
 
-apiRouter.get("/api/v1/whislist/:id", 
-  controllers.api.v1.whislistController.show
+apiRouter.get(
+  "/api/v1/whislist/:id",
+  whislistController.showById
 );
 
-apiRouter.delete("/api/v1/whislist/:id",
+apiRouter.delete(
+  "/api/v1/whislist/:id",
   userController.authorize,
-  controllers.api.v1.whislistController.destroy
+  whislistController.destroy
 );
-
-
 
 apiRouter.use(controllers.api.main.onLost);
 apiRouter.use(controllers.api.main.onError);

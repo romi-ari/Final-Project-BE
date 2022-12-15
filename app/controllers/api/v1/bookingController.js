@@ -1,37 +1,57 @@
-const bookingService = require("../../../services/bookingService");
+class bookingController {
+  constructor(bookingService) {
+    this.bookingService = bookingService;
+  }
 
-module.exports = {
-  list(req, res) {
-    bookingService
-      .list()
-      .then(({ data, count }) => {
-        res.status(200).json({
-          status: "OK",
-          data: { booking: data },
-          meta: { total: count },
-        });
-      })
-      .catch((err) => {
-        res.status(400).json({
-          status: "FAIL",
-          message: err.message,
-        });
+  list = async (req, res) => {
+    try {
+      const listBooking = await this.bookingService.list();
+      res.status(200).json({
+        status: "OK",
+        data: { bookings: listBooking },
+        meta: { count: listBooking.length },
       });
-  },
+    } catch (error) {
+      res.status(400).json({
+        status: "FAIL",
+        message: error.message,
+      });
+    }
+  };
 
-  create(req, res) {
-    const id_flight = req.body.id_flight;
-    const id_user = req.user.id
-    const seat = req.body.seat;
-    const baggage = req.body.baggage;
-    const food = req.body.food;
-    const name = req.body.name;
-    const homephone = req.body.homephone;
-    const mobilephone = req.body.mobilephone;
-    const totalprice = req.body.totalprice;
-    const booking_date = req.body.booking_date;
-    bookingService
-      .create({
+  showById = async (req, res) => {
+    try {
+      const booking = await this.bookingService.findByPk(req.params.id);
+
+      if (!booking) {
+        res.status(404).json({ message: "id booking tidak ditemukan" });
+        return;
+      }
+      res.status(200).json({
+        status: "OK",
+        data: booking,
+      });
+    } catch (error) {
+      res.status(400).json({
+        status: "FAIL",
+        message: error.message,
+      });
+    }
+  };
+
+  create = async (req, res) => {
+    try {
+      const id_flight = req.body.id_flight;
+      const id_user = req.user.id;
+      const seat = req.body.seat;
+      const baggage = req.body.baggage;
+      const food = req.body.food;
+      const name = req.body.name;
+      const homephone = req.body.homephone;
+      const mobilephone = req.body.mobilephone;
+      const totalprice = req.body.totalprice;
+      const booking_date = req.body.booking_date;
+      const booking = await this.bookingService.create({
         id_flight,
         id_user,
         seat,
@@ -42,25 +62,23 @@ module.exports = {
         mobilephone,
         totalprice,
         booking_date,
-      })
-      .then((post) => {
-        res.status(201).json({
-          status: "Create Booking successfully",
-          data: post,
-        });
-      })
-      .catch((err) => {
-        res.status(422).json({
-          status: "FAIL",
-          message: err.message,
-        });
       });
-  },
+      res.status(201).json({
+        status: "Create Booking successfully",
+        data: booking,
+      });
+    } catch (error) {
+      res.status(400).json({
+        status: "FAIL",
+        message: error.message,
+      });
+    }
+  };
 
-  update(req, res) {
-    bookingService
-      .update(req.params.id, {
-        id_booking: req.body.id_booking,
+  update = async (req, res) => {
+    try {
+      const booking = await this.bookingService.update(req.params.id, {
+        id_flight : req.body.id_flight,
         id_user: req.user.id_user,
         seat: req.body.seat,
         baggage: req.body.baggage,
@@ -69,51 +87,42 @@ module.exports = {
         homephone: req.body.homephone,
         mobilephone: req.body.mobilephone,
         totalprice: req.body.totalprice,
-        booking_date: req.body.booking_date
-      })
-      .then(() => {
-        res.status(200).json({
-          status: "Update Booking successfully",
-        });
-      })
-      .catch((err) => {
-        res.status(422).json({
-          status: "FAIL",
-          message: err.message,
-        });
+        booking_date: req.body.booking_date,
       });
-  },
+      if (booking == 0) {
+        res.status(404).json({ message: "id booking tidak ditemukan" });
+        return;
+      }
+      res.status(200).json({
+        status: "Update Booking successfully",
+      });
+    } catch (error) {
+      res.status(400).json({
+        status: "FAIL",
+        message: error.message,
+      });
+    }
+  };
 
-  show(req, res) {
-    bookingService
-      .findByPk(req.params.id)
-      .then((post) => {
-        res.status(200).json({
-          status: "OK",
-          data: post,
-        });
-      })
-      .catch((err) => {
-        res.status(422).json({
-          status: "FAIL",
-          message: err.message,
-        });
-      });
-  },
+  destroy = async (req, res) => {
+    try {
+      const booking = await this.bookingService.destroy(req.params.id);
 
-  destroy(req, res) {
-    bookingService
-      .destroy(req.params.id)
-      .then(() => {
-        res.status(200).json({
-          status: `Delete Booking successfully`,
-        });
-      })
-      .catch((err) => {
-        res.status(422).json({
-          status: "FAIL",
-          message: err.message,
-        });
+      if (!booking) {
+        res.status(404).json({ message: "id booking tidak ditemukan" });
+        return;
+      }
+      res.status(200).json({
+        status: "SUCCESS",
+        status: `Delete booking successfully`,
       });
-  },
-};
+    } catch (error) {
+      res.status(400).json({
+        status: "FAIL",
+        message: error.message,
+      });
+    }
+  };
+}
+
+module.exports = bookingController;
