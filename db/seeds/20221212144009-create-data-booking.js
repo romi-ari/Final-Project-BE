@@ -7,8 +7,7 @@ module.exports = {
       {
         id_flight:1,
         id_user:1,
-        seat:1,
-        baggage:1,
+        baggage:20,
         food:true,
         name:"budi",
         homephone:"073123456",
@@ -21,8 +20,7 @@ module.exports = {
       {
         id_flight:2,
         id_user:1,
-        seat:1,
-        baggage:1,
+        baggage:20,
         food:true,
         name:"ucok",
         homephone:"073123456",
@@ -35,8 +33,7 @@ module.exports = {
       {
         id_flight:3,
         id_user:1,
-        seat:1,
-        baggage:1,
+        baggage:20,
         food:true,
         name:"badu",
         homephone:"073123456",
@@ -49,8 +46,7 @@ module.exports = {
       {
         id_flight:4,
         id_user:1,
-        seat:1,
-        baggage:1,
+        baggage:20,
         food:false,
         name:"upi",
         homephone:"073123456",
@@ -63,8 +59,7 @@ module.exports = {
       {
         id_flight:5,
         id_user:1,
-        seat:1,
-        baggage:1,
+        baggage:20,
         food:false,
         name:"apan",
         homephone:"073123456",

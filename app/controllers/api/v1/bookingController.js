@@ -43,7 +43,6 @@ class bookingController {
     try {
       const id_flight = req.body.id_flight;
       const id_user = req.user.id;
-      const seat = req.body.seat;
       const baggage = req.body.baggage;
       const food = req.body.food;
       const name = req.body.name;
@@ -54,7 +53,6 @@ class bookingController {
       const booking = await this.bookingService.create({
         id_flight,
         id_user,
-        seat,
         baggage,
         food,
         name,
@@ -80,7 +78,6 @@ class bookingController {
       const booking = await this.bookingService.update(req.params.id, {
         id_flight : req.body.id_flight,
         id_user: req.user.id_user,
-        seat: req.body.seat,
         baggage: req.body.baggage,
         food: req.body.food,
         name: req.body.name,

@@ -27,9 +27,6 @@ module.exports = {
         onDelete: 'CASCADE',
         onUpdate : 'CASCADE'
       },
-      seat: {
-        type: Sequelize.INTEGER
-      },
       baggage: {
         type: Sequelize.INTEGER
       },
