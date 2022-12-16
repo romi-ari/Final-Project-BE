@@ -5,11 +5,11 @@ class notificationController {
   
     list = async (req, res) => {
       try {
-        const notificationPlane = await this.notificationService.list();
+        const listNotification = await this.notificationService.list();
         res.status(200).json({
           status: "OK",
-          data: { planes: notificationPlane },
-          meta: { count: notificationPlane.length },
+          data: { notifications: listNotification },
+          meta: { count: listNotification.length },
         });
       } catch (error) {
         res.status(400).json({
@@ -29,7 +29,7 @@ class notificationController {
         }
         res.status(200).json({
           status: "OK",
-          data: plane,
+          data: notification,
         });
       } catch (error) {
         res.status(400).json({
@@ -48,7 +48,7 @@ class notificationController {
           message,
         });
         res.status(201).json({
-          status: "Create Notification successfully",
+          status: "Create notification successfully",
           data: notification,
         });
       } catch (error) {
@@ -61,16 +61,16 @@ class notificationController {
   
     update = async (req, res) => {
       try {
-        const plane = await this.notificationService.update(req.params.id, {
-          message : req.body.message,
-          id_user : req.body.id_user,
+        const notification = await this.notificationService.update(req.params.id, {
+          message: req.body.message,
+          id_user: req.body.id_user,
         });
-        if (plane == 0) {
-          res.status(404).json({ message: "id Notification tidak ditemukan" });
+        if (notification == 0) {
+          res.status(404).json({ message: "id notification tidak ditemukan" });
           return;
         }
         res.status(200).json({
-          status: "Update Notification successfully",
+          status: "Update notification successfully",
         });
       } catch (error) {
         res.status(400).json({
@@ -82,15 +82,15 @@ class notificationController {
   
     destroy = async (req, res) => {
       try {
-        const Notification = await this.notificationService.destroy(req.params.id);
+        const notification = await this.notificationService.destroy(req.params.id);
   
-        if (!Notification) {
-          res.status(404).json({ message: "id Notification tidak ditemukan" });
+        if (!notification) {
+          res.status(404).json({ message: "id notification tidak ditemukan" });
           return;
         }
         res.status(200).json({
           status: "SUCCESS",
-          status: `Delete Notification successfully`,
+          status: `Delete notification successfully`,
         });
       } catch (error) {
         res.status(400).json({
