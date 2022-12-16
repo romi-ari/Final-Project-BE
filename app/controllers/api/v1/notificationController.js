@@ -5,11 +5,11 @@ class notificationController {
   
     list = async (req, res) => {
       try {
-        const listNotification = await this.notificationService.list();
+        const listNotifications = await this.notificationService.list();
         res.status(200).json({
           status: "OK",
-          data: { notifications: listNotification },
-          meta: { count: listNotification.length },
+          data: { notifications: listNotifications },
+          meta: { count: listNotifications.length },
         });
       } catch (error) {
         res.status(400).json({
