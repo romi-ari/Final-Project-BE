@@ -12,6 +12,8 @@
  const bookingController = require("./bookingController");
  const whislistController = require("./whislistController");
  const handleGoogleLoginOrRegister = require("./handleGoogleLoginOrRegister");
+ const notificationController = require("./notificationController");
+
  
  module.exports = {
    UserController,
@@ -24,6 +26,7 @@
    ticketController,
    bookingController,
    whislistController,
-   handleGoogleLoginOrRegister
+   handleGoogleLoginOrRegister,
+   notificationController
  };
  
