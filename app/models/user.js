@@ -16,6 +16,9 @@ module.exports = (sequelize, DataTypes) => {
       });
       this.hasMany(models.Whislist,{
         foreignKey: 'id_user'
+      });
+      this.hasMany(models.Notification,{
+        foreignKey: 'id_user'
       })
     }
   }
