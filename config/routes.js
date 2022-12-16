@@ -11,7 +11,8 @@ const {
   planeService,
   flightService,
   ticketService,
-  whislistService
+  whislistService,
+  notificationService
 } = require("../app/services");
 
 const swaggerDocument = YAML.load("./openApi.yaml");
@@ -296,6 +297,36 @@ apiRouter.delete(
   userController.authorize,
   whislistController.destroy
 );
+
+//End Point Notification
+
+const notificationController = new controllers.api.v1.notificationController(notificationService);
+
+apiRouter.get("/api/v1/notification", notificationController.list);
+
+apiRouter.post(
+  "/api/v1/notification",
+  userController.authorize,
+  notificationController.create
+);
+
+apiRouter.put(
+  "/api/v1/notification/:id",
+  userController.authorize,
+  notificationController.update
+);
+
+apiRouter.get(
+  "/api/v1/notification/:id",
+  notificationController.showById
+);
+
+apiRouter.delete(
+  "/api/v1/notification/:id",
+  userController.authorize,
+  notificationController.destroy
+);
+
 
 apiRouter.use(controllers.api.main.onLost);
 apiRouter.use(controllers.api.main.onError);
