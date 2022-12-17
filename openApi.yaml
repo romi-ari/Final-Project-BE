@@ -9,6 +9,12 @@ servers:
     url: https://final-project-be-develop.up.railway.app/
 
 tags:
+  - name: Login
+    description: Contain every operation about Login Resource
+  - name: User
+    description: Contain every operation about User Resource
+  - name: Admin
+    description: Contain every operation about Admin Resource
   - name: Airport
     description: Contain every operation about Airport Resource
   - name: Plane
@@ -19,12 +25,6 @@ tags:
     description: Contain every operation about Booking Resource
   - name: Ticket
     description: Contain every operation about Ticket Resource
-  - name: Login
-    description: Contain every operation about Login Resource
-  - name: User
-   description: Contain every operation about User Resource
-  - name: Admin
-   description: Contain every operation about Admin Resource
 
 paths:
  
@@ -542,12 +542,119 @@ paths:
             example: 1
       responses:
         "200":
+          $ref: "#/components/responses/DeleteWhislistResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "403":
+          $ref: "#/components/responses/ForbiddenResponse"
+
+  #---Whislist Operation---#
+  /api/v1/whislist:
+    get:
+      summary: Get all Whislist
+      operationId: Get all Whislist
+      description: "Get Whislist data from database"
+      tags:
+        - Whislist
+      responses:
+        "200":
+          $ref: "#/components/responses/GetWhislistResponse"
+        "400":
+          $ref: "#/components/responses/ErrorResponse"
+    
+    post:
+      security:
+        - bearerAuth: []
+      operationId: createWhislist
+      summary: Create Data Whislist
+      description: "Add new Whislist data to database \n\n Allowed roles: superadmin, admin"
+      tags:
+        - Whislist
+      requestBody:
+        $ref: "#/components/requestBodies/WhislistRequest"
+      responses:
+        "200":
+          $ref: "#/components/responses/PutWhislistResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "403":
+          $ref: "#/components/responses/ForbiddenResponse"
+  
+  /api/v1/whislist/:id:
+    get:
+      summary: Get Whislist By ID
+      operationId: Get Whislist By Id
+      description: "Get Whislist data from database"
+      tags:
+        - Whislist
+      parameters:
+        - in: path
+          name: id
+          description: The id of the Post
+          required: true
+          schema:
+            type: number
+            example: 1
+      responses:
+        "200":
+          $ref: "#/components/responses/GetWhislistById"
+        "400":
+          $ref: "#/components/responses/ErrorResponse"
+    
+    put:
+      security:
+        - bearerAuth: []
+      summary: Update Whislist By Id
+      operationId: UpdateWhislist
+      description: "Update Whislist data from database \n\n Allowed roles: superadmin, admin"
+      tags:
+        - Whislist
+      parameters:
+        - in: path
+          name: id
+          description: The id of the Post
+          required: true
+          schema:
+            type: number
+            example: 1
+      requestBody:
+        $ref: "#/components/requestBodies/WhislistUpdate"
+      responses:
+        "200":
+          $ref: "#/components/responses/PutWhistlistResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "403":
+          $ref: "#/components/responses/ForbiddenResponse"
+    
+    delete:
+      security:
+        - bearerAuth: []
+      summary: Delete Whislist By Id
+      operationId: DeleteWhislist
+      description: "Delete Whislist data from database \n\n Allowed roles: superadmin, admin"
+      tags:
+        - Whislist
+      parameters:
+        - in: path
+          name: id
+          description: The id of the Post
+          required: true
+          schema:
+            type: number
+            example: 1
+      responses:
+        "200":
           $ref: "#/components/responses/DeleteTicketResponse"
         "401":
           $ref: "#/components/responses/UnauthorizedResponse"
         "403":
           $ref: "#/components/responses/ForbiddenResponse"
 
+  #---Notification Operation---#
+  /api/v1/notification:
+  /api/v1/notification/:id:
+  
   #---Login User Operation---#
 
   /api/v1/login:
@@ -1034,6 +1141,37 @@ components:
               date:
                 type: date
                 example: "2022-12-08T13:30:39.034Z"
+
+    #---Whislist RequestBodies#
+    WhislistRequest:
+      description: Create Whislist Data
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id_user:
+                type: integer
+                example: 3
+              id_flight:
+                type: integer
+                example: 1
+    
+    WhislistUpdate:
+      description: Update Whislist Data
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id_user:
+                type: integer
+                example: 1
+              id_flight:
+                type: integer
+                example: 1
 
     #---User RequestBodies---#
     UserPostRequest:
@@ -1595,6 +1733,94 @@ components:
                 type: string
                 example: Delete Ticket successfully
     
+    #---Whislist Response---#
+
+    GetWhislistResponse:
+      description: Get data whislist success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: OK
+              data:
+                type: object
+                properties:
+                  whislists:
+                    $ref: "#/components/schemas/WhislistGet"
+              properties:
+              meta:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    example: 1
+    
+    PostWhislistResponse:
+      description: create data Whislist succes
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: Create whislist successfully
+              data:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  id_flight:
+                    type: integer
+                    example: 1
+                  updatedAt:
+                    type: string
+                    example: "2022-12-05T16:32:34.011Z"
+                  createdAt:
+                    type: string
+                    example: "2022-12-05T16:32:34.011Z"
+    
+    GetWhislistById:
+      description: Get data Whislist success with id = id
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: OK
+              data:
+                $ref: "#/components/schemas/WhislistGetByID"
+    
+    PutWhistlistResponse:
+      description: Update data Whislist success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: Update Whislist successfully
+    
+    DeleteWhislistResponse:
+      description: Delete data Whislist success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: Delete Whislist successfully
+
+    #---Notification Response---#
+
     #---User Response---#
 
     GetUserResponse:
@@ -2732,6 +2958,563 @@ components:
         createdAt:
           type: string
           example: "2022-12-05T16:32:34.011Z"
+
+    #---Whislist Schema---#
+    WhislistGet:
+      type: array
+      items:
+        properties:
+          id:
+            type: integer
+            example: 1
+          id_user:
+            type: integer
+            example: 2
+          id_flight:
+            type: integer
+            example: 1
+          createdAt:
+            type: string
+            example: "2022-12-05T16:32:34.011Z"
+          updatedAt:
+            type: string
+            example: "2022-12-05T16:32:34.011Z"
+          User:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 2
+              no_ktp:
+                type: string
+                example: "123456789"
+              gender:
+                type: string
+                example: L
+              date_of_birth:
+                type: string
+                example: "2022-12-01"
+              address:
+                type: string
+                example: "Jalan Suroyo No. 161 Mayangan Kota Probolonggo Indonesia"
+              email:
+                type: string
+                example: "user@mail.com"
+              password:
+                type: string
+                example: "$2a$10$wSSZliEv0WX7l17UmE4zMeyYluacWP0W0pk85zcnto0/GqR3ioYA."
+              name:
+                type: string
+                example: "User"
+              username:
+                type: string
+                example: "user"
+              image:
+                type: string
+                example: ""
+              role:
+                type: string
+                example: "member"
+              createdAt:
+                type: string
+                example: "2022-12-05T16:32:34.011Z"
+              updatedAt:
+                type: string
+                example: "2022-12-05T16:32:34.011Z"
+              Booking:
+                type: object
+                properties:
+              Notification:
+                type: object
+                properties:
+          Flight:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 1
+              id_plane:
+                type: integer
+                example: 2
+              from_airport_id:
+                type: integer
+                example: 1
+              to_airport_id:
+                type: integer
+                example: 3
+              kelas:
+                type: string
+                example: Ekonomi
+              available_seats:
+                type: integer
+                example: 100
+              price:
+                type: integer
+                example: 120000 
+              arrival_time:
+                type: string
+                example: "2022-12-06T15:06:22.516Z"
+              departure_time:
+                type: string
+                example: "2022-12-06T15:06:22.516Z" 
+              createdAt:
+                type: string
+                example: "2022-12-05T16:32:34.011Z"
+              updatedAt:
+                type: string
+                example: "2022-12-05T16:32:34.011Z"
+              Plane:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 2
+                  code:
+                    type: integer
+                    example: 101
+                  name:
+                    type: string
+                    example: Boeing 777-300ER
+                  status:
+                    type: boolean
+                    example: On 
+                  createdAt:
+                    type: string
+                    example: "2022-12-05T16:32:34.011Z"
+                  updatedAt:
+                    type: string
+                    example: "2022-12-05T16:32:34.011Z"
+              FromAirpot:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  name:
+                    type: string
+                    example: Bandara Udara Internasional Soekarno–Hatta
+                  province:
+                    type: string
+                    example: Banten
+                  city:
+                    type: string
+                    example: Tangerang
+                  country:
+                    type: string
+                    example: Indonesia
+                  status:
+                    type: string
+                    example: "On"
+                  createdAt:
+                    type: string
+                    example: "2022-12-05T16:32:34.011Z"
+                  updatedAt:
+                    type: string
+                    example: "2022-12-05T16:32:34.011Z"
+              ToAirpot:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 3
+                  name:
+                    type: string
+                    example: Bandara Udara Internasional Juanda
+                  province:
+                    type: string
+                    example: Jawa Timur
+                  city:
+                    type: string
+                    example: Sidoarjo
+                  country:
+                    type: string
+                    example: Indonesia
+                  status:
+                    type: string
+                    example: "On"
+                  createdAt:
+                    type: string
+                    example: "2022-12-05T16:32:34.011Z"
+                  updatedAt:
+                    type: string
+                    example: "2022-12-05T16:32:34.011Z" 
+              Bookings:
+                type: object 
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  id_flight:
+                    type: integer
+                    example: 1
+                  id_user:
+                    type: integer
+                    example: 1
+                  baggage:
+                    type: integer
+                    example: 20
+                  food:
+                    type: string
+                    example: true
+                  name:
+                    type: string
+                    example: budi
+                  homephone:
+                    type: string
+                    example: 073123456
+                  mobilephone:
+                    type: string
+                    example: 073123456
+                  totalprice:
+                    type: string
+                    example: null
+                  booking_date:
+                    type: string
+                    example: null
+                  createdAt:
+                    type: string
+                    example: "2022-12-05T16:32:34.011Z"
+                  updatedAt:
+                    type: string
+                    example: "2022-12-05T16:32:34.011Z"
+                  User:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 2
+                      no_ktp:
+                        type: string
+                        example: "123456789"
+                      gender:
+                        type: string
+                        example: L
+                      date_of_birth:
+                        type: string
+                        example: "2022-12-01"
+                      address:
+                        type: string
+                        example: "Jalan Suroyo No. 161 Mayangan Kota Probolonggo Indonesia"
+                      email:
+                        type: string
+                        example: "user@mail.com"
+                      password:
+                        type: string
+                        example: "$2a$10$wSSZliEv0WX7l17UmE4zMeyYluacWP0W0pk85zcnto0/GqR3ioYA."
+                      name:
+                        type: string
+                        example: "User"
+                      username:
+                        type: string
+                        example: "user"
+                      image:
+                        type: string
+                        example: ""
+                      role:
+                        type: string
+                        example: "member"
+                      createdAt:
+                        type: string
+                        example: "2022-12-05T16:32:34.011Z"
+                      updatedAt:
+                        type: string
+                        example: "2022-12-05T16:32:34.011Z"
+                      Notification:
+                        type: object
+                        properties: 
+                  Ticket:
+                    type: object 
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      id_booking:
+                        type: integer
+                        example: 1
+                      createdAt:
+                        type: string
+                        example: "2022-12-05T16:32:34.011Z"
+                      updatedAt:
+                        type: string
+                        example: "2022-12-05T16:32:34.011Z" 
+    
+    WhislistGetByID:
+      type: array
+      items:
+        properties:
+          id:
+            type: integer
+            example: 1
+          id_user:
+            type: integer
+            example: 2
+          id_flight:
+            type: integer
+            example: 1
+          createdAt:
+            type: string
+            example: "2022-12-05T16:32:34.011Z"
+          updatedAt:
+            type: string
+            example: "2022-12-05T16:32:34.011Z"
+          User:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 2
+              no_ktp:
+                type: string
+                example: "123456789"
+              gender:
+                type: string
+                example: L
+              date_of_birth:
+                type: string
+                example: "2022-12-01"
+              address:
+                type: string
+                example: "Jalan Suroyo No. 161 Mayangan Kota Probolonggo Indonesia"
+              email:
+                type: string
+                example: "user@mail.com"
+              password:
+                type: string
+                example: "$2a$10$wSSZliEv0WX7l17UmE4zMeyYluacWP0W0pk85zcnto0/GqR3ioYA."
+              name:
+                type: string
+                example: "User"
+              username:
+                type: string
+                example: "user"
+              image:
+                type: string
+                example: ""
+              role:
+                type: string
+                example: "member"
+              createdAt:
+                type: string
+                example: "2022-12-05T16:32:34.011Z"
+              updatedAt:
+                type: string
+                example: "2022-12-05T16:32:34.011Z"
+              Booking:
+                type: object
+                properties:
+              Notification:
+                type: object
+                properties:
+          Flight:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 1
+              id_plane:
+                type: integer
+                example: 2
+              from_airport_id:
+                type: integer
+                example: 1
+              to_airport_id:
+                type: integer
+                example: 3
+              kelas:
+                type: string
+                example: Ekonomi
+              available_seats:
+                type: integer
+                example: 100
+              price:
+                type: integer
+                example: 120000 
+              arrival_time:
+                type: string
+                example: "2022-12-06T15:06:22.516Z"
+              departure_time:
+                type: string
+                example: "2022-12-06T15:06:22.516Z" 
+              createdAt:
+                type: string
+                example: "2022-12-05T16:32:34.011Z"
+              updatedAt:
+                type: string
+                example: "2022-12-05T16:32:34.011Z"
+              Plane:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 2
+                  code:
+                    type: integer
+                    example: 101
+                  name:
+                    type: string
+                    example: Boeing 777-300ER
+                  status:
+                    type: boolean
+                    example: On 
+                  createdAt:
+                    type: string
+                    example: "2022-12-05T16:32:34.011Z"
+                  updatedAt:
+                    type: string
+                    example: "2022-12-05T16:32:34.011Z"
+              FromAirpot:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  name:
+                    type: string
+                    example: Bandara Udara Internasional Soekarno–Hatta
+                  province:
+                    type: string
+                    example: Banten
+                  city:
+                    type: string
+                    example: Tangerang
+                  country:
+                    type: string
+                    example: Indonesia
+                  status:
+                    type: string
+                    example: "On"
+                  createdAt:
+                    type: string
+                    example: "2022-12-05T16:32:34.011Z"
+                  updatedAt:
+                    type: string
+                    example: "2022-12-05T16:32:34.011Z"
+              ToAirpot:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 3
+                  name:
+                    type: string
+                    example: Bandara Udara Internasional Juanda
+                  province:
+                    type: string
+                    example: Jawa Timur
+                  city:
+                    type: string
+                    example: Sidoarjo
+                  country:
+                    type: string
+                    example: Indonesia
+                  status:
+                    type: string
+                    example: "On"
+                  createdAt:
+                    type: string
+                    example: "2022-12-05T16:32:34.011Z"
+                  updatedAt:
+                    type: string
+                    example: "2022-12-05T16:32:34.011Z" 
+              Bookings:
+                type: object 
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  id_flight:
+                    type: integer
+                    example: 1
+                  id_user:
+                    type: integer
+                    example: 1
+                  baggage:
+                    type: integer
+                    example: 20
+                  food:
+                    type: string
+                    example: true
+                  name:
+                    type: string
+                    example: budi
+                  homephone:
+                    type: string
+                    example: 073123456
+                  mobilephone:
+                    type: string
+                    example: 073123456
+                  totalprice:
+                    type: string
+                    example: null
+                  booking_date:
+                    type: string
+                    example: null
+                  createdAt:
+                    type: string
+                    example: "2022-12-05T16:32:34.011Z"
+                  updatedAt:
+                    type: string
+                    example: "2022-12-05T16:32:34.011Z"
+                  User:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 2
+                      no_ktp:
+                        type: string
+                        example: "123456789"
+                      gender:
+                        type: string
+                        example: L
+                      date_of_birth:
+                        type: string
+                        example: "2022-12-01"
+                      address:
+                        type: string
+                        example: "Jalan Suroyo No. 161 Mayangan Kota Probolonggo Indonesia"
+                      email:
+                        type: string
+                        example: "user@mail.com"
+                      password:
+                        type: string
+                        example: "$2a$10$wSSZliEv0WX7l17UmE4zMeyYluacWP0W0pk85zcnto0/GqR3ioYA."
+                      name:
+                        type: string
+                        example: "User"
+                      username:
+                        type: string
+                        example: "user"
+                      image:
+                        type: string
+                        example: ""
+                      role:
+                        type: string
+                        example: "member"
+                      createdAt:
+                        type: string
+                        example: "2022-12-05T16:32:34.011Z"
+                      updatedAt:
+                        type: string
+                        example: "2022-12-05T16:32:34.011Z"
+                      Notification:
+                        type: object
+                        properties: 
+                  Ticket:
+                    type: object 
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      id_booking:
+                        type: integer
+                        example: 1
+                      createdAt:
+                        type: string
+                        example: "2022-12-05T16:32:34.011Z"
+                      updatedAt:
+                        type: string
+                        example: "2022-12-05T16:32:34.011Z" 
 
     #---User Schema---#
 
