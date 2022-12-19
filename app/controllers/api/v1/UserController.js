@@ -427,8 +427,8 @@ class UserController {
   
       console.log(ticket.getPayload());
   
-      let user = await User.findOne({ where: { email: email } });
-      if (!user) user = await User.create({ email, name });
+      let user = await this.userService.findOne({ where: { email: email } });
+      if (!user) user = await this.userService.create({ email, name });
   
       const accessToken = createTokenGoogle(user);
   
