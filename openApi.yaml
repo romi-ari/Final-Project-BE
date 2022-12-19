@@ -1086,7 +1086,7 @@ components:
                 example: 3
               kelas:
                 type: string
-                example: Ekonomi
+                example: Economy Class
               available_seats:
                 type: integer
                 example: 100
@@ -1095,10 +1095,13 @@ components:
                 example: 120000 
               arrival_time:
                 type: string
-                example: "2022-12-06T15:06:22.516Z"
+                example: "14:00"
               departure_time:
                 type: string
-                example: "2022-12-06T15:06:22.516Z"
+                example: "13:00"
+              flight_date:
+                type: string
+                example: "2022-12-18"
     
     FlightUpdate:
       description: Update Flight Data
@@ -1119,7 +1122,7 @@ components:
                 example: 2
               kelas:
                 type: string
-                example: Ekonomi
+                example: Economy Class
               available_seats:
                 type: integer
                 example: 100
@@ -1128,10 +1131,13 @@ components:
                 example: 120000 
               arrival_time:
                 type: string
-                example: "2022-12-06T15:06:22.516Z"
+                example: "14:00"
               departure_time:
                 type: string
-                example: "2022-12-06T15:06:22.516Z"
+                example: "13:00"
+              flight_date:
+                type: string
+                example: "2022-12-18"
 
     #---Booking RequestBodies---#
 
@@ -1149,12 +1155,9 @@ components:
               id_user:
                 type: integer
                 example: 1
-              seat:
-                type: integer
-                example: 5
               baggage:
                 type: integer
-                example: 1
+                example: 20
               food:
                 type: boolean
                 example: true
@@ -1185,12 +1188,9 @@ components:
               id_user:
                 type: integer
                 example: 1
-              seat:
-                type: integer
-                example: 50
               baggage:
                 type: integer
-                example: 50
+                example: 20
               food:
                 type: boolean
                 example: true
@@ -1220,9 +1220,6 @@ components:
               id_booking:
                 type: integer
                 example: 1
-              price:
-                type: integer
-                example: 2000000
               date:
                 type: date
                 example: "2022-12-08T13:30:39.034Z"
@@ -1238,9 +1235,6 @@ components:
               id_booking:
                 type: integer
                 example: 1
-              price:
-                type: integer
-                example: 4000000
               date:
                 type: date
                 example: "2022-12-08T13:30:39.034Z"
@@ -1681,12 +1675,9 @@ components:
                   id_user:
                     type: integer
                     example: 1
-                  seat:
-                    type: integer
-                    example: 5
                   baggage:
                     type: integer
-                    example: 1
+                    example: 20
                   food:
                     type: boolean
                     example: true
@@ -1788,12 +1779,6 @@ components:
                   id_booking:
                     type: integer
                     example: 4
-                  price:
-                    type: integer
-                    example: 2000000
-                  date:
-                    type: date
-                    example: "2022-12-08T13:30:39.034Z"
                   updatedAt:
                     type: string
                     example: "2022-12-05T16:32:34.011Z"
@@ -2478,7 +2463,7 @@ components:
             example: 3
           kelas:
             type: string
-            example: Ekonomi
+            example: Economy Class
           available_seats:
             type: integer
             example: 100
@@ -2487,10 +2472,13 @@ components:
             example: 120000 
           arrival_time:
             type: string
-            example: "2022-12-06T15:06:22.516Z"
+            example: "14:00"
           departure_time:
             type: string
-            example: "2022-12-06T15:06:22.516Z" 
+            example: "13:00"
+          flight_date:
+            type: string
+            example: "2022-12-18"
           createdAt:
             type: string
             example: "2022-12-05T16:32:34.011Z"
@@ -2583,7 +2571,7 @@ components:
           example: 3
         kelas:
           type: string
-          example: Ekonomi
+          example: Economy Class
         available_seats:
           type: integer
           example: 100
@@ -2592,10 +2580,13 @@ components:
           example: 120000 
         arrival_time:
           type: string
-          example: "2022-12-06T15:06:22.516Z"
+          example: "14:00"
         departure_time:
           type: string
-          example: "2022-12-06T15:06:22.516Z" 
+          example: "13:00"
+        flight_date:
+          type: string
+          example: "2022-12-18"
         createdAt:
           type: string
           example: "2022-12-05T16:32:34.011Z"
@@ -2618,12 +2609,9 @@ components:
           id_user:
             type: integer
             example: 2
-          seat:
-            type: integer
-            example: 5
           baggage:
             type: integer
-            example: 1
+            example: 20
           food:
             type: boolean
             example: true
@@ -2662,7 +2650,7 @@ components:
                 example: 3
               kelas:
                 type: string
-                example: Ekonomi
+                example: Economy Class
               available_seats:
                 type: integer
                 example: 100
@@ -2671,10 +2659,13 @@ components:
                 example: 120000 
               arrival_time:
                 type: string
-                example: "2022-12-06T15:06:22.516Z"
+                example: "14:00"
               departure_time:
                 type: string
-                example: "2022-12-06T15:06:22.516Z" 
+                example: "13:00"
+              flight_date:
+                type: string
+                example: "2022-12-18"
               createdAt:
                 type: string
                 example: "2022-12-05T16:32:34.011Z"
@@ -2698,7 +2689,7 @@ components:
                     example: 3
                   kelas:
                     type: string
-                    example: Ekonomi
+                    example: Economy Class
                   available_seats:
                     type: integer
                     example: 100
@@ -2707,10 +2698,13 @@ components:
                     example: 120000 
                   arrival_time:
                     type: string
-                    example: "2022-12-06T15:06:22.516Z"
+                    example: "14:00"
                   departure_time:
                     type: string
-                    example: "2022-12-06T15:06:22.516Z" 
+                    example: "13:00"
+                  flight_date:
+                    type: string
+                    example: "2022-12-18"
                   createdAt:
                     type: string
                     example: "2022-12-05T16:32:34.011Z"
@@ -2819,12 +2813,9 @@ components:
         id_user:
           type: integer
           example: 2
-        seat:
-          type: integer
-          example: 5
         baggage:
           type: integer
-          example: 1
+          example: 20
         food:
           type: boolean
           example: true
@@ -2859,12 +2850,6 @@ components:
           id_booking:
             type: integer
             example: 1
-          price:
-            type: integer
-            example: 2000000
-          date:
-            type: date
-            example: "2022-12-08T13:30:39.034Z"
           createdAt:
             type: string
             example: "2022-12-05T16:32:34.011Z"
@@ -2883,12 +2868,9 @@ components:
               id_user:
                 type: integer
                 example: 2
-              seat:
-                type: integer
-                example: 5
               baggage:
                 type: integer
-                example: 1
+                example: 20
               food:
                 type: boolean
                 example: true
@@ -2927,7 +2909,7 @@ components:
                     example: 3
                   kelas:
                     type: string
-                    example: Ekonomi
+                    example: Economy Class
                   available_seats:
                     type: integer
                     example: 100
@@ -2936,10 +2918,13 @@ components:
                     example: 120000 
                   arrival_time:
                     type: string
-                    example: "2022-12-06T15:06:22.516Z"
+                    example: "14:00"
                   departure_time:
                     type: string
-                    example: "2022-12-06T15:06:22.516Z" 
+                    example: "13:00"
+                  flight_date:
+                    type: string
+                    example: "2022-12-18" 
                   createdAt:
                     type: string
                     example: "2022-12-05T16:32:34.011Z"
@@ -3072,12 +3057,6 @@ components:
         id_booking:
           type: integer
           example: 4
-        price:
-          type: integer
-          example: 2000000
-        date:
-          type: date
-          example: "2022-12-08T13:30:39.034Z"
         updatedAt:
           type: string
           example: "2022-12-05T16:32:34.011Z"
@@ -3170,7 +3149,7 @@ components:
                 example: 3
               kelas:
                 type: string
-                example: Ekonomi
+                example: Economy Class
               available_seats:
                 type: integer
                 example: 100
@@ -3179,10 +3158,13 @@ components:
                 example: 120000 
               arrival_time:
                 type: string
-                example: "2022-12-06T15:06:22.516Z"
+                example: "14:00"
               departure_time:
                 type: string
-                example: "2022-12-06T15:06:22.516Z" 
+                example: "13:00"
+              flight_date:
+                type: string
+                example: "2022-12-18" 
               createdAt:
                 type: string
                 example: "2022-12-05T16:32:34.011Z"
@@ -3448,7 +3430,7 @@ components:
                 example: 3
               kelas:
                 type: string
-                example: Ekonomi
+                example: Economy Class
               available_seats:
                 type: integer
                 example: 100
@@ -3457,10 +3439,13 @@ components:
                 example: 120000 
               arrival_time:
                 type: string
-                example: "2022-12-06T15:06:22.516Z"
+                example: "14:00"
               departure_time:
                 type: string
-                example: "2022-12-06T15:06:22.516Z" 
+                example: "13:00"
+              flight_date:
+                type: string
+                example: "2022-12-18"
               createdAt:
                 type: string
                 example: "2022-12-05T16:32:34.011Z"
