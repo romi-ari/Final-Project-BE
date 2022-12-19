@@ -6,7 +6,7 @@ const planeService = require("./planeService");
 const ticketService = require("./ticketService");
 const userService = require("./userServices");
 const whislistService = require("./whislistService");
-const notificationsService = require("./notificationService");
+const notificationService = require("./notificationService");
 
 module.exports = {
     airportService,
@@ -17,6 +17,6 @@ module.exports = {
     ticketService,
     userService,
     whislistService,
-    notificationsService,
+    notificationService,
     
 }
