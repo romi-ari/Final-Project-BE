@@ -5,6 +5,7 @@
 
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const { OAuth2Client } = require("google-auth-library");
 const client = new OAuth2Client(process.env.REACT_APP_GOOGLE_CLIENT_ID);
 const cloudinary = require("../../../../config/cloudinary");
 const SALT = 10;
@@ -15,7 +16,7 @@ function createTokenGoogle(user) {
     email: user.email,
   };
 
-  return jwt.sign(payload, JWT_SECRET_KEY);
+  return jwt.sign(payload, process.env.JWT_SIGNATURE_KEY || "Rahasia");
 }
 
 //FUNCTION UNTUK ME ENCRYPT PASSWORD SAAT REGISTRASI
