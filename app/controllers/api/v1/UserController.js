@@ -418,7 +418,7 @@ class UserController {
     try {
       const ticket = await client.verifyIdToken({
         idToken: token,
-        audience: "1075166577960-t9j4kguud7mo2dkaij6k3o5qu9rfna1b.apps.googleusercontent.com"
+        audience: process.env.REACT_APP_GOOGLE_CLIENT_ID,
       });
   
       const { email, name } = ticket.getPayload();
