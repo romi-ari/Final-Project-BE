@@ -424,11 +424,12 @@ class UserController {
       });
   
       const { email, name } = ticket.getPayload();
+      const role = "member";
   
       console.log(ticket.getPayload());
   
       let user = await this.userService.findOne({ where: { email: email } });
-      if (!user) user = await this.userService.create({ email, name });
+      if (!user) user = await this.userService.create({ email, name, role });
   
       const accessToken = createTokenGoogle(user);
   
