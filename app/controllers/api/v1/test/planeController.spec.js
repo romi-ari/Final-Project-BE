@@ -33,6 +33,25 @@ describe("planeController", () => {
         meta: { count: mockPlaneList.length },
       });
     });
+    
+    it("should res.status(400) and return error message if failed", async () => {
+      const error = new Error("Something");
+      const mockReq = {};
+      const mockRes = mock.RES;
+      const mockPlaneService = {
+        list: jest.fn().mockReturnValue(Promise.reject(error)),
+      };
+
+      const controller = new planeController(mockPlaneService);
+      await controller.list(mockReq, mockRes);
+
+      expect(mockPlaneService.list).toHaveBeenCalled();
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        status: "FAIL",
+        message: error.message,
+      });
+    });
   });
 
   describe("#showById", () => {
@@ -74,15 +93,33 @@ describe("planeController", () => {
         message: "id plane tidak ditemukan",
       });
     });
+
+    it("should res.status(400) and return error message if failed", async () => {
+      const error = new Error("Something");
+      const mockReq = {
+        params: mockPlane.id,
+      };
+      const mockRes = mock.RES;
+      const mockPlaneService = {
+        findByPk: jest.fn().mockReturnValue(Promise.reject(error)),
+      };
+      const controller = new planeController(mockPlaneService);
+      await controller.showById(mockReq, mockRes);
+
+      expect(mockPlaneService.findByPk).toHaveBeenCalled();
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        status: "FAIL",
+        message: error.message,
+      });
+    });
   });
 
   describe("#create", () => {
     it("should res.status(201) and res.json with plane instance if success", async () => {
       const mockReq = {
         body: {
-          code: mockPlane.code,
-          name: mockPlane.name,
-          status: mockPlane.status,
+          ...mock.PLANE
         },
       };
       const mockRes = mock.RES;
@@ -100,6 +137,28 @@ describe("planeController", () => {
         data: mockPlane,
       });
     });
+    it("should res.status(400) and return error message if failed", async () => {
+      const error = new Error("Something");
+      const mockReq = {
+        body: {
+          ...mock.PLANE
+        },
+      };
+      const mockRes = mock.RES;
+      const mockPlaneService = {
+        create: jest.fn().mockReturnValue(Promise.reject(error)),
+      };
+
+      const controller = new planeController(mockPlaneService);
+      await controller.create(mockReq, mockRes);
+
+      expect(mockPlaneService.create).toHaveBeenCalled();
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        status: "FAIL",
+        message: error.message,
+      });
+    });
   });
 
   describe("#update", () => {
@@ -107,9 +166,7 @@ describe("planeController", () => {
       const mockReq = {
         params: mockPlane.id,
         body: {
-          code: mockPlane.code,
-          name: mockPlane.name,
-          status: mockPlane.status,
+          ...mock.PLANE
         },
       };
       const mockRes = mock.RES;
@@ -131,9 +188,7 @@ describe("planeController", () => {
       const mockReq = {
         params: 999,
         body: {
-          code: mockPlane.code,
-          name: mockPlane.name,
-          status: mockPlane.status,
+          ...mock.PLANE
         },
       };
       const mockRes = mock.RES;
@@ -148,6 +203,30 @@ describe("planeController", () => {
       expect(mockRes.status).toHaveBeenCalledWith(404);
       expect(mockRes.json).toHaveBeenCalledWith({
         message: "id plane tidak ditemukan",
+      });
+    });
+
+    it("should res.status(400) and return error message if failed", async () => {
+      const error = new Error("Something");
+      const mockReq = {
+        params: mockPlane.id,
+        body: {
+          ...mock.PLANE
+        },
+      };
+      const mockRes = mock.RES;
+      const mockPlaneService = {
+        update: jest.fn().mockReturnValue(Promise.reject(error)),
+      };
+
+      const controller = new planeController(mockPlaneService);
+      await controller.update(mockReq, mockRes);
+
+      expect(mockPlaneService.update).toHaveBeenCalled();
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        status: "FAIL",
+        message: error.message,
       });
     });
   });
@@ -193,6 +272,29 @@ describe("planeController", () => {
       expect(mockRes.status).toHaveBeenCalledWith(404);
       expect(mockRes.json).toHaveBeenCalledWith({
         message: "id plane tidak ditemukan",
+      });
+    });
+
+    it("should res.status(400) and return error message if failed", async () => {
+      const error = new Error("Something");
+      const mockReq = {
+        params: {
+          id: mockPlane.id,
+        },
+      };
+      const mockRes = mock.RES;
+      const mockPlaneService = {
+        destroy: jest.fn().mockReturnValue(Promise.reject(error)),
+      };
+
+      const controller = new planeController(mockPlaneService);
+      await controller.destroy(mockReq, mockRes);
+
+      expect(mockPlaneService.destroy).toHaveBeenCalled();
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        status: "FAIL",
+        message: error.message,
       });
     });
   });

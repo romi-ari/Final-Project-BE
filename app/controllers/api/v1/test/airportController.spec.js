@@ -33,6 +33,25 @@ describe("airportController", () => {
         meta: { count: mockAirportList.length },
       });
     });
+    
+    it("should res.status(400) and return error message if failed", async () => {
+      const error = new Error("Something");
+      const mockReq = {};
+      const mockRes = mock.RES;
+      const mockAirportService = {
+        list: jest.fn().mockReturnValue(Promise.reject(error)),
+      };
+
+      const controller = new airportController(mockAirportService);
+      await controller.list(mockReq, mockRes);
+
+      expect(mockAirportService.list).toHaveBeenCalled();
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        status: "FAIL",
+        message: error.message,
+      });
+    });
   });
 
   describe("#showById", () => {
@@ -74,17 +93,34 @@ describe("airportController", () => {
         message: "id airport tidak ditemukan" 
       });
     });
+
+    it("should res.status(400) and return error message if failed", async () => {
+      const error = new Error("Something");
+      const mockReq = {
+        params : mockAirport.id
+      };
+      const mockRes = mock.RES;
+      const mockAirportService = {
+        findByPk: jest.fn().mockReturnValue(Promise.reject(error)),
+      };
+
+      const controller = new airportController(mockAirportService);
+      await controller.showById(mockReq, mockRes);
+
+      expect(mockAirportService.findByPk).toHaveBeenCalled();
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        status: "FAIL",
+        message: error.message,
+      });
+    });
   });
 
   describe("#create", () => {
     it("should res.status(201) and res.json with airport instance if success", async () => {
       const mockReq = {
         body: {
-          name: mockAirport.name,
-          province: mockAirport.province,
-          city: mockAirport.city,
-          country: mockAirport.country,
-          status: mockAirport.status,
+          ...mock.AIRPORT
         },
       };
       const mockRes = mock.RES;
@@ -102,6 +138,29 @@ describe("airportController", () => {
         data: mockAirport
       });
     });
+
+    it("should res.status(400) and return error message if failed", async () => {
+      const error = new Error("Something");
+      const mockReq = {
+        body: {
+          ...mock.AIRPORT
+        },
+      };
+      const mockRes = mock.RES;
+      const mockAirportService = {
+        create: jest.fn().mockReturnValue(Promise.reject(error)),
+      };
+
+      const controller = new airportController(mockAirportService);
+      await controller.create(mockReq, mockRes);
+
+      expect(mockAirportService.create).toHaveBeenCalled();
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        status: "FAIL",
+        message: error.message,
+      });
+    });
   });
 
   describe("#update", () => {
@@ -109,11 +168,7 @@ describe("airportController", () => {
       const mockReq = {
         params : mockAirport.id,
         body: {
-          name: mockAirport.name,
-          province: mockAirport.province,
-          city: mockAirport.city,
-          country: mockAirport.country,
-          status: mockAirport.status,
+          ...mock.AIRPORT
         },
       };
       const mockRes = mock.RES;
@@ -135,11 +190,7 @@ describe("airportController", () => {
       const mockReq = {
         params : 999,
         body: {
-          name: mockAirport.name,
-          province: mockAirport.province,
-          city: mockAirport.city,
-          country: mockAirport.country,
-          status: mockAirport.status,
+          ...mock.AIRPORT
         },
       };
       const mockRes = mock.RES;
@@ -154,6 +205,30 @@ describe("airportController", () => {
       expect(mockRes.status).toHaveBeenCalledWith(404);
       expect(mockRes.json).toHaveBeenCalledWith({
         message: "id airport tidak ditemukan" 
+      });
+    });
+
+    it("should res.status(400) and return error message if failed", async () => {
+      const error = new Error("Something");
+      const mockReq = {
+        params : mockAirport.id,
+        body: {
+          ...mock.AIRPORT
+        },
+      };
+      const mockRes = mock.RES;
+      const mockAirportService = {
+        update: jest.fn().mockReturnValue(Promise.reject(error)),
+      };
+
+      const controller = new airportController(mockAirportService);
+      await controller.update(mockReq, mockRes);
+
+      expect(mockAirportService.update).toHaveBeenCalled();
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        status: "FAIL",
+        message: error.message,
       });
     });
   });
@@ -199,6 +274,29 @@ describe("airportController", () => {
       expect(mockRes.status).toHaveBeenCalledWith(404);
       expect(mockRes.json).toHaveBeenCalledWith({
         message: "id airport tidak ditemukan",
+      });
+    });
+
+    it("should res.status(400) and return error message if failed", async () => {
+      const error = new Error("Something");
+      const mockReq = {
+        params: {
+          id: mockAirport.id,
+        },
+      };
+      const mockRes = mock.RES;
+      const mockAirportService = {
+        destroy: jest.fn().mockReturnValue(Promise.reject(error)),
+      };
+
+      const controller = new airportController(mockAirportService);
+      await controller.destroy(mockReq, mockRes);
+
+      expect(mockAirportService.destroy).toHaveBeenCalled();
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        status: "FAIL",
+        message: error.message,
       });
     });
   });

@@ -62,6 +62,25 @@ describe("whislistController", () => {
         meta: { count: mockWhislistList.length },
       });
     });
+
+    it("should res.status(400) and return error message if failed", async () => {
+      const error = new Error("Something");
+      const mockReq = {};
+      const mockRes = mock.RES;
+      const mockWhislistService = {
+        list: jest.fn().mockReturnValue(Promise.reject(error)),
+      };
+
+      const controller = new whislistController(mockWhislistService);
+      await controller.list(mockReq, mockRes);
+
+      expect(mockWhislistService.list).toHaveBeenCalled();
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        status: "FAIL",
+        message: error.message,
+      });
+    });
   });
 
   describe("#showById", () => {
@@ -103,6 +122,27 @@ describe("whislistController", () => {
         message: "id whislist tidak ditemukan",
       });
     });
+
+    it("should res.status(400) and return error message if failed", async () => {
+      const error = new Error("Something");
+      const mockReq = {
+        params: mockWhislist.id,
+      };
+      const mockRes = mock.RES;
+      const mockWhislistService = {
+        findByPk: jest.fn().mockReturnValue(Promise.reject(error)),
+      };
+
+      const controller = new whislistController(mockWhislistService);
+      await controller.showById(mockReq, mockRes);
+
+      expect(mockWhislistService.findByPk).toHaveBeenCalled();
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        status: "FAIL",
+        message: error.message,
+      });
+    });
   });
 
   describe("#create", () => {
@@ -126,6 +166,30 @@ describe("whislistController", () => {
       expect(mockRes.json).toHaveBeenCalledWith({
         status: "Create whislist successfully",
         data: mockWhislist,
+      });
+    });
+
+    it("should res.status(400) and return error message if failed", async () => {
+      const error = new Error("Something");
+      const mockReq = {
+        user : mock.USER,
+        body: {
+            ...mock.WHISLIST
+        },
+      };
+      const mockRes = mock.RES;
+      const mockWhislistService = {
+        create: jest.fn().mockReturnValue(Promise.reject(error)),
+      };
+
+      const controller = new whislistController(mockWhislistService);
+      await controller.create(mockReq, mockRes);
+
+      expect(mockWhislistService.create).toHaveBeenCalled();
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        status: "FAIL",
+        message: error.message,
       });
     });
   });
@@ -178,6 +242,32 @@ describe("whislistController", () => {
         message: "id whislist tidak ditemukan",
       });
     });
+
+    it("should res.status(400) and return error message if failed", async () => {
+      const error = new Error("Something");
+      const mockReq = {
+        params: mockWhislist.id,
+        user : mock.USER,
+        body: {
+            ...mock.WHISLIST,
+            id_flight : 2
+        },
+      };
+      const mockRes = mock.RES;
+      const mockWhislistService = {
+        update: jest.fn().mockReturnValue(Promise.reject(error)),
+      };
+
+      const controller = new whislistController(mockWhislistService);
+      await controller.update(mockReq, mockRes);
+
+      expect(mockWhislistService.update).toHaveBeenCalled();
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        status: "FAIL",
+        message: error.message,
+      });
+    });
   });
 
   describe("#destroy", () => {
@@ -221,6 +311,29 @@ describe("whislistController", () => {
       expect(mockRes.status).toHaveBeenCalledWith(404);
       expect(mockRes.json).toHaveBeenCalledWith({
         message: "id whislist tidak ditemukan",
+      });
+    });
+
+    it("should res.status(400) and return error message if failed", async () => {
+      const error = new Error("Something");
+      const mockReq = {
+        params: {
+          id: mockWhislist.id,
+        },
+      };
+      const mockRes = mock.RES;
+      const mockWhislistService = {
+        destroy: jest.fn().mockReturnValue(Promise.reject(error)),
+      };
+
+      const controller = new whislistController(mockWhislistService);
+      await controller.destroy(mockReq, mockRes);
+
+      expect(mockWhislistService.destroy).toHaveBeenCalled();
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        status: "FAIL",
+        message: error.message,
       });
     });
   });

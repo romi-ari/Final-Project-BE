@@ -68,6 +68,25 @@ describe("ticketController", () => {
         meta: { count: mockTicketList.length },
       });
     });
+
+    it("should res.status(400) and return error message if failed", async () => {
+      const error = new Error("Something");
+      const mockReq = {};
+      const mockRes = mock.RES;
+      const mockTicketService = {
+        list: jest.fn().mockReturnValue(Promise.reject(error)),
+      };
+
+      const controller = new ticketController(mockTicketService);
+      await controller.list(mockReq, mockRes);
+
+      expect(mockTicketService.list).toHaveBeenCalled();
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        status: "FAIL",
+        message: error.message,
+      });
+    });
   });
 
   describe("#showById", () => {
@@ -109,6 +128,27 @@ describe("ticketController", () => {
         message: "id ticket tidak ditemukan",
       });
     });
+
+    it("should res.status(400) and return error message if failed", async () => {
+      const error = new Error("Something");
+      const mockReq = {
+        params: mockTicket.id,
+      };
+      const mockRes = mock.RES;
+      const mockTicketService = {
+        findByPk: jest.fn().mockReturnValue(Promise.reject(error)),
+      };
+
+      const controller = new ticketController(mockTicketService);
+      await controller.showById(mockReq, mockRes);
+
+      expect(mockTicketService.findByPk).toHaveBeenCalled();
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        status: "FAIL",
+        message: error.message,
+      });
+    });
   });
 
   describe("#create", () => {
@@ -132,6 +172,30 @@ describe("ticketController", () => {
       expect(mockRes.json).toHaveBeenCalledWith({
         status: "Create ticket successfully",
         data: mockTicket,
+      });
+    });
+
+    it("should res.status(400) and return error message if failed", async () => {
+      const error = new Error("Something");
+      const mockReq = {
+        user: mock.USER,
+        body: {
+          id_booking : mockTicket.id_booking
+        },
+      };
+      const mockRes = mock.RES;
+      const mockTicketService = {
+        create: jest.fn().mockReturnValue(Promise.reject(error)),
+      };
+
+      const controller = new ticketController(mockTicketService);
+      await controller.create(mockReq, mockRes);
+
+      expect(mockTicketService.create).toHaveBeenCalled();
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        status: "FAIL",
+        message: error.message,
       });
     });
   });
@@ -182,6 +246,31 @@ describe("ticketController", () => {
         message: "id ticket tidak ditemukan",
       });
     });
+
+    it("should res.status(400) and return error message if failed", async () => {
+      const error = new Error("Something");
+      const mockReq = {
+        params: mockTicket.id,
+        user: mock.USER,
+        body: {
+          id_booking: 2,
+        },
+      };
+      const mockRes = mock.RES;
+      const mockTicketService = {
+        update: jest.fn().mockReturnValue(Promise.reject(error)),
+      };
+
+      const controller = new ticketController(mockTicketService);
+      await controller.update(mockReq, mockRes);
+
+      expect(mockTicketService.update).toHaveBeenCalled();
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        status: "FAIL",
+        message: error.message,
+      });
+    });
   });
 
   describe("#destroy", () => {
@@ -225,6 +314,29 @@ describe("ticketController", () => {
       expect(mockRes.status).toHaveBeenCalledWith(404);
       expect(mockRes.json).toHaveBeenCalledWith({
         message: "id ticket tidak ditemukan",
+      });
+    });
+
+    it("should res.status(400) and return error message if failed", async () => {
+      const error = new Error("Something");
+      const mockReq = {
+        params: {
+          id: mockTicket.id,
+        },
+      };
+      const mockRes = mock.RES;
+      const mockTicketService = {
+        destroy: jest.fn().mockReturnValue(Promise.reject(error)),
+      };
+
+      const controller = new ticketController(mockTicketService);
+      await controller.destroy(mockReq, mockRes);
+
+      expect(mockTicketService.destroy).toHaveBeenCalled();
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        status: "FAIL",
+        message: error.message,
       });
     });
   });

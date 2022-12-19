@@ -62,6 +62,25 @@ describe("bookingController", () => {
         meta: { count: mockBookingList.length },
       });
     });
+
+    it("should res.status(400) and return error message if failed", async () => {
+      const error = new Error("Something");
+      const mockReq = {};
+      const mockRes = mock.RES;
+      const mockBookingService = {
+        list: jest.fn().mockReturnValue(Promise.reject(error)),
+      };
+
+      const controller = new bookingController(mockBookingService);
+      await controller.list(mockReq, mockRes);
+
+      expect(mockBookingService.list).toHaveBeenCalled();
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        status: "FAIL",
+        message: error.message,
+      });
+    });
   });
 
   describe("#showById", () => {
@@ -103,6 +122,27 @@ describe("bookingController", () => {
         message: "id booking tidak ditemukan",
       });
     });
+
+    it("should res.status(400) and return error message if failed", async () => {
+      const error = new Error("Something");
+      const mockReq = {
+        params: mockBooking.id,
+      };
+      const mockRes = mock.RES;
+      const mockBookingService = {
+        findByPk: jest.fn().mockReturnValue(Promise.reject(error)),
+      };
+
+      const controller = new bookingController(mockBookingService);
+      await controller.showById(mockReq, mockRes);
+
+      expect(mockBookingService.findByPk).toHaveBeenCalled();
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        status: "FAIL",
+        message: error.message,
+      });
+    });
   });
 
   describe("#create", () => {
@@ -126,6 +166,30 @@ describe("bookingController", () => {
       expect(mockRes.json).toHaveBeenCalledWith({
         status: "Create Booking successfully",
         data: mockBooking,
+      });
+    });
+
+    it("should res.status(400) and return error message if failed", async () => {
+      const error = new Error("Something");
+      const mockReq = {
+        user : mock.USER,
+        body: {
+            ...mock.BOOKING
+        },
+      };
+      const mockRes = mock.RES;
+      const mockBookingService = {
+        create: jest.fn().mockReturnValue(Promise.reject(error)),
+      };
+
+      const controller = new bookingController(mockBookingService);
+      await controller.create(mockReq, mockRes);
+
+      expect(mockBookingService.create).toHaveBeenCalled();
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        status: "FAIL",
+        message: error.message,
       });
     });
   });
@@ -178,6 +242,32 @@ describe("bookingController", () => {
         message: "id booking tidak ditemukan",
       });
     });
+
+    it("should res.status(400) and return error message if failed", async () => {
+      const error = new Error("Something");
+      const mockReq = {
+        params: mockBooking.id,
+        user : mock.USER,
+        body: {
+            ...mock.BOOKING,
+            id_flight : 2
+        },
+      };
+      const mockRes = mock.RES;
+      const mockBookingService = {
+        update: jest.fn().mockReturnValue(Promise.reject(error)),
+      };
+
+      const controller = new bookingController(mockBookingService);
+      await controller.update(mockReq, mockRes);
+
+      expect(mockBookingService.update).toHaveBeenCalled();
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        status: "FAIL",
+        message: error.message,
+      });
+    });
   });
 
   describe("#destroy", () => {
@@ -221,6 +311,29 @@ describe("bookingController", () => {
       expect(mockRes.status).toHaveBeenCalledWith(404);
       expect(mockRes.json).toHaveBeenCalledWith({
         message: "id booking tidak ditemukan",
+      });
+    });
+
+    it("should res.status(400) and return error message if failed", async () => {
+      const error = new Error("Something");
+      const mockReq = {
+        params: {
+          id: mockBooking.id,
+        },
+      };
+      const mockRes = mock.RES;
+      const mockBookingService = {
+        destroy: jest.fn().mockReturnValue(Promise.reject(error)),
+      };
+
+      const controller = new bookingController(mockBookingService);
+      await controller.destroy(mockReq, mockRes);
+
+      expect(mockBookingService.destroy).toHaveBeenCalled();
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        status: "FAIL",
+        message: error.message,
       });
     });
   });

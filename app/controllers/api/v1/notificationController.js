@@ -21,52 +21,54 @@ class notificationController {
 
   showById = async (req, res) => {
     try {
-      const notification = await this.notificationService.findByPk(req.params.id);
+      const notification = await this.notificationService.findByPk(
+        req.params.id
+      );
 
       if (!notification) {
         res.status(404).json({ message: "id notification tidak ditemukan" });
         return;
       }
-    };
-  
-    create = async (req, res) => {
-      try {
-        const message = req.body.message;
-        const id_user = req.body.id_user;
-        const notification = await this.notificationService.create({
-          message,
-          id_user,
-        });
-        res.status(201).json({
-          status: "Create notification successfully",
-          data: notification,
-        });
-      } catch (error) {
-        res.status(400).json({
-          status: "FAIL",
-          message: error.message,
-        });
-      }
-    };
-  
-    update = async (req, res) => {
-      try {
-        const notification = await this.notificationService.update(req.params.id, {
+    } catch (error) {
+      res.status(400).json({
+        status: "FAIL",
+        message: error.message,
+      });
+    }
+  };
+
+  create = async (req, res) => {
+    try {
+      const message = req.body.message;
+      const id_user = req.body.id_user;
+      const notification = await this.notificationService.create({
+        message,
+        id_user,
+      });
+      res.status(201).json({
+        status: "Create notification successfully",
+        data: notification,
+      });
+    } catch (error) {
+      res.status(400).json({
+        status: "FAIL",
+        message: error.message,
+      });
+    }
+  };
+
+  update = async (req, res) => {
+    try {
+      const notification = await this.notificationService.update(
+        req.params.id,
+        {
           message: req.body.message,
           id_user: req.body.id_user,
-        });
-        if (notification == 0) {
-          res.status(404).json({ message: "id notification tidak ditemukan" });
-          return;
         }
-        res.status(200).json({
-          status: "Update notification successfully",
-        });
-      } catch (error) {
-        res.status(400).json({
-          status: "FAIL",
-          message: error.message,
-        });
+      );
+      if (notification == 0) {
+        res.status(404).json({ message: "id notification tidak ditemukan" });
+        return;
       }
       res.status(200).json({
         status: "Update notification successfully",
@@ -81,7 +83,9 @@ class notificationController {
 
   destroy = async (req, res) => {
     try {
-      const notification = await this.notificationService.destroy(req.params.id);
+      const notification = await this.notificationService.destroy(
+        req.params.id
+      );
 
       if (!notification) {
         res.status(404).json({ message: "id notification tidak ditemukan" });
@@ -99,5 +103,4 @@ class notificationController {
     }
   };
 }
-
 module.exports = notificationController;

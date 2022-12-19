@@ -51,6 +51,25 @@ describe("flightController", () => {
         meta: { count: mockFlightList.length },
       });
     });
+
+    it("should res.status(400) and return error message if failed", async () => {
+      const error = new Error("Something");
+      const mockReq = {};
+      const mockRes = mock.RES;
+      const mockFlightService = {
+        list: jest.fn().mockReturnValue(Promise.reject(error)),
+      };
+
+      const controller = new flightController(mockFlightService);
+      await controller.list(mockReq, mockRes);
+
+      expect(mockFlightService.list).toHaveBeenCalled();
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        status: "FAIL",
+        message: error.message,
+      });
+    });
   });
 
   describe("#showById", () => {
@@ -92,21 +111,34 @@ describe("flightController", () => {
         message: "id flight tidak ditemukan",
       });
     });
+
+    it("should res.status(400) and return error message if failed", async () => {
+      const error = new Error("Something");
+      const mockReq = {
+        params: mockFlight.id,
+      };
+      const mockRes = mock.RES;
+      const mockFlightService = {
+        findByPk: jest.fn().mockReturnValue(Promise.reject(error)),
+      };
+
+      const controller = new flightController(mockFlightService);
+      await controller.showById(mockReq, mockRes);
+
+      expect(mockFlightService.findByPk).toHaveBeenCalled();
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        status: "FAIL",
+        message: error.message,
+      });
+    });
   });
 
   describe("#create", () => {
     it("should res.status(201) and res.json with flight instance if success", async () => {
       const mockReq = {
         body: {
-            from_airport_id : mockFlight.from_airport_id,
-            to_airport_id : mockFlight.to_airport_id,
-            id_plane : mockFlight.id_plane,
-            kelas : mockFlight.kelas,
-            available_seats : mockFlight.available_seats,
-            price : mockFlight.price,
-            arrival_time : mockFlight.arrival_time,
-            departure_time : mockFlight.departure_time,
-            flight_date : mockFlight.flight_date,
+            ...mock.FLIGHT
         },
       };
       const mockRes = mock.RES;
@@ -124,6 +156,29 @@ describe("flightController", () => {
         data: mockFlight,
       });
     });
+
+    it("should res.status(400) and return error message if failed", async () => {
+      const error = new Error("Something");
+      const mockReq = {
+        body: {
+            ...mock.FLIGHT
+        },
+      };
+      const mockRes = mock.RES;
+      const mockFlightService = {
+        create: jest.fn().mockReturnValue(Promise.reject(error)),
+      };
+
+      const controller = new flightController(mockFlightService);
+      await controller.create(mockReq, mockRes);
+
+      expect(mockFlightService.create).toHaveBeenCalled();
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        status: "FAIL",
+        message: error.message,
+      });
+    });
   });
 
   describe("#update", () => {
@@ -131,15 +186,7 @@ describe("flightController", () => {
       const mockReq = {
         params: mockFlight.id,
         body: {
-            from_airport_id : mockFlight.from_airport_id,
-            to_airport_id : mockFlight.to_airport_id,
-            id_plane : mockFlight.id_plane,
-            kelas : mockFlight.kelas,
-            available_seats : mockFlight.available_seats,
-            price : mockFlight.price,
-            arrival_time : mockFlight.arrival_time,
-            departure_time : mockFlight.departure_time,
-            flight_date : mockFlight.flight_date,
+            ...mock.FLIGHT
         },
       };
       const mockRes = mock.RES;
@@ -161,15 +208,7 @@ describe("flightController", () => {
       const mockReq = {
         params: 999,
         body: {
-            from_airport_id : mockFlight.from_airport_id,
-            to_airport_id : mockFlight.to_airport_id,
-            id_plane : mockFlight.id_plane,
-            kelas : mockFlight.kelas,
-            available_seats : mockFlight.available_seats,
-            price : mockFlight.price,
-            arrival_time : mockFlight.arrival_time,
-            departure_time : mockFlight.departure_time,
-            flight_date : mockFlight.flight_date,
+            ...mock.FLIGHT
         },
       };
       const mockRes = mock.RES;
@@ -184,6 +223,30 @@ describe("flightController", () => {
       expect(mockRes.status).toHaveBeenCalledWith(404);
       expect(mockRes.json).toHaveBeenCalledWith({
         message: "id flight tidak ditemukan",
+      });
+    });
+
+    it("should res.status(400) and return error message if failed", async () => {
+      const error = new Error("Something");
+      const mockReq = {
+        params: mockFlight.id,
+        body: {
+            ...mock.FLIGHT
+        },
+      };
+      const mockRes = mock.RES;
+      const mockFLightService = {
+        update: jest.fn().mockReturnValue(Promise.reject(error)),
+      };
+
+      const controller = new flightController(mockFLightService);
+      await controller.update(mockReq, mockRes);
+
+      expect(mockFLightService.update).toHaveBeenCalled();
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        status: "FAIL",
+        message: error.message,
       });
     });
   });
@@ -229,6 +292,29 @@ describe("flightController", () => {
       expect(mockRes.status).toHaveBeenCalledWith(404);
       expect(mockRes.json).toHaveBeenCalledWith({
         message: "id flight tidak ditemukan",
+      });
+    });
+
+    it("should res.status(400) and return error message if failed", async () => {
+      const error = new Error("Something");
+      const mockReq = {
+        params: {
+          id: mockFlight.id,
+        },
+      };
+      const mockRes = mock.RES;
+      const mockFlightService = {
+        destroy: jest.fn().mockReturnValue(Promise.reject(error)),
+      };
+
+      const controller = new flightController(mockFlightService);
+      await controller.destroy(mockReq, mockRes);
+
+      expect(mockFlightService.destroy).toHaveBeenCalled();
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        status: "FAIL",
+        message: error.message,
       });
     });
   });

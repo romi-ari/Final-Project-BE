@@ -5,9 +5,6 @@ const now = dayjs();
 const isoDate = now.toISOString();
 const controllers = require("../app/controllers");
 
-const encryptedPassword = async (password) => {
-  return await controllers.api.v1.encryptPassword(password);
-};
 
 const mock = {
   RES: {
