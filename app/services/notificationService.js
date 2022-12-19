@@ -1,34 +1,31 @@
-const notificationRepository = require("../repositories/notificationRespository");
-
+const notification = require("../repositories/notificationRespository");
 
 module.exports = {
   create(requestBody) {
-    return notificationRepository.create(requestBody);
+    return notification.create(requestBody);
   },
 
   update(id, requestBody) {
-    return notificationRepository.update(id, requestBody);
+    return notification.update(id, requestBody);
   },
 
   destroy(id) {
-    return notificationRepository.destroy(id);
+    return notification.destroy(id);
   },
 
   async list() {
     try {
-      return await notificationRepository.findAll();
+      return await notification.findAll();
     } catch (err) {
       throw err;
     }
   },
 
-  findOne(id){
-    return notificationRepository.findOne(id)
+  findOne(id) {
+    return notification.findOne(id);
   },
 
-  findByPk(id){
-    return notificationRepository.findByPk(id)
-  }
-
-  
+  findByPk(id) {
+    return notification.findByPk(id);
+  },
 };
