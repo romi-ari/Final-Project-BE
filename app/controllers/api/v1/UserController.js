@@ -5,6 +5,7 @@
 
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const client = new OAuth2Client(process.env.REACT_APP_GOOGLE_CLIENT_ID);
 const cloudinary = require("../../../../config/cloudinary");
 const SALT = 10;
 
@@ -432,7 +433,6 @@ class UserController {
   
       res.status(201).json({ accessToken });
     } catch (err) {
-      console.log(err.message);
       res.status(401).json({ error: { name: err.name, message: err.message } });
     }
   }
