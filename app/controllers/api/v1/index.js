@@ -11,7 +11,6 @@
  const ticketController = require("./ticketController");
  const bookingController = require("./bookingController");
  const whislistController = require("./whislistController");
- const handleGoogleLoginOrRegister = require("./handleGoogleLoginOrRegister");
  const notificationController = require("./notificationController");
 
  
@@ -26,7 +25,6 @@
    ticketController,
    bookingController,
    whislistController,
-   handleGoogleLoginOrRegister,
    notificationController
  };
  
