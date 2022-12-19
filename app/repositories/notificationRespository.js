@@ -21,7 +21,7 @@ module.exports = {
   },
 
   findByPk(id) {
-    return Notification.findByPk(id);
+    return Notification.findByPk(id, {include: [{all:true, nested:true}]});
   },
 
   findOne(id) {
