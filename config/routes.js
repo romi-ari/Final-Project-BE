@@ -25,14 +25,14 @@ apiRouter.use(cors());
 
 apiRouter.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
+const userController = new controllers.api.v1.UserController(userService);
+
 //Google Login API
 
 apiRouter.post(
   "/api/v1/google",
-  controllers.api.v1.handleGoogleLoginOrRegister
+  userController.handleGoogleLoginOrRegister
 );
-
-const userController = new controllers.api.v1.UserController(userService);
 
 //Login untuk member, admin, superAdmin
 

@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for app/models/ticket.js</title>
+    <title>Code coverage report for app/models/notification.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,13 +19,13 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">app/models</a> ticket.js</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">app/models</a> notification.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>26/26</span>
+                <span class='fraction'>27/27</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>26/26</span>
+                <span class='fraction'>27/27</span>
             </div>
         
             
@@ -88,11 +88,13 @@
 <a name='L23'></a><a href='#L23'>23</a>
 <a name='L24'></a><a href='#L24'>24</a>
 <a name='L25'></a><a href='#L25'>25</a>
-<a name='L26'></a><a href='#L26'>26</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-yes">7x</span>
@@ -118,7 +120,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) =&gt; {
-  class Ticket extends Model {
+  class Notification extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -126,18 +128,19 @@ module.exports = (sequelize, DataTypes) =&gt; {
      */
     static associate(models) {
       // define association here
-      Ticket.belongsTo(models.Booking, {
-        foreignKey: "id_booking"
+      Notification.belongsTo(models.User, {
+        foreignKey: "id_user"
       });
     }
   }
-  Ticket.init({
-    id_booking: DataTypes.INTEGER,
+  Notification.init({
+    message: DataTypes.STRING,
+    id_user: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'Ticket',
+    modelName: 'Notification',
   });
-  return Ticket;
+  return Notification;
 };</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->

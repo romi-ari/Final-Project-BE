@@ -8,6 +8,15 @@ const jwt = require("jsonwebtoken");
 const cloudinary = require("../../../../config/cloudinary");
 const SALT = 10;
 
+function createTokenGoogle(user) {
+  const payload = {
+    id: user.id,
+    email: user.email,
+  };
+
+  return jwt.sign(payload, JWT_SECRET_KEY);
+}
+
 //FUNCTION UNTUK ME ENCRYPT PASSWORD SAAT REGISTRASI
 function encryptPassword(password) {
   try {
@@ -402,6 +411,31 @@ class UserController {
   authorizeSuperAdmin = (req, res, next) => {
     this.verifyRoles(req, res, next, ["superAdmin"]);
   };
+
+  handleGoogleLoginOrRegister = async (req, res) => {
+    const { token } = req.body;
+  
+    try {
+      const ticket = await client.verifyIdToken({
+        idToken: token,
+        audience: "1075166577960-t9j4kguud7mo2dkaij6k3o5qu9rfna1b.apps.googleusercontent.com"
+      });
+  
+      const { email, name } = ticket.getPayload();
+  
+      console.log(ticket.getPayload());
+  
+      let user = await User.findOne({ where: { email: email } });
+      if (!user) user = await User.create({ email, name });
+  
+      const accessToken = createTokenGoogle(user);
+  
+      res.status(201).json({ accessToken });
+    } catch (err) {
+      console.log(err.message);
+      res.status(401).json({ error: { name: err.name, message: err.message } });
+    }
+  }
 }
 
 module.exports = { UserController, encryptPassword, createToken };
