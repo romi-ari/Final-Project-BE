@@ -306,13 +306,11 @@ apiRouter.get("/api/v1/notification", notificationController.list);
 
 apiRouter.post(
   "/api/v1/notification",
-  userController.authorize,
   notificationController.create
 );
 
 apiRouter.put(
   "/api/v1/notification/:id",
-  userController.authorize,
   notificationController.update
 );
 
@@ -323,7 +321,6 @@ apiRouter.get(
 
 apiRouter.delete(
   "/api/v1/notification/:id",
-  userController.authorize,
   notificationController.destroy
 );
 

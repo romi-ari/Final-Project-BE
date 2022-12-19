@@ -1,41 +1,31 @@
 class notificationController {
-    constructor(notificationService) {
-      this.notificationService = notificationService;
+  constructor(notificationService) {
+    this.notificationService = notificationService;
+  }
+
+  list = async (req, res) => {
+    try {
+      const listNotification = await this.notificationService.list();
+      res.status(200).json({
+        status: "OK",
+        data: { notifications: listNotification },
+        meta: { count: listNotification.length },
+      });
+    } catch (error) {
+      res.status(400).json({
+        status: "FAIL",
+        message: error.message,
+      });
     }
-  
-    list = async (req, res) => {
-      try {
-        const listNotifications = await this.notificationService.list();
-        res.status(200).json({
-          status: "OK",
-          data: { notifications: listNotifications },
-          meta: { count: listNotifications.length },
-        });
-      } catch (error) {
-        res.status(400).json({
-          status: "FAIL",
-          message: error.message,
-        });
-      }
-    };
-  
-    showById = async (req, res) => {
-      try {
-        const notification = await this.notificationService.findByPk(req.params.id);
-  
-        if (!notification) {
-          res.status(404).json({ message: "id notification tidak ditemukan" });
-          return;
-        }
-        res.status(200).json({
-          status: "OK",
-          data: notification,
-        });
-      } catch (error) {
-        res.status(400).json({
-          status: "FAIL",
-          message: error.message,
-        });
+  };
+
+  showById = async (req, res) => {
+    try {
+      const notification = await this.notificationService.findByPk(req.params.id);
+
+      if (!notification) {
+        res.status(404).json({ message: "id notification tidak ditemukan" });
+        return;
       }
     };
   
@@ -78,29 +68,36 @@ class notificationController {
           message: error.message,
         });
       }
-    };
-  
-    destroy = async (req, res) => {
-      try {
-        const notification = await this.notificationService.destroy(req.params.id);
-  
-        if (!notification) {
-          res.status(404).json({ message: "id notification tidak ditemukan" });
-          return;
-        }
-        res.status(200).json({
-          status: "SUCCESS",
-          status: `Delete notification successfully`,
-        });
-      } catch (error) {
-        res.status(400).json({
-          status: "FAIL",
-          message: error.message,
-        });
+      res.status(200).json({
+        status: "Update notification successfully",
+      });
+    } catch (error) {
+      res.status(400).json({
+        status: "FAIL",
+        message: error.message,
+      });
+    }
+  };
+
+  destroy = async (req, res) => {
+    try {
+      const notification = await this.notificationService.destroy(req.params.id);
+
+      if (!notification) {
+        res.status(404).json({ message: "id notification tidak ditemukan" });
+        return;
       }
-    };
-  }
-  
-  module.exports = notificationController;
-  
-  
+      res.status(200).json({
+        status: "SUCCESS",
+        status: `Delete notification successfully`,
+      });
+    } catch (error) {
+      res.status(400).json({
+        status: "FAIL",
+        message: error.message,
+      });
+    }
+  };
+}
+
+module.exports = notificationController;
