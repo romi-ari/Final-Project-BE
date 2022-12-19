@@ -29,7 +29,7 @@ module.exports = {
   },
 
   findAll() {
-    return Notification.findAll();
+    return Notification.findAll({include: [{all:true, nested:true}]});
   },
 
   getTotalNotification() {

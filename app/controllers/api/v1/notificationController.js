@@ -44,8 +44,8 @@ class notificationController {
         const message = req.body.message;
         const id_user = req.body.id_user;
         const notification = await this.notificationService.create({
-          id_user,
           message,
+          id_user,
         });
         res.status(201).json({
           status: "Create notification successfully",

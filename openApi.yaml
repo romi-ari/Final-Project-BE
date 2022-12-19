@@ -25,6 +25,10 @@ tags:
     description: Contain every operation about Booking Resource
   - name: Ticket
     description: Contain every operation about Ticket Resource
+  - name: Whislist
+    description: Contain every operation about Whislist Resource
+  - name: Notification
+    description: Contain every operation about Whislist Resource
 
 paths:
  
@@ -653,8 +657,107 @@ paths:
 
   #---Notification Operation---#
   /api/v1/notification:
+    get:
+     summary: Get all Notification
+     operationId: Get all Notification
+     description: "Get Notification data from database"
+     tags:
+       - Notification
+     responses:
+       "200":
+         $ref: "#/components/responses/GetNotificationResponse"
+       "400":
+         $ref: "#/components/responses/ErrorResponse"
+    
+    post:
+      security:
+        - bearerAuth: []
+      operationId: createWhislist
+      summary: Create Data Whislist
+      description: "Add new Whislist data to database \n\n Allowed roles: superadmin, admin"
+      tags:
+        - Whislist
+      requestBody:
+        $ref: "#/components/requestBodies/WhislistRequest"
+      responses:
+        "200":
+          $ref: "#/components/responses/PutWhislistResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "403":
+          $ref: "#/components/responses/ForbiddenResponse"
+
   /api/v1/notification/:id:
-  
+    get:
+      summary: Get Whislist By ID
+      operationId: Get Whislist By Id
+      description: "Get Whislist data from database"
+      tags:
+        - Whislist
+      parameters:
+        - in: path
+          name: id
+          description: The id of the Post
+          required: true
+          schema:
+            type: number
+            example: 1
+      responses:
+        "200":
+          $ref: "#/components/responses/GetWhislistById"
+        "400":
+          $ref: "#/components/responses/ErrorResponse"
+    
+    put:
+      security:
+        - bearerAuth: []
+      summary: Update Whislist By Id
+      operationId: UpdateWhislist
+      description: "Update Whislist data from database \n\n Allowed roles: superadmin, admin"
+      tags:
+        - Whislist
+      parameters:
+        - in: path
+          name: id
+          description: The id of the Post
+          required: true
+          schema:
+            type: number
+            example: 1
+      requestBody:
+        $ref: "#/components/requestBodies/WhislistUpdate"
+      responses:
+        "200":
+          $ref: "#/components/responses/PutWhistlistResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "403":
+          $ref: "#/components/responses/ForbiddenResponse"
+    
+    delete:
+      security:
+        - bearerAuth: []
+      summary: Delete Whislist By Id
+      operationId: DeleteWhislist
+      description: "Delete Whislist data from database \n\n Allowed roles: superadmin, admin"
+      tags:
+        - Whislist
+      parameters:
+        - in: path
+          name: id
+          description: The id of the Post
+          required: true
+          schema:
+            type: number
+            example: 1
+      responses:
+        "200":
+          $ref: "#/components/responses/DeleteTicketResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "403":
+          $ref: "#/components/responses/ForbiddenResponse"
+
   #---Login User Operation---#
 
   /api/v1/login:
@@ -1820,6 +1923,29 @@ components:
                 example: Delete Whislist successfully
 
     #---Notification Response---#
+    GetNotificationResponse:
+      description: Get data Notification success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: OK
+              data:
+                type: object
+                properties:
+                  whislists:
+                    $ref: "#/components/schemas/WhislistGet"
+              properties:
+              meta:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    example: 1
+
 
     #---User Response---#
 
