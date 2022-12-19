@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "test": "jest",
-    "start": "nodemon bin/www",
+    "start": "node bin/www",
     "develop": "node -q bin/www",
     "db:create": "./node_modules/.bin/sequelize-cli db:create",
     "db:drop": "./node_modules/.bin/sequelize-cli db:drop",
