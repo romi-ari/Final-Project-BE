@@ -363,6 +363,7 @@ class UserController {
   authorize = async (req, res, next) => {
     try {
       const bearerToken = req.headers.authorization;
+      console.log(bearerToken);
       const token = bearerToken.split("Bearer ")[1];
       const tokenPayload = jwt.verify(
         token,
