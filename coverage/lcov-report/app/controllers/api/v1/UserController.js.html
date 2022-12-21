@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80.73% </span>
+                <span class="strong">80.77% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>641/794</span>
+                <span class='fraction'>643/796</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80.73% </span>
+                <span class="strong">80.77% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>641/794</span>
+                <span class='fraction'>643/796</span>
             </div>
         
             
@@ -857,7 +857,11 @@
 <a name='L792'></a><a href='#L792'>792</a>
 <a name='L793'></a><a href='#L793'>793</a>
 <a name='L794'></a><a href='#L794'>794</a>
-<a name='L795'></a><a href='#L795'>795</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L795'></a><a href='#L795'>795</a>
+<a name='L796'></a><a href='#L796'>796</a>
+<a name='L797'></a><a href='#L797'>797</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -1658,6 +1662,8 @@
 &nbsp;
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const { OAuth2Client } = require("google-auth-library");
+const client = new OAuth2Client(process.env.REACT_APP_GOOGLE_CLIENT_ID);
 const cloudinary = require("../../../../config/cloudinary");
 const SALT = 10;
 &nbsp;
@@ -1667,7 +1673,7 @@ const SALT = 10;
 <span class="cstat-no" title="statement not covered" >    email: user.email,</span>
 <span class="cstat-no" title="statement not covered" >  };</span>
 <span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >  return jwt.sign(payload, JWT_SECRET_KEY);</span>
+<span class="cstat-no" title="statement not covered" >  return jwt.sign(payload, process.env.JWT_SIGNATURE_KEY || "Rahasia");</span>
 <span class="cstat-no" title="statement not covered" >}</span>
 &nbsp;
 //FUNCTION UNTUK ME ENCRYPT PASSWORD SAAT REGISTRASI
@@ -2026,7 +2032,7 @@ class UserController {
       next();
     } <span class="branch-0 cbranch-no" title="branch not covered" >catch (err) {</span>
 <span class="cstat-no" title="statement not covered" >      res.status(401).json({</span>
-<span class="cstat-no" title="statement not covered" >        message: "Unauthorized",</span>
+<span class="cstat-no" title="statement not covered" >        message: err.message,</span>
 <span class="cstat-no" title="statement not covered" >      });</span>
 <span class="cstat-no" title="statement not covered" >    }</span>
   };
@@ -2075,17 +2081,17 @@ class UserController {
 <span class="cstat-no" title="statement not covered" >      });</span>
 <span class="cstat-no" title="statement not covered" >  </span>
 <span class="cstat-no" title="statement not covered" >      const { email, name } = ticket.getPayload();</span>
+<span class="cstat-no" title="statement not covered" >      const role = "member";</span>
 <span class="cstat-no" title="statement not covered" >  </span>
 <span class="cstat-no" title="statement not covered" >      console.log(ticket.getPayload());</span>
 <span class="cstat-no" title="statement not covered" >  </span>
-<span class="cstat-no" title="statement not covered" >      let user = await User.findOne({ where: { email: email } });</span>
-<span class="cstat-no" title="statement not covered" >      if (!user) user = await User.create({ email, name });</span>
+<span class="cstat-no" title="statement not covered" >      let user = await this.userService.findOne({ where: { email: email } });</span>
+<span class="cstat-no" title="statement not covered" >      if (!user) user = await this.userService.create({ email, name, role });</span>
 <span class="cstat-no" title="statement not covered" >  </span>
 <span class="cstat-no" title="statement not covered" >      const accessToken = createTokenGoogle(user);</span>
 <span class="cstat-no" title="statement not covered" >  </span>
 <span class="cstat-no" title="statement not covered" >      res.status(201).json({ accessToken });</span>
 <span class="cstat-no" title="statement not covered" >    } catch (err) {</span>
-<span class="cstat-no" title="statement not covered" >      console.log(err.message);</span>
 <span class="cstat-no" title="statement not covered" >      res.status(401).json({ error: { name: err.name, message: err.message } });</span>
 <span class="cstat-no" title="statement not covered" >    }</span>
 <span class="cstat-no" title="statement not covered" >  }</span>
@@ -2452,7 +2458,7 @@ module.exports = { UserController, encryptPassword, createToken };
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2022-12-19T14:00:06.428Z
+                at 2022-12-21T14:12:54.632Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

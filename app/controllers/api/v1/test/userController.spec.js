@@ -1,5 +1,4 @@
 const { UserController, createToken } = require("../UserController");
-const userServise = require("../../../../services/userServices");
 const mock = require("../../../../../test/mock");
 
 describe("UserController", () => {

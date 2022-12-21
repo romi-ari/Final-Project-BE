@@ -122,6 +122,14 @@ const mock = {
     createdAt: new Date(),
     updatedAt: new Date(),
   },
+
+  NOTIFICATION: {
+    id: 1,
+    message: "Good Job",
+    id_user: 1,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
 };
 
 module.exports = mock;

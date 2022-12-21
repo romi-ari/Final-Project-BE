@@ -363,7 +363,6 @@ class UserController {
   authorize = async (req, res, next) => {
     try {
       const bearerToken = req.headers.authorization;
-      console.log(bearerToken);
       const token = bearerToken.split("Bearer ")[1];
       const tokenPayload = jwt.verify(
         token,
@@ -417,6 +416,7 @@ class UserController {
 
   handleGoogleLoginOrRegister = async (req, res) => {
     const { token } = req.body;
+    console.log(token);
   
     try {
       const ticket = await client.verifyIdToken({

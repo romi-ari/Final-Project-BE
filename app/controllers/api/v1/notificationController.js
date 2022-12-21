@@ -29,6 +29,11 @@ class notificationController {
         res.status(404).json({ message: "id notification tidak ditemukan" });
         return;
       }
+
+      res.status(200).json({
+        status: "OK",
+        data: notification,
+      });
     } catch (error) {
       res.status(400).json({
         status: "FAIL",
