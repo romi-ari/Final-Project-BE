@@ -49,8 +49,14 @@ apiRouter.get(
 apiRouter.put(
   "/api/v1/updateUser",
   userController.authorize,
-  limit,
   userController.updateUser
+);
+
+apiRouter.put(
+  "/api/v1/updateProfileUser",
+  userController.authorize,
+  limit,
+  userController.updateProfileUser
 );
 
 apiRouter.post("/api/v1/register", userController.register);

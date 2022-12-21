@@ -621,4 +621,30 @@ describe("UserController", () => {
       });
     });
   });
+
+  describe("#handleGoogleLoginOrRegister", () => {
+    it("should res.status(200) and return accesstoken if success", async () => {
+      const mockReq = {
+        body: {
+          token : "eyJhbGciOiJSUzI1NiIsImtpZCI6IjhjMjdkYjRkMTNmNTRlNjU3ZDI2NWI0NTExMDA4MGI0ODhlYjQzOGEiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJuYmYiOjE2NzE2MzM2NzMsImF1ZCI6IjEwNzUxNjY1Nzc5NjAtdTIxcjk5MzJtZnI1MXMxdWlxM21iYzV2NWsxNXV1OTYuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDgzNzUyMTY4MDIxMjM4NjE0MzkiLCJlbWFpbCI6InJheWhhbnB1dHJhMTAwQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJhenAiOiIxMDc1MTY2NTc3OTYwLXUyMXI5OTMybWZyNTFzMXVpcTNtYmM1djVrMTV1dTk2LmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwibmFtZSI6IlJheWhhbiBQdXRyYSBKYWZhbmRpIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FFZEZUcDRsdW9lX0hzbVMxNXRzR1hid0NxUlA3UzJKamNIUHBySW5DekRXanc9czk2LWMiLCJnaXZlbl9uYW1lIjoiUmF5aGFuIiwiZmFtaWx5X25hbWUiOiJQdXRyYSBKYWZhbmRpIiwiaWF0IjoxNjcxNjMzOTczLCJleHAiOjE2NzE2Mzc1NzMsImp0aSI6IjIwYzcxMzU3OWExMGM4NTJiZjcxOWRmYmY3OWZiODAwZjQyOGExYzcifQ.BssHg-GpGs72P4sxuIP-EzB0rJFTNSjbcUKQLNijSF6BQ6AFoNVJuANG7zbOQaXuHfjdslp4NSmuX98wzNDoF2n-j3Xnv12F069hr3e6xaJEWywMR50Exz2yZqPRZtvKkCzjEMOijvzesHefBwGbIzgLLiuMkLp29z4SIOXMa6o7DUnEjjl5KLjS1RJcCofB0I7Fn58d98DySeEDKjtuhpsqHzJvv0pTg_cfSIZ1OJp0rMurw0Koiuk9WROD5_Iv0wIM3bNJ4QvkjMlCzwcWvUuGFUPheqqPCPKltmFHusi4hXwlAyp5ho3_avj-B4znkLplq5NhH3LMbVnGSg3oCg"
+        }
+      };
+      const mockRes = mock.RES;
+      const mockUserService = {
+        findOne: jest.fn().mockReturnValue(null),
+        create: jest.fn().mockReturnValue(mockUser),
+      };
+
+      const controller = new UserController(mockUserService);
+      await controller.handleGoogleLoginOrRegister(mockReq, mockRes);
+
+      expect(mockUserService.findOne).toHaveBeenCalled();
+      expect(mockUserService.create).toHaveBeenCalled();
+      expect(mockRes.status).toHaveBeenCalledWith(201);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        accessToken: expect.any(String)
+      });
+    });
+  });
+  
 });

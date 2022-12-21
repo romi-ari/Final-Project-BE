@@ -7,6 +7,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { OAuth2Client } = require("google-auth-library");
 const client = new OAuth2Client(process.env.REACT_APP_GOOGLE_CLIENT_ID);
+const userService = require("../../../services/userServices");
 const cloudinary = require("../../../../config/cloudinary");
 const SALT = 10;
 
@@ -204,62 +205,9 @@ class UserController {
       const email = req.body.email;
       const name = req.body.name;
       const username = req.body.username;
-      const image = req.body.image;
       const password = !req.body.password
         ? req.user.password
         : await encryptPassword(req.body.password);
-      if (image != null || image != undefined) {
-        const oldimage = req.user.image;
-
-        if (oldimage !== null) {
-          const getImageID = oldimage.split("/").pop().split(".")[0];
-          await cloudinary.uploader.destroy(`profile-pictures/${getImageID}`);
-        }
-
-        const fileBase64 = req.file.buffer.toString("base64");
-        const file = `data:${req.file.mimetype};base64,${fileBase64}`;
-
-        cloudinary.uploader.upload(
-          file,
-          { folder: "profile-pictures" },
-          function (err, result) {
-            if (!!err) {
-              res.status(400).json({
-                status: "Update Failed",
-                errors: err.message,
-              });
-              return;
-            }
-
-            const image = result.url;
-
-            this.userService
-              .update(req.user.id, {
-                no_ktp: no_ktp,
-                gender: gender,
-                date_of_birth: date_of_birth,
-                address: address,
-                email: email,
-                name: name,
-                username: username,
-                password: password,
-                image: image,
-              })
-              .then(() => {
-                res.status(200).json({
-                  status: "updated",
-                });
-              })
-              .catch((err) => {
-                res.status(422).json({
-                  status: "FAIL",
-                  message: err.message,
-                });
-              });
-          }
-        );
-        return;
-      }
       const user = await this.userService.update(req.user.id, {
         no_ktp: no_ktp,
         gender: gender,
@@ -273,8 +221,51 @@ class UserController {
       res.status(200).json({
         status: "SUCCESS",
         message: "Update User successfully",
-        data : user
+        data: user,
       });
+    } catch (error) {
+      res.status(400).json({
+        status: "FAIL",
+        message: error.message,
+      });
+    }
+  };
+
+  updateProfileUser = async (req, res) => {
+    try {
+      const oldimage = req.user.image;
+      if (oldimage !== null) {
+        const getImageID = oldimage.split("/").pop().split(".")[0];
+        await cloudinary.uploader.destroy(`profile-pictures/${getImageID}`);
+      }
+
+      const fileBase64 = req.file.buffer.toString("base64");
+      const file = `data:${req.file.mimetype};base64,${fileBase64}`;
+
+      cloudinary.uploader.upload(
+        file,
+        { folder: "profile-pictures" },
+        async function (err, result) {
+          if (!!err) {
+            res.status(400).json({
+              status: "Update Failed",
+              errors: err.message,
+            });
+            return;
+          }
+
+          const image = result.url;
+
+          const user = await this.userService.update(req.user.id, {
+            image: image,
+          });
+          res.status(200).json({
+            status: "SUCCESS",
+            message: "Update Profile User successfully",
+            data: user,
+          });
+        }
+      );
     } catch (error) {
       res.status(400).json({
         status: "FAIL",
@@ -417,28 +408,28 @@ class UserController {
   handleGoogleLoginOrRegister = async (req, res) => {
     const { token } = req.body;
     console.log(token);
-  
+
     try {
       const ticket = await client.verifyIdToken({
         idToken: token,
         audience: process.env.REACT_APP_GOOGLE_CLIENT_ID,
       });
-  
+
       const { email, name } = ticket.getPayload();
       const role = "member";
-  
+
       console.log(ticket.getPayload());
-  
+
       let user = await this.userService.findOne({ where: { email: email } });
       if (!user) user = await this.userService.create({ email, name, role });
-  
+
       const accessToken = createTokenGoogle(user);
-  
+
       res.status(201).json({ accessToken });
     } catch (err) {
       res.status(401).json({ error: { name: err.name, message: err.message } });
     }
-  }
+  };
 }
 
 module.exports = { UserController, encryptPassword, createToken };

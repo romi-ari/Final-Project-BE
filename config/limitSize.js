@@ -9,7 +9,7 @@ module.exports = errorHandleValidations = (req, res, next) => {
             res.status(400).json({
                 msg: "Bad Request",
                 status: 400,
-                errors: "File size is bigger than 2 MB"
+                errors: err.message
             })
             return
         } else if (err) {
