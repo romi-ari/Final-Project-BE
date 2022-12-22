@@ -885,10 +885,14 @@ paths:
 
   /api/v1/profile:
     get:
-      summary: Get Profile after user login
+      summary: Get Profile credential after user login
       description: "Get Profile user data from database"
       tags:
         - User
+      summary: Register new User
+      description: Register new account
+      requestBody:
+        $ref: "#/components/requestBodies/UserPostRequest"
       responses:
         "200":
           $ref: "#/components/responses/GetUserResponse"
@@ -896,6 +900,37 @@ paths:
           $ref: "#/components/responses/ErrorResponse"
 
   /api/v1/updateUser:
+    put:
+      summary: Update User By Login
+      tags:
+        - User
+      description: Update user
+      requestBody:
+        $ref: "#/components/requestBodies/UserPutRequest"
+      responses:
+        "200":
+          $ref: "#/components/responses/PutConfirmation"
+        "400":
+          $ref: "#/components/responses/ErrorResponse"
+
+  /api/v1/updateProfileUser:
+    put:
+      summary: Update User profile picture By Login
+      tags:
+        - User
+      description: Update user profile picture
+      consumes:
+         - multipart/form-data
+      parameters:
+        - in: formData
+          name: file
+          type: file
+          description: The file to upload (PNG, JPG, JPEG).
+      responses:
+        "200":
+          $ref: "#/components/responses/PutConfirmation"
+        "400":
+          $ref: "#/components/responses/ErrorResponse"
 
   /api/v1/userDelete:
     delete:
@@ -1457,6 +1492,45 @@ components:
               password:
                 type: string
                 example: "abdul"
+
+    UserPutRequest:
+      description: Create User Data Required fields [gender, date_of_birth, address, email, password, name, username]
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              no_ktp:
+                type: string
+                example: ""
+              gender:
+                type: string
+                example: L
+              date_of_birth:
+                type: string
+                example: "4022-12-12"
+              address:
+                type: string
+                example: JL.abcde
+              email:
+                type: string
+                example: abdul@email.com
+              password:
+                type: string
+                example: abdul
+              name:
+                type: string
+                example: abdul ok
+              username:
+                type: string
+                example: abdul
+              image:
+                type: string
+                example: ""
+              role:
+                type: string
+                example: "member"
 
     #---Admin and SuperAdmin RequestBodies---#
 
@@ -2276,6 +2350,17 @@ components:
                 type: string
                 example: "2022-12-10T06:38:13.614Z"
       
+    PutUserResponse:
+      description: Update data User success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: Delete User successfully  
+  
     DeleteUserResponse:
       description: Delete data User success
       content:
