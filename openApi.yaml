@@ -28,7 +28,9 @@ tags:
   - name: Whislist
     description: Contain every operation about Whislist Resource
   - name: Notification
-    description: Contain every operation about Whislist Resource
+    description: Contain every operation about Notification Resource
+  - name: Confirmation
+    description: Contain every operation about Confirmation Resource
 
 paths:
  
@@ -757,6 +759,41 @@ paths:
           $ref: "#/components/responses/UnauthorizedResponse"
         "403":
           $ref: "#/components/responses/ForbiddenResponse"
+  
+
+  #---Confirmation---#
+  /confirmation:
+    get:
+     summary: Get all Confirmation
+     operationId: Get all Confirmation
+     description: "Get Confirmation data from database"
+     tags:
+       - Confirmation
+     responses:
+       "200":
+         $ref: "#/components/responses/GetNotificationResponse"
+       "400":
+         $ref: "#/components/responses/ErrorResponse"
+    
+    post:
+      security:
+        - bearerAuth: []
+      operationId: createWhislist
+      summary: Create Data Whislist
+      description: "Add new Whislist data to database \n\n Allowed roles: superadmin, admin"
+      tags:
+        - Whislist
+      requestBody:
+        $ref: "#/components/requestBodies/WhislistRequest"
+      responses:
+        "200":
+          $ref: "#/components/responses/PutWhislistResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "403":
+          $ref: "#/components/responses/ForbiddenResponse"
+  /confirmation/:id:
+  
 
   #---Login User Operation---#
 
