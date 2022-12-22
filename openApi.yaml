@@ -548,7 +548,7 @@ paths:
             example: 1
       responses:
         "200":
-          $ref: "#/components/responses/DeleteWhislistResponse"
+          $ref: "#/components/responses/DeleteTicketResponse"
         "401":
           $ref: "#/components/responses/UnauthorizedResponse"
         "403":
@@ -580,7 +580,7 @@ paths:
         $ref: "#/components/requestBodies/WhislistRequest"
       responses:
         "200":
-          $ref: "#/components/responses/PutWhislistResponse"
+          $ref: "#/components/responses/PostWhislistResponse"
         "401":
           $ref: "#/components/responses/UnauthorizedResponse"
         "403":
@@ -651,7 +651,7 @@ paths:
             example: 1
       responses:
         "200":
-          $ref: "#/components/responses/DeleteTicketResponse"
+          $ref: "#/components/responses/DeleteWhislistResponse"
         "401":
           $ref: "#/components/responses/UnauthorizedResponse"
         "403":
@@ -674,16 +674,16 @@ paths:
     post:
       security:
         - bearerAuth: []
-      operationId: createWhislist
-      summary: Create Data Whislist
-      description: "Add new Whislist data to database \n\n Allowed roles: superadmin, admin"
+      operationId: createNotification
+      summary: Create Data Notification
+      description: "Add new Notification data to database \n\n Allowed roles: superadmin, admin"
       tags:
-        - Whislist
+        - Notification
       requestBody:
-        $ref: "#/components/requestBodies/WhislistRequest"
+        $ref: "#/components/requestBodies/NotificationRequest"
       responses:
         "200":
-          $ref: "#/components/responses/PutWhislistResponse"
+          $ref: "#/components/responses/PostNotificationResponse"
         "401":
           $ref: "#/components/responses/UnauthorizedResponse"
         "403":
@@ -691,11 +691,11 @@ paths:
 
   /api/v1/notification/:id:
     get:
-      summary: Get Whislist By ID
-      operationId: Get Whislist By Id
-      description: "Get Whislist data from database"
+      summary: Get Notification By ID
+      operationId: Get Notification By Id
+      description: "Get Notification data from database"
       tags:
-        - Whislist
+        - Notification
       parameters:
         - in: path
           name: id
@@ -706,18 +706,18 @@ paths:
             example: 1
       responses:
         "200":
-          $ref: "#/components/responses/GetWhislistById"
+          $ref: "#/components/responses/GetNotificationById"
         "400":
           $ref: "#/components/responses/ErrorResponse"
     
     put:
       security:
         - bearerAuth: []
-      summary: Update Whislist By Id
-      operationId: UpdateWhislist
-      description: "Update Whislist data from database \n\n Allowed roles: superadmin, admin"
+      summary: Update Notification By Id
+      operationId: UpdateNotification
+      description: "Update Notification data from database \n\n Allowed roles: superadmin, admin"
       tags:
-        - Whislist
+        - Notification
       parameters:
         - in: path
           name: id
@@ -727,10 +727,10 @@ paths:
             type: number
             example: 1
       requestBody:
-        $ref: "#/components/requestBodies/WhislistUpdate"
+        $ref: "#/components/requestBodies/NotificationUpdate"
       responses:
         "200":
-          $ref: "#/components/responses/PutWhistlistResponse"
+          $ref: "#/components/responses/PutNotificationResponse"
         "401":
           $ref: "#/components/responses/UnauthorizedResponse"
         "403":
@@ -739,11 +739,11 @@ paths:
     delete:
       security:
         - bearerAuth: []
-      summary: Delete Whislist By Id
-      operationId: DeleteWhislist
-      description: "Delete Whislist data from database \n\n Allowed roles: superadmin, admin"
+      summary: Delete Notification By Id
+      operationId: DeleteNotification
+      description: "Delete Notification data from database \n\n Allowed roles: superadmin, admin"
       tags:
-        - Whislist
+        - Notification
       parameters:
         - in: path
           name: id
@@ -754,7 +754,7 @@ paths:
             example: 1
       responses:
         "200":
-          $ref: "#/components/responses/DeleteTicketResponse"
+          $ref: "#/components/responses/DeleteNotificationResponse"
         "401":
           $ref: "#/components/responses/UnauthorizedResponse"
         "403":
@@ -778,16 +778,16 @@ paths:
     post:
       security:
         - bearerAuth: []
-      operationId: createWhislist
-      summary: Create Data Whislist
-      description: "Add new Whislist data to database \n\n Allowed roles: superadmin, admin"
+      operationId: createConfirmation
+      summary: Create Data Confirmation
+      description: "Add new Confirmation data to database \n\n Allowed roles: superadmin, admin"
       tags:
-        - Whislist
+        - Confirmation
       requestBody:
-        $ref: "#/components/requestBodies/WhislistRequest"
+        $ref: "#/components/requestBodies/NotificationRequest"
       responses:
         "200":
-          $ref: "#/components/responses/PutWhislistResponse"
+          $ref: "#/components/responses/PostNotificationResponse"
         "401":
           $ref: "#/components/responses/UnauthorizedResponse"
         "403":
@@ -1304,6 +1304,38 @@ components:
                 type: integer
                 example: 1
               id_flight:
+                type: integer
+                example: 1
+
+    #--- Notification RequestBodies ---#
+
+    NotificationRequest:
+      description: Create Notification Data
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: Flight berhasil ditambahkan
+              id_user:
+                type: integer
+                example: 1
+    
+    NotificationUpdate:
+      description: Update Whislist Data
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: Flight berhasil ditambahkan ke dalam whislist
+              id_user:
                 type: integer
                 example: 1
 
@@ -1958,8 +1990,8 @@ components:
               data:
                 type: object
                 properties:
-                  whislists:
-                    $ref: "#/components/schemas/WhislistGet"
+                  notifications:
+                    $ref: "#/components/schemas/NotificationGet"
               properties:
               meta:
                 type: object
@@ -1968,6 +2000,71 @@ components:
                     type: integer
                     example: 1
 
+    PostNotificationResponse:
+      description: create data Notification success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: Create notification successfully
+              data:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  message:
+                    type: string
+                    example: Flight berhasil ditambahkan
+                  id_user:
+                    type: integer
+                    example: 2
+                  updatedAt:
+                    type: string
+                    example: "2022-12-05T16:32:34.011Z"
+                  createdAt:
+                    type: string
+                    example: "2022-12-05T16:32:34.011Z"
+    
+    GetNotificationById:
+      description: Get data Notification success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: OK
+              data:
+                type: object
+                properties:
+                $ref: "#/components/schemas/NotificationGet"
+    
+    PutNotificationResponse:
+      description: Update data Notification success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: Update Notification successfully
+    
+    DeleteNotificationResponse:
+      description: Delete data Notification success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: Delete Notification successfully
 
     #---User Response---#
 
@@ -3663,6 +3760,76 @@ components:
                       updatedAt:
                         type: string
                         example: "2022-12-05T16:32:34.011Z" 
+
+    #--- Notification Schema ----#
+    NotificationGet:
+      type: array
+      items:
+        properties:
+          id:
+            type: integer
+            example: 1
+          message:
+            type: string
+            example: Flight berhasil ditambahkan
+          id_user:
+            type: integer
+            example: 2
+          updatedAt:
+            type: string
+            example: "2022-12-05T16:32:34.011Z"
+          createdAt:
+            type: string
+            example: "2022-12-05T16:32:34.011Z"
+          User:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 2
+              no_ktp:
+                type: string
+                example: "123456789"
+              gender:
+                type: string
+                example: L
+              date_of_birth:
+                type: string
+                example: "2022-12-01"
+              address:
+                type: string
+                example: "Jalan Suroyo No. 161 Mayangan Kota Probolonggo Indonesia"
+              email:
+                type: string
+                example: "user@mail.com"
+              password:
+                type: string
+                example: "$2a$10$wSSZliEv0WX7l17UmE4zMeyYluacWP0W0pk85zcnto0/GqR3ioYA."
+              name:
+                type: string
+                example: "User"
+              username:
+                type: string
+                example: "user"
+              image:
+                type: string
+                example: ""
+              role:
+                type: string
+                example: "member"
+              createdAt:
+                type: string
+                example: "2022-12-05T16:32:34.011Z"
+              updatedAt:
+                type: string
+                example: "2022-12-05T16:32:34.011Z"
+              Bookings:
+                type: object 
+                properties:
+              Whislists:
+                type: object 
+                properties:
+    
 
     #---User Schema---#
 
