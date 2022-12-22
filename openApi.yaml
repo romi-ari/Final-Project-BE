@@ -4,7 +4,7 @@ info:
   version: 0.0.1
 servers:
   - description: Production Server
-    url: https://gotravel-production.up.railway.app/
+    url: https://gotravel-ilms4lrona-as.a.run.app/
   - description: Development Server
     url: https://final-project-be-develop.up.railway.app/
 
@@ -761,7 +761,7 @@ paths:
           $ref: "#/components/responses/ForbiddenResponse"
   
 
-  #---Confirmation---#
+  #---Confirmation Operation---#
   /confirmation:
     get:
      summary: Get all Confirmation
@@ -771,29 +771,80 @@ paths:
        - Confirmation
      responses:
        "200":
-         $ref: "#/components/responses/GetNotificationResponse"
+         $ref: "#/components/responses/GetConfirmationResponse"
        "400":
          $ref: "#/components/responses/ErrorResponse"
     
     post:
-      security:
-        - bearerAuth: []
       operationId: createConfirmation
       summary: Create Data Confirmation
       description: "Add new Confirmation data to database \n\n Allowed roles: superadmin, admin"
       tags:
         - Confirmation
-      requestBody:
-        $ref: "#/components/requestBodies/NotificationRequest"
+      consumes:
+         - multipart/form-data
+      parameters:
+         - in: formData
+           name: file
+           type: file
+           description: The file to upload (PNG, JPG, JPEG, PDF).
       responses:
         "200":
-          $ref: "#/components/responses/PostNotificationResponse"
+          $ref: "#/components/responses/PostConfirmationResponse"
         "401":
           $ref: "#/components/responses/UnauthorizedResponse"
         "403":
           $ref: "#/components/responses/ForbiddenResponse"
+    
+
   /confirmation/:id:
-  
+    put:
+      summary: Get Confirmation By ID
+      operationId: Get Confirmation By Id
+      description: "Get Confirmation data from database"
+      tags:
+        - Confirmation
+      consumes:
+         - multipart/form-data
+      parameters:
+        - in: path
+          name: id
+          description: The id of the Post
+          required: true
+          schema:
+            type: number
+            example: 1
+        - in: formData
+          name: file
+          type: file
+          description: The file to upload (PNG, JPG, JPEG, PDF).
+      responses:
+        "200":
+          $ref: "#/components/responses/PutConfirmation"
+        "400":
+          $ref: "#/components/responses/ErrorResponse"
+    
+    delete:
+      summary: Delete Confirmation By Id
+      operationId: DeleteConfirmation
+      description: "Delete Confirmation data from database \n\n Allowed roles: superadmin, admin"
+      tags:
+        - Confirmation
+      parameters:
+        - in: path
+          name: id
+          description: The id of the Post
+          required: true
+          schema:
+            type: number
+            example: 1
+      responses:
+        "200":
+          $ref: "#/components/responses/DeleteConfirmationResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedResponse"
+        "403":
+          $ref: "#/components/responses/ForbiddenResponse"
 
   #---Login User Operation---#
 
@@ -1338,6 +1389,19 @@ components:
               id_user:
                 type: integer
                 example: 1
+    
+    #---Confirmation request---#
+    ConfirmationRequest:
+      description: Create Confirmation Data
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: Created
 
     #---User RequestBodies---#
     UserPostRequest:
@@ -2065,6 +2129,60 @@ components:
               status:
                 type: string
                 example: Delete Notification successfully
+
+    #---Confirmation Response---#
+    GetConfirmationResponse:
+      description: Get data Confirmation success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: OK
+              data:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/ConfirmationGet"
+              properties:
+              count:
+                type: integer
+                example: 1
+    
+    PostConfirmationResponse:
+      description: create data Confirmation success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: Created
+    
+    PutConfirmation:
+      description: Update data Confirmation success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: updated
+    
+    DeleteConfirmationResponse:
+      description: Delete data Confirmation success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: Deleted
 
     #---User Response---#
 
@@ -3830,6 +3948,24 @@ components:
                 type: object 
                 properties:
     
+    #---Confirmation Schema---#
+
+    ConfirmationGet:
+      type: array
+      items:
+        properties:
+          id:
+            type: integer
+            example: 1
+          file_url:
+            type: string
+            example: "http://res.cloudinary.com/dps0jpnk2/image/upload/v1671714771/backend-files/bz9wxfhlypbi9kyevpng.png"
+          createdAt:
+            type: string
+            example: "2022-12-05T16:32:34.011Z"
+          updatedAt:
+            type: string
+            example: "2022-12-05T16:32:34.011Z"
 
     #---User Schema---#
 
