@@ -168,23 +168,32 @@ apiRouter.delete(
 
 apiRouter.get(
   "/confirmation",
+  userController.authorize,
+  userController.authorizeAdmin,
   limit,
   controllers.api.v1.confirmationController.list
 );
 
 apiRouter.post(
   "/confirmation",
+  userController.authorize,
+  userController.authorizeUser,
   limit,
   controllers.api.v1.confirmationController.create
 );
 
 apiRouter.put(
   "/confirmation/:id",
+  userController.authorize,
+  userController.authorizeUser,
   limit,
   controllers.api.v1.confirmationController.update
 );
+
 apiRouter.delete(
   "/confirmation/:id",
+  userController.authorize,
+  userController.authorizeUser,
   limit,
   controllers.api.v1.confirmationController.destroy
 );
