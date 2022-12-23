@@ -176,8 +176,8 @@ apiRouter.get(
 
 apiRouter.post(
   "/confirmation",
-  userController.authorize,
-  userController.authorizeUser,
+  // userController.authorize,
+  // userController.authorizeUser,
   limit,
   controllers.api.v1.confirmationController.create
 );
