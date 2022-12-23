@@ -241,6 +241,7 @@ class UserController {
 
       const fileBase64 = req.file.buffer.toString("base64");
       const file = `data:${req.file.mimetype};base64,${fileBase64}`;
+      const userService = this.userService;
 
       cloudinary.uploader.upload(
         file,
@@ -256,7 +257,7 @@ class UserController {
 
           const image = result.url;
 
-          const user = await this.userService.update(req.user.id, {
+          const user = await userService.update(req.user.id, {
             image: image,
           });
           res.status(200).json({
