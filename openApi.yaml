@@ -1275,9 +1275,6 @@ components:
               id_flight:
                 type: integer
                 example: 1
-              id_user:
-                type: integer
-                example: 1
               baggage:
                 type: integer
                 example: 20
@@ -1295,8 +1292,8 @@ components:
                 example: 08123456
               totalprice:
                 type: integer
-                example: 1000000
-
+                example: null
+              
     BookingUpdate:
       description: Update Booking Data
       required: true
@@ -1329,6 +1326,15 @@ components:
               totalprice:
                 type: integer
                 example: 2000000
+              booking_date:
+                type: string
+                example: "2022-12-10"
+              confirmation:
+                type: string
+                example: "http://res.cloudinary.com/dps0jpnk2/image/upload/v1671889795/backend-files/bi9s017phjfxzytpngnp.jpg"
+              approved:
+                type: boolean
+                example: false
 
     #---Ticket Operation---#
   
@@ -1899,7 +1905,16 @@ components:
                     example: 08123456
                   totalprice:
                     type: integer
-                    example: 1000000
+                    example: 2000000
+                  booking_date:
+                    type: string
+                    example: "2022-12-12"
+                  confirmation:
+                    type: string
+                    example: "http://res.cloudinary.com/dps0jpnk2/image/upload/v1671889795/backend-files/bi9s017phjfxzytpngnp.jpg"
+                  approved:
+                    type: boolean
+                    example: false
                   updatedAt:
                     type: string
                     example: "2022-12-08T13:30:39.034Z"
@@ -2963,7 +2978,16 @@ components:
             example: 08123456
           totalprice:
             type: integer
-            example: 1000000
+            example: 2000000
+          booking_date:
+            type: string
+            example: "2022-12-12"
+          confirmation:
+            type: string
+            example: "http://res.cloudinary.com/dps0jpnk2/image/upload/v1671889795/backend-files/bi9s017phjfxzytpngnp.jpg"
+          approved:
+            type: boolean
+            example: false
           createdAt:
             type: string
             example: "2022-12-05T16:32:34.011Z"
@@ -3167,7 +3191,16 @@ components:
           example: 08123456
         totalprice:
           type: integer
-          example: 1000000
+          example: 2000000
+        booking_date:
+          type: string
+          example: "2022-12-12"
+        confirmation:
+          type: string
+          example: "http://res.cloudinary.com/dps0jpnk2/image/upload/v1671889795/backend-files/bi9s017phjfxzytpngnp.jpg"
+        approved:
+          type: boolean
+          example: false
         createdAt:
           type: string
           example: "2022-12-05T16:32:34.011Z"
@@ -3222,7 +3255,16 @@ components:
                 example: 08123456
               totalprice:
                 type: integer
-                example: 1000000
+                example: 2000000
+              booking_date:
+                type: string
+                example: "2022-12-12"
+              confirmation:
+                type: string
+                example: "http://res.cloudinary.com/dps0jpnk2/image/upload/v1671889795/backend-files/bi9s017phjfxzytpngnp.jpg"
+              approved:
+                type: boolean
+                example: false
               createdAt:
                 type: string
                 example: "2022-12-05T16:32:34.011Z"
@@ -3612,10 +3654,16 @@ components:
                     example: 073123456
                   totalprice:
                     type: string
-                    example: null
+                    example: 2000000
                   booking_date:
                     type: string
-                    example: null
+                    example: "2022-12-12"
+                  confirmation:
+                    type: string
+                    example: "http://res.cloudinary.com/dps0jpnk2/image/upload/v1671889795/backend-files/bi9s017phjfxzytpngnp.jpg"
+                  approved:
+                    type: boolean
+                    example: false
                   createdAt:
                     type: string
                     example: "2022-12-05T16:32:34.011Z"
@@ -3893,10 +3941,16 @@ components:
                     example: 073123456
                   totalprice:
                     type: string
-                    example: null
+                    example: 2000000
                   booking_date:
                     type: string
-                    example: null
+                    example: "2022-12-12"
+                  confirmation:
+                    type: string
+                    example: "http://res.cloudinary.com/dps0jpnk2/image/upload/v1671889795/backend-files/bi9s017phjfxzytpngnp.jpg"
+                  approved:
+                    type: boolean
+                    example: false
                   createdAt:
                     type: string
                     example: "2022-12-05T16:32:34.011Z"
