@@ -48,6 +48,12 @@ module.exports = {
       booking_date: {
         type: Sequelize.STRING
       },
+      confirmation: {
+        type: Sequelize.STRING
+      },
+      approved: {
+        type: Sequelize.BOOLEAN
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

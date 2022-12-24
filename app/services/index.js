@@ -1,6 +1,5 @@
 const airportService = require("./airportService");
 const bookingService = require("./bookingService");
-const confirmationService = require("./confirmationService");
 const flightService = require("./flightService");
 const planeService = require("./planeService");
 const ticketService = require("./ticketService");
@@ -11,7 +10,6 @@ const notificationService = require("./notificationService");
 module.exports = {
     airportService,
     bookingService,
-    confirmationService,
     flightService,
     planeService,
     ticketService,

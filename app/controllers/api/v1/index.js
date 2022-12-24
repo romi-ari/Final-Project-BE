@@ -6,7 +6,6 @@
  const {UserController, encryptPassword, createToken} = require("./UserController");
  const airportController = require("./airportController");
  const planeController = require("./planeController");
- const confirmationController = require("./confirmationController");
  const flightController = require("./flightController");
  const ticketController = require("./ticketController");
  const bookingController = require("./bookingController");
@@ -20,7 +19,6 @@
    createToken,
    airportController,
    planeController,
-   confirmationController,
    flightController,
    ticketController,
    bookingController,

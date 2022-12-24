@@ -164,40 +164,6 @@ apiRouter.delete(
   planeController.destroy
 );
 
-//cloudinary upload file (receipt)
-
-apiRouter.get(
-  "/confirmation",
-  userController.authorize,
-  userController.authorizeAdmin,
-  limit,
-  controllers.api.v1.confirmationController.list
-);
-
-apiRouter.post(
-  "/confirmation",
-  // userController.authorize,
-  // userController.authorizeUser,
-  limit,
-  controllers.api.v1.confirmationController.create
-);
-
-apiRouter.put(
-  "/confirmation/:id",
-  userController.authorize,
-  userController.authorizeUser,
-  limit,
-  controllers.api.v1.confirmationController.update
-);
-
-apiRouter.delete(
-  "/confirmation/:id",
-  userController.authorize,
-  userController.authorizeUser,
-  limit,
-  controllers.api.v1.confirmationController.destroy
-);
-
 //END POINT FLIGHT
 
 const flightController = new controllers.api.v1.flightController(flightService);
@@ -274,6 +240,14 @@ apiRouter.put(
   "/api/v1/booking/:id",
   userController.authorize,
   bookingController.update
+);
+
+apiRouter.put(
+  "/api/v1/confirmation/:id",
+  userController.authorize,
+  userController.authorizeUser,
+  limit,
+  bookingController.updateConfirmation
 );
 
 apiRouter.get("/api/v1/booking/:id", bookingController.showById);
