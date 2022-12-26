@@ -762,42 +762,7 @@ paths:
   
 
   #---Confirmation Operation---#
-  /confirmation:
-    get:
-     summary: Get all Confirmation
-     operationId: Get all Confirmation
-     description: "Get Confirmation data from database"
-     tags:
-       - Confirmation
-     responses:
-       "200":
-         $ref: "#/components/responses/GetConfirmationResponse"
-       "400":
-         $ref: "#/components/responses/ErrorResponse"
-    
-    post:
-      operationId: createConfirmation
-      summary: Create Data Confirmation
-      description: "Add new Confirmation data to database \n\n Allowed roles: superadmin, admin"
-      tags:
-        - Confirmation
-      consumes:
-         - multipart/form-data
-      parameters:
-         - in: formData
-           name: file
-           type: file
-           description: The file to upload (PNG, JPG, JPEG, PDF).
-      responses:
-        "200":
-          $ref: "#/components/responses/PostConfirmationResponse"
-        "401":
-          $ref: "#/components/responses/UnauthorizedResponse"
-        "403":
-          $ref: "#/components/responses/ForbiddenResponse"
-    
-
-  /confirmation/:id:
+  /api/v1/confirmation/:id:
     put:
       summary: Get Confirmation By ID
       operationId: Get Confirmation By Id
@@ -823,28 +788,6 @@ paths:
           $ref: "#/components/responses/PutConfirmation"
         "400":
           $ref: "#/components/responses/ErrorResponse"
-    
-    delete:
-      summary: Delete Confirmation By Id
-      operationId: DeleteConfirmation
-      description: "Delete Confirmation data from database \n\n Allowed roles: superadmin, admin"
-      tags:
-        - Confirmation
-      parameters:
-        - in: path
-          name: id
-          description: The id of the Post
-          required: true
-          schema:
-            type: number
-            example: 1
-      responses:
-        "200":
-          $ref: "#/components/responses/DeleteConfirmationResponse"
-        "401":
-          $ref: "#/components/responses/UnauthorizedResponse"
-        "403":
-          $ref: "#/components/responses/ForbiddenResponse"
 
   #---Login User Operation---#
 
@@ -866,23 +809,6 @@ paths:
           $ref: "#/components/responses/UnprocessableRespon"
 
   #---User Operation---#
-  
-  /api/v1/register:
-    post:
-      tags:
-        - User
-      summary: Register new User
-      description: Register new account
-      requestBody:
-        $ref: "#/components/requestBodies/UserPostRequest"
-      responses:
-        "200":
-          $ref: "#/components/responses/PostUserResponse"
-        "400":
-          $ref: "#/components/responses/ErrorResponse"
-        "403":
-          $ref: "#/components/responses/UnprocessableRespon"
-
   /api/v1/profile:
     get:
       summary: Get Profile credential after user login
@@ -899,6 +825,22 @@ paths:
         "400":
           $ref: "#/components/responses/ErrorResponse"
 
+  /api/v1/register:
+    post:
+      tags:
+        - User
+      summary: Register new User
+      description: Register new account
+      requestBody:
+        $ref: "#/components/requestBodies/UserPostRequest"
+      responses:
+        "200":
+          $ref: "#/components/responses/PostUserResponse"
+        "400":
+          $ref: "#/components/responses/ErrorResponse"
+        "403":
+          $ref: "#/components/responses/UnprocessableRespon"
+
   /api/v1/updateUser:
     put:
       summary: Update User By Login
@@ -909,7 +851,7 @@ paths:
         $ref: "#/components/requestBodies/UserPutRequest"
       responses:
         "200":
-          $ref: "#/components/responses/PutConfirmation"
+          $ref: "#/components/responses/PutUserResponse"
         "400":
           $ref: "#/components/responses/ErrorResponse"
 
@@ -928,7 +870,7 @@ paths:
           description: The file to upload (PNG, JPG, JPEG).
       responses:
         "200":
-          $ref: "#/components/responses/PutConfirmation"
+          $ref: "#/components/responses/PutUserProfileResponse"
         "400":
           $ref: "#/components/responses/ErrorResponse"
 
@@ -1015,78 +957,6 @@ paths:
           $ref: "#/components/responses/UnprocessableRespon"
 
   #---Admin and SuperAdmin---#
-
-  /register:
-    post:
-      tags:
-        - auth
-      summary: Register new member
-      description: Register new account with member role
-      operationId: registerMember
-      requestBody:
-        $ref: "#/components/requestBodies/MemberRequest"
-      responses:
-        "200":
-          $ref: "#/components/responses/RegisterResponse"
-        "400":
-          $ref: "#/components/responses/ErrorResponse"
-        "403":
-          $ref: "#/components/responses/UnprocessableRespon"
-
-  /createAdmin:
-    post:
-      security:
-        - bearerAuth: []
-      tags:
-        - auth
-      summary: Register new Admin
-      description: Register new account with admin role
-      operationId: registerAdmin
-      requestBody:
-        $ref: "#/components/requestBodies/LoginRequest"
-      responses:
-        "200":
-          $ref: "#/components/responses/AdminResponse"
-        "401":
-          $ref: "#/components/responses/UnauthorizedResponse"
-        "403":
-          $ref: "#/components/responses/ForbiddenResponse"
-        "400":
-          $ref: "#/components/responses/UnprocessableRespon"
-
-  /login:
-    post:
-      tags:
-        - auth
-      summary: Login
-      description: Login
-      operationId: Login
-      requestBody:
-        $ref: "#/components/requestBodies/AdminRequest"
-      responses:
-        "200":
-          $ref: "#/components/responses/AdminResponse"
-        "401":
-          $ref: "#/components/responses/UnauthorizedResponse"
-        "403":
-          $ref: "#/components/responses/UnprocessableRespon"
-
-  /whoami:
-    get:
-      security:
-        - bearerAuth: []
-      tags:
-        - auth
-      summary: Check Who Am I
-      description: whoami
-      operationId: whoami
-      responses:
-        "200":
-          $ref: "#/components/responses/WhoAmIRespon"
-        "401":
-          $ref: "#/components/responses/UnauthorizedResponse"
-        "403":
-          $ref: "#/components/responses/UnprocessableRespon"
 
 components:
   securitySchemes:
@@ -1539,52 +1409,7 @@ components:
                 example: "member"
 
     #---Admin and SuperAdmin RequestBodies---#
-
-    AdminRequest:
-      description: Create Admin Data Required fields [email, password]
-      required: true
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              email:
-                type: string
-                example: "admin@gmai.com"
-              password:
-                type: string
-                example: "iniadmin"
-
-    LoginRequest:
-      description: Login [email, password]
-      required: true
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              email:
-                type: string
-                example: "admin@gmai.com"
-              password:
-                type: string
-                example: "iniadmin"
    
-    MemberRequest:
-        description: Login [email, password]
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                email:
-                  type: string
-                  example: "abdul@mail.com"
-                password:
-                  type: string
-                  example: "abdul"
-    
     CreateAdminPostRequest:
       description: Create Admin Data Required fields [no_ktp, gender, date_of_birth, address, email, password, name, username, role]
       required: true
@@ -2220,36 +2045,6 @@ components:
                 example: Delete Notification successfully
 
     #---Confirmation Response---#
-    GetConfirmationResponse:
-      description: Get data Confirmation success
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: string
-                example: OK
-              data:
-                type: object
-                properties:
-                  data:
-                    $ref: "#/components/schemas/ConfirmationGet"
-              properties:
-              count:
-                type: integer
-                example: 1
-    
-    PostConfirmationResponse:
-      description: create data Confirmation success
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: string
-                example: Created
     
     PutConfirmation:
       description: Update data Confirmation success
@@ -2261,17 +2056,6 @@ components:
               status:
                 type: string
                 example: updated
-    
-    DeleteConfirmationResponse:
-      description: Delete data Confirmation success
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: string
-                example: Deleted
 
     #---User Response---#
 
@@ -2374,7 +2158,18 @@ components:
             properties:
               status:
                 type: string
-                example: Delete User successfully  
+                example: Update User profile successfully
+
+    PutUserProfileResponse:
+      description: Update data User success
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: Update User profile picture successfully  
   
     DeleteUserResponse:
       description: Delete data User success
@@ -2430,26 +2225,6 @@ components:
                 example: "you don't have permission"
 
     #---Register Response---#
-
-    RegisterResponse:
-      description: Created Member
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: string
-                example: success
-              data:
-                type: object
-                properties:
-                  name:
-                    type: string
-                    example: "Success"
-                  message:
-                    type: string
-                    example: "create user successfully"
     
     UserResponse:
       description: Created Admin
@@ -2562,26 +2337,6 @@ components:
                 type: string
                 example: "2022-12-10T06:38:13.614Z"
 
-    AdminResponse:
-      description: Created Admin
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: string
-                example: success
-              data:
-                type: object
-                properties:
-                  name:
-                    type: string
-                    example: "Success"
-                  message:
-                    type: string
-                    example: "create Admin successfully"
-
     #---Login Response---#
 
     LoginResponse:
@@ -2627,26 +2382,6 @@ components:
                     example: "check missing fields from requestBody"
 
     #---WhoAmI Response---#
-
-    WhoAmIRespon:
-      description: Get User Login
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: string
-                example: Success
-              data:
-                type: object
-                properties:
-                  name:
-                    type: string
-                    example: "success"
-                  message:
-                    type: string
-                    example: "check user login"
 
   schemas:
 
@@ -4088,23 +3823,6 @@ components:
                 properties:
     
     #---Confirmation Schema---#
-
-    ConfirmationGet:
-      type: array
-      items:
-        properties:
-          id:
-            type: integer
-            example: 1
-          file_url:
-            type: string
-            example: "http://res.cloudinary.com/dps0jpnk2/image/upload/v1671714771/backend-files/bz9wxfhlypbi9kyevpng.png"
-          createdAt:
-            type: string
-            example: "2022-12-05T16:32:34.011Z"
-          updatedAt:
-            type: string
-            example: "2022-12-05T16:32:34.011Z"
 
     #---User Schema---#
 
