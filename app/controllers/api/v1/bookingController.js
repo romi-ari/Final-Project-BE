@@ -52,8 +52,8 @@ class bookingController {
       const mobilephone = req.body.mobilephone;
       const totalprice = req.body.totalprice;
       const booking_date = req.body.booking_date;
-      const confirmation = req.body.confirmation
-      const approved = false
+      const confirmation = req.body.confirmation;
+      const approved = "";
       const booking = await this.bookingService.create({
         id_flight,
         id_user,
@@ -65,7 +65,7 @@ class bookingController {
         totalprice,
         booking_date,
         confirmation,
-        approved
+        approved,
       });
       res.status(201).json({
         status: "Create Booking successfully",
@@ -81,20 +81,20 @@ class bookingController {
 
   updateConfirmation = async (req, res) => {
     try {
-      const oldFile = req.user.confirmation;
-      const userTest = req.user.id
-      console.log("file =", oldFile)
-      console.log("user =", userTest)
-      if (oldFile !== (null || undefined))  {
+      const oldFile = req.booking.confirmation;
+      const userTest = req.user.id;
+      console.log("file =", oldFile);
+      console.log("user =", userTest);
+      if (oldFile !== (null || undefined)) {
         const getImageID = oldFile.split("/").pop().split(".")[0];
         await cloudinary.uploader.destroy(`profile-pictures/${getImageID}`);
-      } 
-      
+      }
+
       const fileBase64 = req.file.buffer.toString("base64");
       const file = `data:${req.file.mimetype};base64,${fileBase64}`;
-      const bookingService = this.bookingService
-      console.log("user =", userTest)
-      
+      const bookingService = this.bookingService;
+      console.log("user =", userTest);
+
       cloudinary.uploader.upload(
         file,
         { folder: "backend-files" },
@@ -107,20 +107,21 @@ class bookingController {
             return;
           }
 
-          
+          const confirm = result.url;
+          console.log("URL =", confirm);
 
-          const confirm = 
-            result.url
-            console.log("URL =", confirm)
-
-          const user = await bookingService.update(req.params.id, {
-            confirmation: confirm
+          const booking = await bookingService.update(req.params.id, {
+            confirmation: confirm,
           });
-          console.log("user =", user)
+          console.log("booking =", booking);
+
+          if (booking == 0) {
+            res.status(404).json({ message: "id booking tidak ditemukan" });
+            return;
+          }
           res.status(200).json({
             status: "SUCCESS",
-            message: "Confirm success",
-            data: user,
+            message: "Confirm success"
           });
         }
       );
@@ -135,7 +136,7 @@ class bookingController {
   update = async (req, res) => {
     try {
       const booking = await this.bookingService.update(req.params.id, {
-        id_flight : req.body.id_flight,
+        id_flight: req.body.id_flight,
         id_user: req.user.id_user,
         baggage: req.body.baggage,
         food: req.body.food,

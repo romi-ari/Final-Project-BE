@@ -260,10 +260,14 @@ class UserController {
           const user = await userService.update(req.user.id, {
             image: image,
           });
+
+          if (user == 0) {
+            res.status(404).json({ message: "id user tidak ditemukan" });
+            return;
+          }
           res.status(200).json({
             status: "SUCCESS",
-            message: "Update Profile User successfully",
-            data: user,
+            message: "Update Profile User successfully"
           });
         }
       );

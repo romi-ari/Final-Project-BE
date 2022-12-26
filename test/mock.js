@@ -104,6 +104,8 @@ const mock = {
     mobilephone: "073123456",
     totalprice: 120000,
     booking_date: "2022-12-28",
+    confirmation: "",
+    approved: false,
     createdAt: new Date(),
     updatedAt: new Date(),
   },
