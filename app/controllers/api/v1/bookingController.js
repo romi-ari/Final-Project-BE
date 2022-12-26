@@ -53,7 +53,7 @@ class bookingController {
       const totalprice = req.body.totalprice;
       const booking_date = req.body.booking_date;
       const confirmation = req.body.confirmation;
-      const approved = "";
+      const approved = req.body.approved;
       const booking = await this.bookingService.create({
         id_flight,
         id_user,
