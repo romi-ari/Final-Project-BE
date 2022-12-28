@@ -54,6 +54,9 @@ module.exports = {
       approved: {
         type: Sequelize.BOOLEAN
       },
+      trip_type: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

@@ -54,6 +54,7 @@ class bookingController {
       const booking_date = req.body.booking_date;
       const confirmation = req.body.confirmation;
       const approved = req.body.approved;
+      const trip_type = req.body.trip_type;
       const booking = await this.bookingService.create({
         id_flight,
         id_user,
@@ -66,6 +67,7 @@ class bookingController {
         booking_date,
         confirmation,
         approved,
+        trip_type
       });
       res.status(201).json({
         status: "Create Booking successfully",
@@ -151,6 +153,7 @@ class bookingController {
         totalprice: req.body.totalprice,
         booking_date: req.body.booking_date,
         approved: req.body.approved,
+        trip_type: req.body.trip_type,
       });
       if (booking == 0) {
         res.status(404).json({ message: "id booking tidak ditemukan" });

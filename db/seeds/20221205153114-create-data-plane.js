@@ -13,28 +13,28 @@ module.exports = {
      },
      {
         code: 101,
-        name: "Boeing 777-300ER",
+        name: "Boeing 777-301ER",
         status: "On",
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         code: 102,
-        name: "Boeing 777-300ER",
+        name: "Boeing 777-302ER",
         status: "On",
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         code: 103,
-        name: "Boeing 777-300ER",
+        name: "Boeing 777-303ER",
         status: "On",
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         code: 104,
-        name: "Boeing 777-300ER",
+        name: "Boeing 777-304ER",
         status: "On",
         createdAt: new Date(),
         updatedAt: new Date()

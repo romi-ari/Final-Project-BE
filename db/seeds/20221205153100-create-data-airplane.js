@@ -9,6 +9,7 @@ module.exports = {
       city: "Tangerang",
       country: "Indonesia",
       status: "On",
+      code: "SHIA",
       createdAt: new Date(),
       updatedAt: new Date()
     }, 
@@ -18,6 +19,7 @@ module.exports = {
       city: "Denpasar",
       country: "Indonesia",
       status: "On",
+      code:"DPS",
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -27,6 +29,7 @@ module.exports = {
       city: "Sidoarjo",
       country: "Indonesia",
       status: "On",
+      code:"SUB",
       createdAt: new Date(),
       updatedAt: new Date()      
     },
@@ -36,6 +39,7 @@ module.exports = {
       city: "Makassar",
       country: "Indonesia",
       status: "On",
+      code: "UPG",
       createdAt: new Date(),
       updatedAt: new Date()    
     },
@@ -45,6 +49,7 @@ module.exports = {
       city: "Deli Serdang",
       country: "Indonesia",
       status: "On",
+      code: "KNO",
       createdAt: new Date(),
       updatedAt: new Date()      
     }]);

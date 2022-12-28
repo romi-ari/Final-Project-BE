@@ -33,6 +33,25 @@ describe("UserController", () => {
         meta: { count: mockUserList.length },
       });
     });
+
+    it("should res.status(400) and return error message if failed", async () => {
+      const error = new Error("Something");
+      const mockReq = {};
+      const mockRes = mock.RES;
+      const mockUserService = {
+        list: jest.fn().mockReturnValue(Promise.reject(error)),
+      };
+
+      const controller = new UserController(mockUserService);
+      await controller.listUser(mockReq, mockRes);
+
+      expect(mockUserService.list).toHaveBeenCalled();
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        status: "FAIL",
+        message: error.message,
+      });
+    });
   });
 
   describe("#listMember", () => {
@@ -54,6 +73,25 @@ describe("UserController", () => {
         meta: { count: mockUser.length },
       });
     });
+
+    it("should res.status(400) and return error message if failed", async () => {
+      const error = new Error("Something");
+      const mockReq = {};
+      const mockRes = mock.RES;
+      const mockUserService = {
+        listByRole: jest.fn().mockReturnValue(Promise.reject(error)),
+      };
+
+      const controller = new UserController(mockUserService);
+      await controller.listMember(mockReq, mockRes);
+
+      expect(mockUserService.listByRole).toHaveBeenCalled();
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        status: "FAIL",
+        message: error.message,
+      });
+    });
   });
 
   describe("#listAdmin", () => {
@@ -73,6 +111,25 @@ describe("UserController", () => {
         status: "OK",
         data: { users: mockUser2 },
         meta: { count: mockUser2.length },
+      });
+    });
+
+    it("should res.status(400) and return error message if failed", async () => {
+      const error = new Error("Something");
+      const mockReq = {};
+      const mockRes = mock.RES;
+      const mockUserService = {
+        listByRole: jest.fn().mockReturnValue(Promise.reject(error)),
+      };
+
+      const controller = new UserController(mockUserService);
+      await controller.listMember(mockReq, mockRes);
+
+      expect(mockUserService.listByRole).toHaveBeenCalled();
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        status: "FAIL",
+        message: error.message,
       });
     });
   });
@@ -108,6 +165,36 @@ describe("UserController", () => {
         updatedAt: mockUser.updatedAt,
       });
     });
+
+    it("should res.status(400) and return error message if failed", async () => {
+      const error = new Error("Something")
+      const mockReq = {
+        body: {
+          no_ktp: mockUser.no_ktp,
+          gender: mockUser.gender,
+          date_of_birth: mockUser.date_of_birth,
+          address: mockUser.address,
+          email: mockUser.email,
+          password: "user",
+          name: mockUser.name,
+          username: mockUser.username,
+        },
+      };
+      const mockRes = mock.RES;
+      const mockUserService = {
+        create: jest.fn().mockReturnValue(Promise.reject(error)),
+      };
+
+      const controller = new UserController(mockUserService);
+      await controller.register(mockReq, mockRes);
+
+      expect(mockUserService.create).toHaveBeenCalled();
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        status: "FAIL",
+        message: error.message,
+      });
+    });
   });
 
   describe("#createAdmin", () => {
@@ -141,6 +228,36 @@ describe("UserController", () => {
         updatedAt: mock.ADMIN.updatedAt,
       });
     });
+
+    it("should res.status(400) and return error message if failed", async () => {
+      const error = new Error("Something");
+      const mockReq = {
+        body: {
+          no_ktp: mock.ADMIN.no_ktp,
+          gender: mock.ADMIN.gender,
+          date_of_birth: mock.ADMIN.date_of_birth,
+          address: mock.ADMIN.address,
+          email: mock.ADMIN.email,
+          password: "admin",
+          name: mock.ADMIN.name,
+          username: mock.ADMIN.username,
+        },
+      };
+      const mockRes = mock.RES;
+      const mockUserService = {
+        create: jest.fn().mockReturnValue(Promise.reject(error)),
+      };
+
+      const controller = new UserController(mockUserService);
+      await controller.createAdmin(mockReq, mockRes);
+
+      expect(mockUserService.create).toHaveBeenCalled();
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        status: "FAIL",
+        message: error.message,
+      });
+    });
   });
 
   describe("#updateuser", () => {
@@ -172,6 +289,37 @@ describe("UserController", () => {
         status: "SUCCESS",
         message: "Update User successfully",
         data: mockUser,
+      });
+    });
+
+    it("should res.status(400) and return error message if failed", async () => {
+      const error = new Error("Something");
+      const mockReq = {
+        user: mockUser,
+        body: {
+          no_ktp: mockUser.no_ktp,
+          gender: mockUser.gender,
+          date_of_birth: mockUser.date_of_birth,
+          address: mockUser.address,
+          email: mockUser.email,
+          password: "user",
+          name: mockUser.name,
+          username: mockUser.username,
+        },
+      };
+      const mockRes = mock.RES;
+      const mockUserService = {
+        update: jest.fn().mockReturnValue(Promise.reject(error)),
+      };
+
+      const controller = new UserController(mockUserService);
+      await controller.updateUser(mockReq, mockRes);
+
+      expect(mockUserService.update).toHaveBeenCalled();
+      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        status: "FAIL",
+        message: error.message,
       });
     });
   });
@@ -217,6 +365,28 @@ describe("UserController", () => {
       expect(mockRes.status).toHaveBeenCalledWith(404);
       expect(mockRes.json).toHaveBeenCalledWith({
         message: "id user tidak ditemukan",
+      });
+    });
+
+    it("should res.status(401) and return error message if failed", async () => {
+      const error = new Error("Something");
+      const mockReq = {
+        params: {
+          id: 1,
+        },
+      };
+      const mockRes = mock.RES;
+      const mockUserService = {
+        delete: jest.fn().mockReturnValue(Promise.reject(error)),
+      };
+
+      const controller = new UserController(mockUserService);
+      await controller.deleteUser(mockReq, mockRes);
+
+      expect(mockUserService.delete).toHaveBeenCalled();
+      expect(mockRes.status).toHaveBeenCalledWith(401);
+      expect(mockRes.json).toHaveBeenCalledWith({
+        message: error.message,
       });
     });
   });
