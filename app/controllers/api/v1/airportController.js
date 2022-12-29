@@ -45,12 +45,14 @@ class airportController {
       const province = req.body.province;
       const city = req.body.city;
       const country = req.body.country;
+      const code = req.body.code;
       const status = req.body.status;
       const airport = await this.airportService.create({
         name,
         province,
         city,
         country,
+        code,
         status,
       });
       res.status(201).json({
@@ -72,6 +74,7 @@ class airportController {
         province: req.body.province,
         city: req.body.city,
         country: req.body.country,
+        code: req.body.code,
         status: req.body.status,
       });
       if (airport == 0) {
