@@ -8,7 +8,7 @@ Repository ini ditujukan untuk kolaborasi membuat Backend Final Project. Reposit
 3. Sastra Harapan Gulo
 
 ## ***Running on localhost*** <br/>
-Untuk menjalankan secara local, ubah pengaturan pada .env dan gunakan database yang sudah disediakan setelah itu jalankan perintah di bawah ini.
+Untuk menjalankan secara local, ubah pengaturan pada file .env dan pada folder config dengan nama file database.js setelah itu jalankan perintah di bawah ini.
 ```
 npm install
 sequelize db:create
