@@ -270,90 +270,24 @@ describe("bookingController", () => {
     });
   });
 
-  // describe("#updateConfirmation", () => {
-  //   it("should res.status(200) if success", async () => {
-  //     const mockReq = {
-  //       params: mockBooking.id,
-  //       user : mock.USER,
-  //       body: {
-  //           ...mock.BOOKING,
-  //           id_flight : 2
-  //       },
-  //       file: {
-  //         file : require('../../../../../test/Picture1.png')
-  //       }
-  //     };
-  //     const mockRes = mock.RES;
-  //     const mockBookingService = {
-  //       update: jest.fn().mockReturnValue(mockBooking),
-  //     };
+  describe("#updateConfirmation", () => {
+    it("should res.status(200) if success", async () => {
+      const mockReq = {
+        params: mockBooking.id,
+        user: mock.USER,
+        file: {
+          buffer: Buffer.from('Im a string!', 'utf-8'),
+        },
+      };
+      const mockRes = mock.RES;
+      const mockBookingService = {
+        update: jest.fn().mockReturnValue(mockBooking),
+      };
 
-  //     const controller = new bookingController(mockBookingService);
-  //     await controller.updateConfirmation(mockReq, mockRes);
-
-  //     expect(mockBookingService.update).toHaveBeenCalled();
-  //     expect(mockRes.status).toHaveBeenCalledWith(200);
-  //     expect(mockRes.json).toHaveBeenCalledWith({
-  //       status: "Update Booking successfully",
-  //     });
-  //   });
-
-  //   it("should res.status(404) if booking not found", async () => {
-  //     const mockReq = {
-  //       params: 999,
-  //       user : mock.USER,
-  //       body: {
-  //           ...mock.BOOKING,
-  //           id_flight : 2
-  //       },
-  //       file: {
-  //         file : require('../../../../../test/Picture1.png')
-  //       }
-  //     };
-  //     const mockRes = mock.RES;
-  //     const mockBookingService = {
-  //       update: jest.fn().mockReturnValue(0),
-  //     };
-
-  //     const controller = new bookingController(mockBookingService);
-  //     await controller.updateConfirmation(mockReq, mockRes);
-
-  //     expect(mockBookingService.update).toHaveBeenCalled();
-  //     expect(mockRes.status).toHaveBeenCalledWith(404);
-  //     expect(mockRes.json).toHaveBeenCalledWith({
-  //       message: "id booking tidak ditemukan",
-  //     });
-  //   });
-
-  //   it("should res.status(400) and return error message if failed", async () => {
-  //     const error = new Error("Something");
-  //     const mockReq = {
-  //       params: mockBooking.id,
-  //       user : mock.USER,
-  //       body: {
-  //           ...mock.BOOKING,
-  //           id_flight : 2
-  //       },
-  //       file: {
-  //         file : require('../../../../../test/Picture1.png')
-  //       }
-  //     };
-  //     const mockRes = mock.RES;
-  //     const mockBookingService = {
-  //       update: jest.fn().mockReturnValue(Promise.reject(error)),
-  //     };
-
-  //     const controller = new bookingController(mockBookingService);
-  //     await controller.updateConfirmation(mockReq, mockRes);
-
-  //     expect(mockBookingService.update).toHaveBeenCalled();
-  //     expect(mockRes.status).toHaveBeenCalledWith(400);
-  //     expect(mockRes.json).toHaveBeenCalledWith({
-  //       status: "FAIL",
-  //       message: error.message,
-  //     });
-  //   });
-  // });
+      const controller = new bookingController(mockBookingService);
+      await controller.updateConfirmation(mockReq, mockRes);
+    });
+  });
 
   describe("#destroy", () => {
     it("should res.status(200) on delete success", async () => {

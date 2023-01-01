@@ -29,7 +29,7 @@ module.exports = {
   },
 
   findAll() {
-    return Booking.findAll({include: [{all:true, nested:true}]});
+    return Booking.findAll({include: [{all:true, nested:true}], order: ['createdAt']});
   },
 
   getTotalBooking() {

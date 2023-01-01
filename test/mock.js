@@ -22,6 +22,7 @@ const mock = {
     no_ktp: "123456789",
     gender: "L",
     date_of_birth: "2022-12-01",
+    image : null,
     address: "Jalan Suroyo No. 161 Mayangan Kota Probolonggo Indonesia",
     createdAt: new Date(),
     updatedAt: new Date(),

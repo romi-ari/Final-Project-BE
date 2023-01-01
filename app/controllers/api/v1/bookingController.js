@@ -89,7 +89,6 @@ class bookingController {
         return;
       }
       const oldFile = booking.confirmation;
-      const userTest = req.user.id;
       if (oldFile !== null) {
         const getImageID = oldFile.split("/").pop().split(".")[0];
         await cloudinary.uploader.destroy(`profile-pictures/${getImageID}`);
@@ -116,11 +115,6 @@ class bookingController {
           const booking = await bookingService.update(req.params.id, {
             confirmation: confirm,
           });
-
-          if (booking == 0) {
-            res.status(404).json({ message: "id booking tidak ditemukan" });
-            return;
-          }
           res.status(200).json({
             status: "SUCCESS",
             message: "Confirm success"

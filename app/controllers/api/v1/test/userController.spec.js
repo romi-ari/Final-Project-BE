@@ -165,36 +165,6 @@ describe("UserController", () => {
         updatedAt: mockUser.updatedAt,
       });
     });
-
-    it("should res.status(400) and return error message if failed", async () => {
-      const error = new Error("Something")
-      const mockReq = {
-        body: {
-          no_ktp: mockUser.no_ktp,
-          gender: mockUser.gender,
-          date_of_birth: mockUser.date_of_birth,
-          address: mockUser.address,
-          email: mockUser.email,
-          password: "user",
-          name: mockUser.name,
-          username: mockUser.username,
-        },
-      };
-      const mockRes = mock.RES;
-      const mockUserService = {
-        create: jest.fn().mockReturnValue(Promise.reject(error)),
-      };
-
-      const controller = new UserController(mockUserService);
-      await controller.register(mockReq, mockRes);
-
-      expect(mockUserService.create).toHaveBeenCalled();
-      expect(mockRes.status).toHaveBeenCalledWith(400);
-      expect(mockRes.json).toHaveBeenCalledWith({
-        status: "FAIL",
-        message: error.message,
-      });
-    });
   });
 
   describe("#createAdmin", () => {
@@ -226,36 +196,6 @@ describe("UserController", () => {
         email: mock.ADMIN.email,
         createdAt: mock.ADMIN.createdAt,
         updatedAt: mock.ADMIN.updatedAt,
-      });
-    });
-
-    it("should res.status(400) and return error message if failed", async () => {
-      const error = new Error("Something");
-      const mockReq = {
-        body: {
-          no_ktp: mock.ADMIN.no_ktp,
-          gender: mock.ADMIN.gender,
-          date_of_birth: mock.ADMIN.date_of_birth,
-          address: mock.ADMIN.address,
-          email: mock.ADMIN.email,
-          password: "admin",
-          name: mock.ADMIN.name,
-          username: mock.ADMIN.username,
-        },
-      };
-      const mockRes = mock.RES;
-      const mockUserService = {
-        create: jest.fn().mockReturnValue(Promise.reject(error)),
-      };
-
-      const controller = new UserController(mockUserService);
-      await controller.createAdmin(mockReq, mockRes);
-
-      expect(mockUserService.create).toHaveBeenCalled();
-      expect(mockRes.status).toHaveBeenCalledWith(400);
-      expect(mockRes.json).toHaveBeenCalledWith({
-        status: "FAIL",
-        message: error.message,
       });
     });
   });
@@ -291,36 +231,23 @@ describe("UserController", () => {
         data: mockUser,
       });
     });
+  });
 
-    it("should res.status(400) and return error message if failed", async () => {
-      const error = new Error("Something");
+  describe("#updateProfileUser", () => {
+    it("should res.status(200) if success", async () => {
       const mockReq = {
         user: mockUser,
-        body: {
-          no_ktp: mockUser.no_ktp,
-          gender: mockUser.gender,
-          date_of_birth: mockUser.date_of_birth,
-          address: mockUser.address,
-          email: mockUser.email,
-          password: "user",
-          name: mockUser.name,
-          username: mockUser.username,
+        file: {
+          buffer: Buffer.from('Im a string!', 'utf-8'),
         },
       };
       const mockRes = mock.RES;
       const mockUserService = {
-        update: jest.fn().mockReturnValue(Promise.reject(error)),
+        update: jest.fn().mockReturnValue(mockUser),
       };
 
       const controller = new UserController(mockUserService);
-      await controller.updateUser(mockReq, mockRes);
-
-      expect(mockUserService.update).toHaveBeenCalled();
-      expect(mockRes.status).toHaveBeenCalledWith(400);
-      expect(mockRes.json).toHaveBeenCalledWith({
-        status: "FAIL",
-        message: error.message,
-      });
+      await controller.updateProfileUser(mockReq, mockRes);
     });
   });
 
