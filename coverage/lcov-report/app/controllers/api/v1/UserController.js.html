@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">77.04% </span>
+                <span class="strong">81.13% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>339/440</span>
+                <span class='fraction'>357/440</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">70.58% </span>
+                <span class="strong">71.15% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>36/51</span>
+                <span class='fraction'>37/52</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">90.9% </span>
+                <span class="strong">95.45% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>20/22</span>
+                <span class='fraction'>21/22</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">77.04% </span>
+                <span class="strong">81.13% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>339/440</span>
+                <span class='fraction'>357/440</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -516,14 +516,14 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">3x</span>
@@ -924,21 +924,21 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -956,14 +956,14 @@ const userService = require("../../../services/userServices");
 const cloudinary = require("../../../../config/cloudinary");
 const SALT = 10;
 &nbsp;
-<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >function createTokenGoogle(user) {</span></span>
-<span class="cstat-no" title="statement not covered" >  const payload = {</span>
-<span class="cstat-no" title="statement not covered" >    id: user.id,</span>
-<span class="cstat-no" title="statement not covered" >    email: user.email,</span>
-<span class="cstat-no" title="statement not covered" >  };</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >  return jwt.sign(payload, process.env.JWT_SIGNATURE_KEY || "Rahasia");</span>
-<span class="cstat-no" title="statement not covered" >}</span>
+function createTokenGoogle(user) {
+  const payload = {
+    id: user.id,
+    email: user.email,
+  };
+&nbsp;
+  return jwt.sign(payload, process.env.JWT_SIGNATURE_KEY || "Rahasia");
+}
 &nbsp;
 //FUNCTION UNTUK ME ENCRYPT PASSWORD SAAT REGISTRASI
 function encryptPassword(password) {
@@ -1363,22 +1363,22 @@ class UserController {
       const ticket = await client.verifyIdToken({
         idToken: token,
         audience: process.env.REACT_APP_GOOGLE_CLIENT_ID,
-      })<span class="branch-0 cbranch-no" title="branch not covered" >;</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >      const { email, name } = ticket.getPayload();</span>
-<span class="cstat-no" title="statement not covered" >      const role = "member";</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >      console.log(ticket.getPayload());</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >      let user = await this.userService.findOne({ where: { email: email } });</span>
-<span class="cstat-no" title="statement not covered" >      if (!user) user = await this.userService.create({ email, name, role });</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >      const accessToken = createTokenGoogle(user);</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >      res.status(201).json({ accessToken });</span>
-    } catch (err) {
-      res.status(401).json({ error: { name: err.name, message: err.message } });
-    }
+      });
+&nbsp;
+      const { email, name } = ticket.getPayload();
+      const role = "member";
+&nbsp;
+      console.log(ticket.getPayload());
+&nbsp;
+      let user = await this.userService.findOne({ where: { email: email } });
+      if (!user) user = await this.userService.create({ email, name, role });
+&nbsp;
+      const accessToken = createTokenGoogle(user);
+&nbsp;
+      res.status(201).json({ accessToken });
+    } <span class="branch-0 cbranch-no" title="branch not covered" >catch (err) {</span>
+<span class="cstat-no" title="statement not covered" >      res.status(401).json({ error: { name: err.name, message: err.message } });</span>
+<span class="cstat-no" title="statement not covered" >    }</span>
   };
 }
 &nbsp;
@@ -1390,7 +1390,7 @@ module.exports = { UserController, encryptPassword, createToken };
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-01-01T14:06:59.128Z
+                at 2023-01-02T12:40:33.305Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>
