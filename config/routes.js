@@ -193,35 +193,6 @@ apiRouter.delete(
   flightController.destroy
 );
 
-//END POINT TICKET
-
-const ticketController = new controllers.api.v1.ticketController(ticketService);
-
-apiRouter.get("/api/v1/ticket", ticketController.list);
-
-apiRouter.post(
-  "/api/v1/ticket",
-  userController.authorize,
-  userController.authorizeUser,
-  ticketController.create
-);
-
-apiRouter.put(
-  "/api/v1/ticket/:id",
-  userController.authorize,
-  userController.authorizeAdmin,
-  ticketController.update
-);
-
-apiRouter.get("/api/v1/ticket/:id", ticketController.showById);
-
-apiRouter.delete(
-  "/api/v1/ticket/:id",
-  userController.authorize,
-  userController.authorizeAdmin,
-  ticketController.destroy
-);
-
 //END POINT Booking
 
 const bookingController = new controllers.api.v1.bookingController(

@@ -768,11 +768,11 @@ paths:
         "400":
           $ref: "#/components/responses/ErrorResponse"
 
-  /api/v1/userDelete:
+  /api/v1/deleteUser/:id:
     delete:
       security:
         - bearerAuth: []
-      summary: Delete Uer role member By Id
+      summary: Delete User role member By Id
       operationId: DeleteUser
       description: "Delete User role member data from database \n\n Allowed roles: member"
       tags:

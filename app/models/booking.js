@@ -17,9 +17,6 @@ module.exports = (sequelize, DataTypes) => {
       Booking.belongsTo(models.User, {
         foreignKey: "id_user"
       });
-      this.hasOne(models.Ticket, {
-        foreignKey: "id_booking"
-      });
     }
   }
   Booking.init({
