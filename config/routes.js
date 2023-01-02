@@ -10,7 +10,6 @@ const {
   bookingService,
   planeService,
   flightService,
-  ticketService,
   whislistService,
   notificationService
 } = require("../app/services");
