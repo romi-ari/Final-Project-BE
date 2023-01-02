@@ -45,7 +45,7 @@ class notificationController {
   create = async (req, res) => {
     try {
       const message = req.body.message;
-      const id_user = req.body.id;
+      const id_user = req.body.id_user;
       const notification = await this.notificationService.create({
         message,
         id_user,
@@ -68,7 +68,7 @@ class notificationController {
         req.params.id,
         {
           message: req.body.message,
-          id_user: req.body.id,
+          id_user: req.body.id_user,
         }
       );
       if (notification == 0) {
