@@ -1039,12 +1039,15 @@ components:
               id_flight:
                 type: integer
                 example: 1
-              baggage:
+              id_user:
                 type: integer
-                example: 20
+                example: 1
               food:
                 type: boolean
                 example: true
+              baggage:
+                type: integer
+                example: 20
               name:
                 type: string
                 example: Bukan Orang
@@ -1056,7 +1059,13 @@ components:
                 example: 08123456
               totalprice:
                 type: integer
-                example: null
+                example: 2000000
+              booking_date:
+                type: string
+                example: "2022-12-12"
+              trip_type:
+                type: string
+                example: "Round Trip"
               
     BookingUpdate:
       description: Update Booking Data
@@ -1601,7 +1610,7 @@ components:
                     example: "2022-12-12"
                   confirmation:
                     type: string
-                    example: "http://res.cloudinary.com/dps0jpnk2/image/upload/v1671889795/backend-files/bi9s017phjfxzytpngnp.jpg"
+                    example: ""
                   approved:
                     type: boolean
                     example: false
