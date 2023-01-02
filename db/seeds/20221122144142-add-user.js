@@ -31,6 +31,7 @@ module.exports = {
         gender: "L",
         date_of_birth: "2022-12-01",
         address: "Jalan Suroyo No. 161 Mayangan Kota Probolonggo Indonesia",
+        image: "https://res.cloudinary.com/dps0jpnk2/image/upload/v1672420429/profile-pictures/hco6sgohebeg4spvv94e.jpg",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
